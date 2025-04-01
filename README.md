@@ -19,7 +19,7 @@ In addition to the enhanced Pomodoro method, **ImPomo** also offers a classic Po
    - **To-Do List**: A simple, flexible way to track your tasks without the time constraints.
 3. **Stay on Track**: Focus on your tasks while **ImPomo** manages the timing for you, helping you maintain a steady workflow.
 
-## Technologies Used
+## 🖥️ Technologies Used
 
 - **Qt C++**: The application is developed using **Qt** for the user interface and **C++** for core functionality, ensuring smooth performance across multiple platforms.
 
