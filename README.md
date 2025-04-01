@@ -31,4 +31,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 We hope **ImPomo** helps you optimize your time management and boosts your productivity. Whether you prefer the enhanced Pomodoro technique or a simple to-do list, **ImPomo** has the flexibility to meet your needs.
 
-[Happy Penguin](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExeHo1djJzeTI0cjRlcG9hdHl2bm8zOGNyaW80ZnE3enJ4bTMweG1qbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/SrWuKikT3frcM1u4Qg/giphy.gi)
+![Happy Penguin](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExeHo1djJzeTI0cjRlcG9hdHl2bm8zOGNyaW80ZnE3enJ4bTMweG1qbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/SrWuKikT3frcM1u4Qg/giphy.gi)
