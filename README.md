@@ -21,7 +21,7 @@ In addition to the enhanced Pomodoro method, **ImPomo** also offers a classic Po
 
 ## 🖥️ Technologies Used
 
-- **Qt C++**: The application is developed using **Qt** for the user interface and **C++** for core functionality, ensuring smooth performance across multiple platforms.
+- **Qt C++**: The application is built with Qt for the user interface and C++ for the core functionality, ensuring a responsive and efficient user experience.
 
 ## 📝 License
 
