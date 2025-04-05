@@ -30,3 +30,7 @@ This project is licensed under the GNU General Public License (GPL) v3.0 - see t
 ## 🌟 Wrapping up
 
 We hope **ImPomo** helps you optimize your time management and boosts your productivity. Whether you prefer the improved Pomodoro technique or a simple to-do list, **ImPomo** has the flexibility to meet your needs.
+
+<p align="center">
+<img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExeHo1djJzeTI0cjRlcG9hdHl2bm8zOGNyaW80ZnE3enJ4bTMweG1qbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/SrWuKikT3frcM1u4Qg/giphy.gif" alt="Happy Penguin">
+</p>
