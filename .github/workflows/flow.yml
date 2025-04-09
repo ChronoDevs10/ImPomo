@@ -1,0 +1,31 @@
+name: C++ Test Workflow
+
+on:
+  workflow_dispatch:  # Uruchomienie workflow ręcznie z GitHub UI
+
+jobs:
+  build:
+    runs-on: windows-latest  # Używamy Windows jako systemu operacyjnego
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2  # Sprawdza kod z repozytorium
+
+      - name: Set up Qt and dependencies
+        run: |
+          choco install qt5  # Używamy Chocolatey do instalacji Qt5 na Windows
+          
+      - name: Set up CMake
+        uses: lukechilds/actions/setup-cmake@v2  # Ustawia środowisko CMake
+
+      - name: Build the project
+        run: |
+          mkdir build  # Tworzymy folder 'build' do kompilacji
+          cd build     # Wchodzimy do folderu 'build'
+          cmake ..     # Uruchamiamy CMake, aby przygotować środowisko kompilacji
+          cmake --build .  # Kompilujemy projekt (np. pliki C++ z testami)
+
+      - name: Run tests
+        run: |
+          # Uruchamiamy testy przy użyciu QTest
+          ./tests/test  # Zmienna 'test' to plik, który uruchamia Twoje testy
