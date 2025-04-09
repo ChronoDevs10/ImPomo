@@ -4,27 +4,30 @@ on:
   workflow_dispatch:  # Uruchomienie workflow ręcznie z GitHub UI
 
 jobs:
-  build:
-    runs-on: windows-latest  # Używamy Windows jako systemu operacyjnego
+  build-and-test:
+    runs-on: windows-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Set up Qt and dependencies
-        run: |
-          choco install qt5  # Możesz też zainstalować Qt ręcznie, jeśli masz problem z choco
+    - name: Install Qt 6 and tools
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y qt6-base-dev cmake build-essential
 
-      - name: Set up CMake
-        uses: actions/setup-cmake@v2  # Używamy wersji v2, oficjalna akcja GitHub
+    - name: Configure
+      run: |
+        mkdir build
+        cd build
+        cmake ..
 
-      - name: Build the project
-        run: |
-          mkdir build
-          cd build
-          cmake ..
-          cmake --build .
+    - name: Build
+      run: |
+        cd build
+        make
 
-      - name: Run tests
-        run: |
-          ./tests/test_task  # Upewnij się, że plik testowy jest poprawny
+    - name: Run Tests
+      run: |
+        cd build
+        ctest --output-on-failure
