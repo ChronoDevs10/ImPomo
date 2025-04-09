@@ -4,30 +4,28 @@ on:
   workflow_dispatch:  # Uruchomienie workflow ręcznie z GitHub UI
 
 jobs:
-  build-and-test:
-    runs-on: windows-latest
+  build:
+    runs-on: windows-latest  
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Install Qt 6 and tools
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y qt6-base-dev cmake build-essential
+      - name: Set up Qt and dependencies
+        run: |
+          choco install qt6 --installargs 'ADD_TO_PATH=YES'  # Używamy Chocolatey do zainstalowania Qt6
 
-    - name: Configure
-      run: |
-        mkdir build
-        cd build
-        cmake ..
+      - name: Set up CMake
+        uses: actions/setup-cmake@v2  
 
-    - name: Build
-      run: |
-        cd build
-        make
+      - name: Build the project
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          cmake --build .
 
-    - name: Run Tests
-      run: |
-        cd build
-        ctest --output-on-failure
+      - name: Run tests
+        run: |
+          ./tests/test_task  # Upewnij się, że plik testowy jest poprawny
+
