@@ -16,7 +16,7 @@ jobs:
           choco install qt5  # Możesz też zainstalować Qt ręcznie, jeśli masz problem z choco
 
       - name: Set up CMake
-        uses: actions/setup-cmake@v3  # Używamy wersji v2, oficjalna akcja GitHub
+        uses: actions/setup-cmake@v2  # Używamy wersji v2, oficjalna akcja GitHub
 
       - name: Build the project
         run: |
