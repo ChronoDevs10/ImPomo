@@ -27,4 +27,4 @@ jobs:
 
       - name: Run tests
         run: |
-          ./tests/test  # Upewnij się, że plik testowy jest poprawny
+          ./tests/test_task  # Upewnij się, że plik testowy jest poprawny
