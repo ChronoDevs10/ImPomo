@@ -1,4 +1,4 @@
-#include <QtTest>
+#include <QTest>
 #include "task.h"
 
 class TestTask : public QObject {

@@ -1,6 +1,7 @@
 #ifndef CLASSICPOMODORO_H
 #define CLASSICPOMODORO_H
 
+#include <Qstring>
 #include "ipomodoromode.h"
 #include "timer.h"
 #include "itimerobserver.h"
@@ -12,8 +13,9 @@ private:
     int longBreakDuration;
     int cycles;
     int workBlocksInCycle;
-    Timer timer;
+    QString currentPhase;
 public:
+    Timer timer;
     void start() override;
     void pause() override;
     void reset() override;
@@ -23,6 +25,11 @@ public:
     void update() override;
 
     void changeProperties(int newWork, int newShortBreak, int newLongBreak, int newCycles);
+    int getWorkDuration();
+    int getShortBreakDuration();
+    int getLongBreakDuration();
+    int getCycles();
+    QString getcurrentPhase();
     void loadSettingsFromFile();
     void saveSettingsToFile();
 };

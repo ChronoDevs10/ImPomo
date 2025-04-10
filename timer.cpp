@@ -7,5 +7,5 @@ void Timer::reset() {}
 void Timer::subscribe(ITimerObserver* observer) {}
 void Timer::unsubscribe(ITimerObserver* observer) {}
 int Timer::getRemainingTime() {
-    return remainingTime;
+    return 10000;
 }

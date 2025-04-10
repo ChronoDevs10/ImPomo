@@ -5,7 +5,7 @@
 #include "itimerobserver.h"
 #include <QVector>
 
-class Timer :public ITimer {
+class Timer : public ITimer {
 
 private:
     int remainingTime;

@@ -1,4 +1,4 @@
-QT += core gui
+QT += core gui sql
 QT += testlib
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -21,8 +21,14 @@ SOURCES += \
     statistics.cpp \
     task.cpp \
     taskfactory.cpp \
+    testClassicPomodoro.cpp \
+    testExtendedPomodoro.cpp \
+    testPomodoroList.cpp \
     testPomodoroTask.cpp \
     testTask.cpp \
+    testTaskFactory.cpp \
+    testTimer.cpp \
+    testToDoList.cpp \
     timer.cpp \
     todolist.cpp
 

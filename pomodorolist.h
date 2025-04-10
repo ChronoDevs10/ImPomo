@@ -11,7 +11,9 @@ public:
     void addTask(Task* task) override;
     void removeTask(Task* task) override;
     void editTaskName(Task* task, QString newName) override;
-    void editTaskStatus() override;
+    void editTaskStatus(Task* task) override;
+    int taskCount() override;
+    QVector<PomodoroTask*> getPTasks();
     void reorderTasks(QVector<Task*> newOrder) override;
     void saveToDatabase() override;
     void updateInDatabase(Task* task) override;

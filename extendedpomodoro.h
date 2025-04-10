@@ -9,10 +9,10 @@
 
 class ExtendedPomodoro : public IPomodoroMode, public ITimerObserver {
 private:
-    PomodoroList* list;
-    PomodoroTask current;
-    Timer timer;
+    PomodoroTask* current;
 public:
+    PomodoroList* list;
+    Timer timer;
     void start() override;
     void pause() override;
     void reset() override;
@@ -21,6 +21,8 @@ public:
     void loadSessionStateFromFile() override;
     void update() override;
 
+    //ExtendedPomodoro(PomodoroList* taskList = nullptr, QObject* parent = nullptr);
+    PomodoroTask getcurrent();
     void reorderTasks(QVector<PomodoroTask*> newOrder);
 };
 
