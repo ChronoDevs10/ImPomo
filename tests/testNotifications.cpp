@@ -1,5 +1,5 @@
 #include <QTest>
-#include "Notifications.h"
+#include "../Notifications.h"
 
 class TestNotifications : public QObject {
     Q_OBJECT
@@ -12,13 +12,13 @@ private slots:
 void TestNotifications::testSendNotification() {
     Notifications notif;
     bool result = notif.sendNotification("Test message");
-    QVERIFY(result); // Sprawdzenie, czy powiadomienie zostało wysłane
+    QVERIFY(result);
 }
 
 void TestNotifications::testPlaySound() {
     Notifications notif;
     bool result = notif.playSound();
-    QVERIFY(result); // Sprawdzenie, czy dźwięk został odtworzony
+    QVERIFY(result);
 }
 
 //QTEST_MAIN(TestNotifications)

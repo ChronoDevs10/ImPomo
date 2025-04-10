@@ -1,5 +1,5 @@
 #include <QTest>
-#include "taskfactory.h"
+#include "../taskfactory.h"
 
 class TestTaskFactory : public QObject {
     Q_OBJECT

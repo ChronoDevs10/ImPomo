@@ -1,6 +1,6 @@
 #include <QTest>
-#include "pomodorolist.h"
-#include "pomodorotask.h"
+#include "../pomodorolist.h"
+#include "../pomodorotask.h"
 
 class TestPomodoroList : public QObject {
     Q_OBJECT

@@ -1,6 +1,6 @@
 #include <QTest>
-#include "extendedpomodoro.h"
-#include "pomodorotask.h"
+#include "../extendedpomodoro.h"
+#include "../pomodorotask.h"
 
 class TestExtendedPomodoro : public QObject {
     Q_OBJECT

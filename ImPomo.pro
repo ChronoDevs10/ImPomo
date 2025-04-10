@@ -21,17 +21,17 @@ SOURCES += \
     statistics.cpp \
     task.cpp \
     taskfactory.cpp \
-    testClassicPomodoro.cpp \
-    testExtendedPomodoro.cpp \
-    testNotifications.cpp \
-    testPomodoroList.cpp \
-    testPomodoroTask.cpp \
-    testSettings.cpp \
-    testStatistics.cpp \
-    testTask.cpp \
-    testTaskFactory.cpp \
-    testTimer.cpp \
-    testToDoList.cpp \
+    tests/testClassicPomodoro.cpp \
+    tests/testExtendedPomodoro.cpp \
+    tests/testNotifications.cpp \
+    tests/testPomodoroList.cpp \
+    tests/testPomodoroTask.cpp \
+    tests/testSettings.cpp \
+    tests/testStatistics.cpp \
+    tests/testTask.cpp \
+    tests/testTaskFactory.cpp \
+    tests/testTimer.cpp \
+    tests/testToDoList.cpp \
     timer.cpp \
     todolist.cpp
 

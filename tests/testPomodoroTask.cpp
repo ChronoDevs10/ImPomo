@@ -1,5 +1,5 @@
 #include <QTest>
-#include "pomodorotask.h"
+#include "../pomodorotask.h"
 
 class TestPomodoroTask : public QObject {
     Q_OBJECT

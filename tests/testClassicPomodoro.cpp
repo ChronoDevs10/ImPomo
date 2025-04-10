@@ -1,5 +1,5 @@
 #include <QTest>
-#include "classicpomodoro.h"
+#include "../classicpomodoro.h"
 
 class TestClassicPomodoro : public QObject {
     Q_OBJECT

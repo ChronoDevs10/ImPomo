@@ -1,6 +1,6 @@
 #include <QTest>
-#include "statistics.h"
-#include "task.h"
+#include "../statistics.h"
+#include "../task.h"
 
 class TestStatistics : public QObject {
     Q_OBJECT

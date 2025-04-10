@@ -1,5 +1,5 @@
 #include <QTest>
-#include "task.h"
+#include "../task.h"
 
 class TestTask : public QObject {
     Q_OBJECT

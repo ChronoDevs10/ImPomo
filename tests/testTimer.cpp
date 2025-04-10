@@ -1,5 +1,5 @@
 #include <QTest>
-#include "timer.h"
+#include "../timer.h"
 
 class Observer : public QObject, public ITimerObserver {
     Q_OBJECT

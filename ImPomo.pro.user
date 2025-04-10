@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 16.0.0, 2025-04-10T07:58:25. -->
+<!-- Written by QtCreator 16.0.0, 2025-04-10T22:52:11. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -71,7 +71,18 @@
     <value type="bool" key="AutoTest.Framework.QtTest">true</value>
    </valuemap>
    <value type="bool" key="AutoTest.ApplyFilter">false</value>
-   <valuemap type="QVariantMap" key="AutoTest.CheckStates"/>
+   <valuemap type="QVariantMap" key="AutoTest.CheckStates">
+    <value type="Qt::CheckState" key="1@C:/Users/aleks/Desktop/ImPomo/testPomodoroTask.cpp:TestPomodoroTask">Unchecked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/aleks/Desktop/ImPomo/testPomodoroTask.cpp:testEditDuration">Unchecked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/aleks/Desktop/ImPomo/testPomodoroTask.cpp:testEditDurationLargeValue">Unchecked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/aleks/Desktop/ImPomo/testPomodoroTask.cpp:testEditDurationNegative">Unchecked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/aleks/Desktop/ImPomo/testPomodoroTask.cpp:testEditName">Unchecked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/aleks/Desktop/ImPomo/testPomodoroTask.cpp:testEditNameLongString">Unchecked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/aleks/Desktop/ImPomo/testPomodoroTask.cpp:testEditStatus">Unchecked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/aleks/Desktop/ImPomo/testPomodoroTask.cpp:testGetDuration">Unchecked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/aleks/Desktop/ImPomo/testPomodoroTask.cpp:testGetName">Unchecked</value>
+    <value type="Qt::CheckState" key="1@C:/Users/aleks/Desktop/ImPomo/testPomodoroTask.cpp:testGetStatus">Unchecked</value>
+   </valuemap>
    <valuelist type="QVariantList" key="AutoTest.PathFilters"/>
    <value type="int" key="AutoTest.RunAfterBuild">0</value>
    <value type="bool" key="AutoTest.UseGlobal">true</value>
@@ -106,7 +117,7 @@
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">QtProjectManager.QMakeBuildStep</value>
-      <value type="bool" key="QtProjectManager.QMakeBuildStep.QMakeForced">false</value>
+      <value type="bool" key="QtProjectManager.QMakeBuildStep.QMakeForced">true</value>
       <valuelist type="QVariantList" key="QtProjectManager.QMakeBuildStep.SelectedAbis"/>
      </valuemap>
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.1">
@@ -145,7 +156,7 @@
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">QtProjectManager.QMakeBuildStep</value>
-      <value type="bool" key="QtProjectManager.QMakeBuildStep.QMakeForced">false</value>
+      <value type="bool" key="QtProjectManager.QMakeBuildStep.QMakeForced">true</value>
       <valuelist type="QVariantList" key="QtProjectManager.QMakeBuildStep.SelectedAbis"/>
      </valuemap>
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.1">

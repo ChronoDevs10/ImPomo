@@ -1,5 +1,5 @@
 #include <QTest>
-#include "appsettings.h"
+#include "../appsettings.h"
 
 class TestAppSettings : public QObject {
     Q_OBJECT
@@ -43,5 +43,5 @@ void TestAppSettings::testSaveAndLoadSettingsFromFile() {
     QCOMPARE(settings2.getTheme(), "dark");
 }
 
-//QTEST_MAIN(TestAppSettings)
+QTEST_MAIN(TestAppSettings)
 #include "testSettings.moc"

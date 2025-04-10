@@ -1,6 +1,6 @@
 #include <QTest>
-#include "todolist.h"
-#include "task.h"
+#include "../todolist.h"
+#include "../task.h"
 
 class TestToDoList : public QObject {
     Q_OBJECT
