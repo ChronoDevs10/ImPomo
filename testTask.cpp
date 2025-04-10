@@ -22,27 +22,23 @@ void TestTask::testEditStatus() {
     QVERIFY(task.getStatus() == true);
 }
 
-void TestTask::testEditName()
-{
+void TestTask::testEditName() {
     Task task("Test Task");
     task.editName("New Task Name");
     QCOMPARE(task.getName(), QString("New Task Name"));
 }
 
-void TestTask::testGetStatus()
-{
+void TestTask::testGetStatus() {
     Task task("Test Task");
     QVERIFY(task.getStatus() == true);
 }
 
-void TestTask::testGetName()
-{
+void TestTask::testGetName() {
     Task task("Test Task");
     QCOMPARE(task.getName(), QString("Test Task"));
 }
 
-void TestTask::testEditNameLongString()
-{
+void TestTask::testEditNameLongString() {
     Task task("Test Task");
     QString longName(1000, '!');
     task.editName(longName);
