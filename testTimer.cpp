@@ -1,4 +1,4 @@
-#include <QtTest>
+#include <QTest>
 #include "timer.h"
 
 class Observer : public QObject, public ITimerObserver {

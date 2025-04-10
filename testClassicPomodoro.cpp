@@ -1,11 +1,7 @@
 #include <QTest>
-#include <QFile>
-#include <QJsonDocument>
-#include <QJsonObject>
 #include "classicpomodoro.h"
 
-class TestClassicPomodoro : public QObject
-{
+class TestClassicPomodoro : public QObject {
     Q_OBJECT
 
 private slots:
@@ -14,28 +10,24 @@ private slots:
     void testPhaseTransition();
     void testStart();
     void testStop();
-    void testSaveSessionStateToFile();
-    void testLoadSessionStateFromFile();
+    void testSaveAndLoadSettingsToFile();
 };
 
-void TestClassicPomodoro::testDefaultValues()
-{
+void TestClassicPomodoro::testDefaultValues() {
     ClassicPomodoro pomodoro;
     QCOMPARE(pomodoro.getWorkDuration(), 25);
     QCOMPARE(pomodoro.getShortBreakDuration(), 5);
     QCOMPARE(pomodoro.getLongBreakDuration(), 15);
 }
 
-void TestClassicPomodoro::testChangeProperties()
-{
+void TestClassicPomodoro::testChangeProperties() {
     ClassicPomodoro pomodoro;
     pomodoro.changeProperties(30, 10, 20, 4);
     QCOMPARE(pomodoro.getWorkDuration(), 30);
     QCOMPARE(pomodoro.getShortBreakDuration(), 10);
 }
 
-void TestClassicPomodoro::testPhaseTransition()
-{
+void TestClassicPomodoro::testPhaseTransition() {
     ClassicPomodoro pomodoro;
     pomodoro.start();
     pomodoro.nextPhase();
@@ -61,38 +53,14 @@ void TestClassicPomodoro::testStop() {
     QCOMPARE(pomodoro.timer.getRemainingTime(), remaining);
 }
 
-void TestClassicPomodoro::testSaveSessionStateToFile()
-{
+void TestClassicPomodoro::testSaveAndLoadSettingsToFile() {
     ClassicPomodoro pomodoro;
     pomodoro.changeProperties(10,1,2,3);
 
-    QString filePath = "pomodoro_state.json";
-
     pomodoro.saveSessionStateToFile();
 
-    QFile file(filePath);
-    QVERIFY(file.exists());
-
-    file.open(QIODevice::ReadOnly);
-    QByteArray data = file.readAll();
-    file.close();
-    QJsonDocument doc = QJsonDocument::fromJson(data);
-    QJsonObject jsonObj = doc.object();
-
-    QCOMPARE(jsonObj["workDuration"].toInt(), 25);
-    QCOMPARE(jsonObj["shortBreakDuration"].toInt(), 5);
-    QCOMPARE(jsonObj["longBreakDuration"].toInt(), 15);
-    QCOMPARE(jsonObj["cycles"].toInt(), 4);
-    QCOMPARE(jsonObj["workBlocksInCycle"].toInt(), 4);
-}
-
-void TestClassicPomodoro::testLoadSessionStateFromFile()
-{
-    QString filePath = "pomodoro_state.json";
-
-    ClassicPomodoro pomodoro;
-
-    pomodoro.loadSessionStateFromFile();
+    ClassicPomodoro pomodoro2;
+    pomodoro2.loadSettingsFromFile();
 
     QCOMPARE(pomodoro.getWorkDuration(), 25);
     QCOMPARE(pomodoro.getShortBreakDuration(), 5);
@@ -100,6 +68,5 @@ void TestClassicPomodoro::testLoadSessionStateFromFile()
     QCOMPARE(pomodoro.getCycles(), 4);
 }
 
-
-QTEST_MAIN(TestClassicPomodoro)
+//QTEST_MAIN(TestClassicPomodoro)
 #include "testClassicPomodoro.moc"

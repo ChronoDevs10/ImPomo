@@ -23,8 +23,11 @@ SOURCES += \
     taskfactory.cpp \
     testClassicPomodoro.cpp \
     testExtendedPomodoro.cpp \
+    testNotifications.cpp \
     testPomodoroList.cpp \
     testPomodoroTask.cpp \
+    testSettings.cpp \
+    testStatistics.cpp \
     testTask.cpp \
     testTaskFactory.cpp \
     testTimer.cpp \

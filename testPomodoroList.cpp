@@ -1,9 +1,8 @@
-#include <QtTest>
+#include <QTest>
 #include "pomodorolist.h"
 #include "pomodorotask.h"
 
-class TestPomodoroList : public QObject
-{
+class TestPomodoroList : public QObject {
     Q_OBJECT
 
 private slots:
@@ -15,8 +14,7 @@ private slots:
     void testReorderTasks();
 };
 
-void TestPomodoroList::testAddTask()
-{
+void TestPomodoroList::testAddTask() {
     PomodoroList list;
     PomodoroTask task("Test Task", 25);
 
@@ -24,8 +22,7 @@ void TestPomodoroList::testAddTask()
     QCOMPARE(list.taskCount(), 1);
 }
 
-void TestPomodoroList::testEditTaskDuration()
-{
+void TestPomodoroList::testEditTaskDuration() {
     PomodoroList list;
     PomodoroTask task("Test Task", 25);
     list.addTask(&task);
@@ -34,8 +31,7 @@ void TestPomodoroList::testEditTaskDuration()
     QCOMPARE(task.getDuration(), 30);
 }
 
-void TestPomodoroList::testRemoveTask()
-{
+void TestPomodoroList::testRemoveTask() {
     PomodoroList list;
     PomodoroTask task("Test Task", 25);
 
@@ -44,8 +40,7 @@ void TestPomodoroList::testRemoveTask()
     QCOMPARE(list.taskCount(), 0);
 }
 
-void TestPomodoroList::testEditTaskName()
-{
+void TestPomodoroList::testEditTaskName() {
     PomodoroList list;
     PomodoroTask task("Test Task", 25);
     list.addTask(&task);
@@ -54,8 +49,7 @@ void TestPomodoroList::testEditTaskName()
     QCOMPARE(task.getName(), QString("New Name"));
 }
 
-void TestPomodoroList::testEditTaskStatus()
-{
+void TestPomodoroList::testEditTaskStatus() {
     PomodoroList list;
     PomodoroTask task("Test Task", 25);
     list.addTask(&task);

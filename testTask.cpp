@@ -9,7 +9,7 @@ private slots:
     void testEditName();
     void testGetStatus();
     void testGetName();
-    void testEditNameLongString();
+    void testEditNameLong();
 };
 
 void TestTask::testEditStatus() {
@@ -38,7 +38,7 @@ void TestTask::testGetName() {
     QCOMPARE(task.getName(), QString("Test Task"));
 }
 
-void TestTask::testEditNameLongString() {
+void TestTask::testEditNameLong() {
     Task task("Test Task");
     QString longName(1000, '!');
     task.editName(longName);

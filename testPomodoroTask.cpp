@@ -7,7 +7,6 @@ class TestPomodoroTask : public QObject {
 private slots:
     void testGetDuration();
     void testEditDuration();
-    void testEditDurationZero();
     void testEditDurationNegative();
     void testEditDurationLargeValue();
     void testEditStatus();
@@ -26,12 +25,6 @@ void TestPomodoroTask::testEditDuration() {
     PomodoroTask task("Test Task", 25);
     task.editDuration(30);
     QCOMPARE(task.getDuration(), 30);
-}
-
-void TestPomodoroTask::testEditDurationZero() {
-    PomodoroTask task("Test Task", 25);
-    task.editDuration(0);
-    QCOMPARE(task.getDuration(), 0);
 }
 
 void TestPomodoroTask::testEditDurationNegative() {

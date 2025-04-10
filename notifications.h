@@ -5,8 +5,8 @@
 
 class Notifications {
 public:
-    void playSound();
-    void sendNotification(QString message);
+    bool playSound();
+    bool sendNotification(QString message);
 };
 
 #endif // NOTIFICATIONS_H

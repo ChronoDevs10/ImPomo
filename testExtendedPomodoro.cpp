@@ -1,9 +1,8 @@
-#include <QtTest>
+#include <QTest>
 #include "extendedpomodoro.h"
 #include "pomodorotask.h"
 
-class TestExtendedPomodoro : public QObject
-{
+class TestExtendedPomodoro : public QObject {
     Q_OBJECT
 
 private slots:
@@ -12,8 +11,7 @@ private slots:
     void testAutoTransition();
 };
 
-void TestExtendedPomodoro::testTaskOrder()
-{
+void TestExtendedPomodoro::testTaskOrder() {
     ExtendedPomodoro pomodoro;
     PomodoroTask task1("Task 1", 25);
     PomodoroTask task2("Task 2", 30);
@@ -33,8 +31,7 @@ void TestExtendedPomodoro::testTaskOrder()
         QCOMPARE(currentOrder[i], newOrder[i]);
 }
 
-void TestExtendedPomodoro::testCurrentTask()
-{
+void TestExtendedPomodoro::testCurrentTask() {
     ExtendedPomodoro pomodoro;
     PomodoroTask task("Task 1", 25);
     PomodoroList list;
@@ -46,8 +43,7 @@ void TestExtendedPomodoro::testCurrentTask()
     QCOMPARE(pomodoro.getcurrent().getName(), "Task 1");
 }
 
-void TestExtendedPomodoro::testAutoTransition()
-{
+void TestExtendedPomodoro::testAutoTransition() {
     PomodoroList list;
     PomodoroTask task1("Task 1", 1);
     PomodoroTask task2("Task 2", 1);
