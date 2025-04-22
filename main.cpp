@@ -9,8 +9,8 @@ int main(int argc, char *argv[])
     w.show();
     return a.exec();
 }*/
-
-/*#include <QCoreApplication>
+/*
+#include <QCoreApplication>
 #include <QtTest>
 
 int main(int argc, char *argv[]) {
@@ -28,5 +28,19 @@ int main(int argc, char *argv[]) {
     }
 
     return status;
+}
+
+*/
+/*
+#include "mainwindow.h"
+
+#include <QApplication>
+
+int main(int argc, char *argv[])
+{
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+    return a.exec();
 }
 */

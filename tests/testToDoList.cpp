@@ -100,5 +100,5 @@ void TestToDoList::testUpdate() {
     QCOMPARE(loaded.getTasks()[0]->getName(), QString("Task B"));
 }
 
-//QTEST_MAIN(TestToDoList)
+QTEST_MAIN(TestToDoList)
 #include "testToDoList.moc"

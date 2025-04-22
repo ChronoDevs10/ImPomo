@@ -57,7 +57,7 @@ void TestPomodoroTask::testEditName() {
 
 void TestPomodoroTask::testGetStatus() {
     PomodoroTask task("Test Task", 25);
-    QVERIFY(task.getStatus() == true);
+    QVERIFY(task.getStatus() == false);
 }
 
 void TestPomodoroTask::testGetName() {

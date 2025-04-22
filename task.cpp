@@ -1,11 +1,15 @@
 #include "task.h"
 
 Task::Task(QString taskName) : name(taskName), isCompleted(false) {}
-void Task::editStatus() {}
-void Task::editName(QString newName) {}
+void Task::editStatus() {
+    isCompleted = !isCompleted;
+}
+void Task::editName(QString newName) {
+    name = newName;
+}
 bool Task::getStatus()  {
-    return false;
+    return isCompleted;
 }
 QString Task::getName()  {
-    return "";
+    return name;
 }

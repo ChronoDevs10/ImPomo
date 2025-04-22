@@ -30,7 +30,7 @@ void TestTask::testEditName() {
 
 void TestTask::testGetStatus() {
     Task task("Test Task");
-    QVERIFY(task.getStatus() == true);
+    QVERIFY(task.getStatus() == false);
 }
 
 void TestTask::testGetName() {

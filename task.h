@@ -4,7 +4,7 @@
 #include <QString>
 
 class Task {
-private:
+protected:
     QString name;
     bool isCompleted;
 public:

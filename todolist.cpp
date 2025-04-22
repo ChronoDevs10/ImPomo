@@ -1,14 +1,26 @@
 #include "toDoList.h"
 
-void ToDoList::addTask(Task* task) {}
-void ToDoList::removeTask(Task* task) {}
-void ToDoList::editTaskName(Task* task, QString newName) {}
-void ToDoList::editTaskStatus(Task* task) {}
+ToDoList::ToDoList() {
+    tasks = QVector<Task*>();
+}
+
+void ToDoList::addTask(Task* task) {
+    tasks.append(task);
+}
+void ToDoList::removeTask(Task* task) {
+    tasks.removeOne(task);
+}
+void ToDoList::editTaskName(Task* task, QString newName) {
+    task->editName(newName);
+}
+void ToDoList::editTaskStatus(Task* task) {
+    task->editStatus();
+}
 int ToDoList::taskCount() {
-    return -1;
+    return tasks.size();
 }
 QVector<Task*> ToDoList::getTasks() {
-    return {};
+    return tasks;
 }
 void ToDoList::reorderTasks(QVector<Task*> newOrder) {}
 void ToDoList::saveToDatabase() {}
