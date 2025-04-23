@@ -20,7 +20,6 @@ int PomodoroTask::getDuration() {
     return duration;
 }
 
-// Edytowanie czasu trwania zadania Pomodoro
 void PomodoroTask::editDuration(int newDuration) {
     if(newDuration >= 0)
         duration = newDuration;

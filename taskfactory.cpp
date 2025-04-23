@@ -1,5 +1,8 @@
 #include "taskfactory.h"
 
 Task* TaskFactory::createTask(QString taskType, QString name, int duration) {
-    return new Task("");
+    if(taskType == "Pomodoro")
+        return new PomodoroTask(name, duration);
+    else
+        return new Task(name);
 }

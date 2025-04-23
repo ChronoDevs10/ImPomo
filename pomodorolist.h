@@ -3,6 +3,9 @@
 
 #include "ITaskList.h"
 #include "pomodorotask.h"
+#include <QVBoxLayout>
+#include <QScrollArea>
+#include <QWidget>
 
 class PomodoroList : public ITaskList {
 private:
@@ -20,6 +23,10 @@ public:
     void loadFromDatabase() override;
 
     void editTaskDuration(Task* task, int newDuration);
+
+    QWidget* createTaskWidget(PomodoroTask* task);
+    void refreshListIn(QVBoxLayout* layout);
+    QScrollArea* getScrollArea();
 };
 
 #endif // POMODOROLIST_H
