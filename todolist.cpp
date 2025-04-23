@@ -4,6 +4,8 @@
 #include <QCheckBox>
 #include <QHBoxLayout>
 #include <QTimer>
+#include <QPushButton>
+#include <QApplication>
 
 ToDoList::ToDoList() {
     tasks = QVector<Task*>();
@@ -49,7 +51,7 @@ QWidget* ToDoList::createTaskWidget(Task* task) {
     lineEdit->setFixedSize(400, 60);
     lineEdit->setStyleSheet("QLineEdit { background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 5px; padding: 5px; color: black; }");
 
-    QCheckBox* checkBox = new QCheckBox("Check");
+    QCheckBox* checkBox = new QCheckBox("✔");
     checkBox->setChecked(task->getStatus());
 
     if (task->getStatus())
@@ -64,8 +66,18 @@ QWidget* ToDoList::createTaskWidget(Task* task) {
 
     });
 
+    QPushButton* deleteButton = new QPushButton("🗑");
+    deleteButton->setFixedSize(40, 40);
+    deleteButton->setStyleSheet("QPushButton { background-color: #e57373; color: white; border-radius: 5px; }");
+
+    QObject::connect(deleteButton, &QPushButton::clicked, [this, task, fieldWidget]() {
+        removeTask(task);
+        fieldWidget->deleteLater();
+    });
+
     inputLayout->addWidget(lineEdit);
     inputLayout->addWidget(checkBox);
+    inputLayout->addWidget(deleteButton);
 
     return fieldWidget;
 }

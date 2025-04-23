@@ -3,6 +3,7 @@
 #include <QCheckBox>
 #include <QSpinBox>
 #include <QHBoxLayout>
+#include <QPushButton>
 
 void PomodoroList::addTask(Task* task) {
     PomodoroTask* PomoTask = dynamic_cast<PomodoroTask*>(task);
@@ -80,8 +81,18 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
         this->editTaskDuration(task, newDuration);
     });
 
+    QPushButton* deleteButton = new QPushButton("🗑");
+    deleteButton->setFixedSize(40, 40);
+    deleteButton->setStyleSheet("QPushButton { background-color: #e57373; color: white; border-radius: 5px; }");
+
+    QObject::connect(deleteButton, &QPushButton::clicked, [this, task, fieldWidget]() {
+        removeTask(task);
+        fieldWidget->deleteLater();
+    });
+
     inputLayout->addWidget(lineEdit);
     inputLayout->addWidget(durationBox);
+    inputLayout->addWidget(deleteButton);
     //inputLayout->addWidget(checkBox);
 
     return fieldWidget;
