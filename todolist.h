@@ -21,13 +21,13 @@ public:
     void editTaskStatus(Task* task) override;
     int taskCount() override;
     QVector<Task*> getTasks();
-    void reorderTasks(QVector<Task*> newOrder) override;
+    void reorderTasks(int, int) override;
     void saveToDatabase() override;
     void updateInDatabase(Task* task) override;
     void loadFromDatabase() override;
 
     QWidget* createTaskWidget(Task* task);
-    void refreshListIn(QVBoxLayout* layout);
+    void refreshList(QVBoxLayout* layout);
     QScrollArea* getScrollArea();
 };
 

@@ -111,7 +111,7 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
         int index = tasks.indexOf(task);
         if (index > 0) {
             reorderTasks(index, index - 1);
-            refreshListIn(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
+            refreshList(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
         }
     });
 
@@ -119,7 +119,7 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
         int index = tasks.indexOf(task);
         if (index < tasks.size() - 1) {
             reorderTasks(index, index + 1);
-            refreshListIn(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
+            refreshList(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
         }
     });
 
@@ -133,7 +133,7 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
     return fieldWidget;
 }
 
-void PomodoroList::refreshListIn(QVBoxLayout* layout) {
+void PomodoroList::refreshList(QVBoxLayout* layout) {
     QLayoutItem* child;
     while((child = layout->takeAt(0)) != nullptr) {
         delete child->widget();

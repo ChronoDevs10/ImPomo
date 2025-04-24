@@ -29,6 +29,7 @@ MainWindow::~MainWindow()
 #include <QScrollBar>
 #include <QDebug>
 #include <QLabel>
+#include <QMovie>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), toDoList(new ToDoList()), pomodoroList(new PomodoroList())
@@ -76,9 +77,35 @@ void MainWindow::setupHomeTab() {
     QLabel *hintLabel = new QLabel("Select a tab from the menu to get started");
 
     hintLabel->setAlignment(Qt::AlignCenter);
+    /* Zegar
+    QLabel *timeLabel = new QLabel(this);
+    timeLabel->setAlignment(Qt::AlignCenter);
+    timeLabel->setStyleSheet(
+        "font-size: 30px; "
+        "font-weight: bold; "
+        "color: #000000; "
+        "background-color: #fce4ec; "
+        "border: 2px solid #000000; "
+        "border-radius: 10px; "
+        "padding: 10px; "
+        );
+
+    QTimer *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, [timeLabel]() {
+        // Pobieranie aktualnego czasu
+        QTime currentTime = QTime::currentTime();
+        QString timeString = currentTime.toString("hh:mm:ss AP");
+        timeLabel->setText(timeString);
+    });
+    timer->start(1000);
+
+    QTime currentTime = QTime::currentTime();
+    timeLabel->setText(currentTime.toString("hh:mm:ss AP"));
+    */
 
     layout->addWidget(welcomeLabel);
     layout->addWidget(hintLabel);
+    //layout->addWidget(timeLabel);
 
     stackedWidget->addWidget(startTab);
 }
@@ -94,7 +121,7 @@ void MainWindow::setupToDoListTab() {
     QVBoxLayout *scrollLayout = new QVBoxLayout(scrollContent);
     scrollLayout->setAlignment(Qt::AlignTop);
 
-    toDoList->refreshListIn(scrollLayout);
+    toDoList->refreshList(scrollLayout);
     scrollArea->setWidget(scrollContent);
 
     toDoListLayout->addWidget(scrollArea);
@@ -112,7 +139,7 @@ void MainWindow::setupImPomodoroTab() {
     imPomodoroScrollLayout = new QVBoxLayout(scrollContent);
     imPomodoroScrollLayout->setAlignment(Qt::AlignTop);
 
-    pomodoroList->refreshListIn(imPomodoroScrollLayout);
+    pomodoroList->refreshList(imPomodoroScrollLayout);
     imPomodoroScrollArea->setWidget(scrollContent);
 
     layout->addWidget(imPomodoroScrollArea);
@@ -253,7 +280,7 @@ void MainWindow::addTaskField() {
         if (currentWidget) {
             QVBoxLayout* layout = qobject_cast<QVBoxLayout*>(currentWidget->layout());
             if (layout)
-                toDoList->refreshListIn(layout);
+                toDoList->refreshList(layout);
         }
 
         QList<Task*> currentTasks = toDoList->getTasks();
@@ -270,7 +297,7 @@ void MainWindow::addTaskField() {
         if (currentWidget) {
             QVBoxLayout* layout = qobject_cast<QVBoxLayout*>(currentWidget->layout());
             if (layout)
-                pomodoroList->refreshListIn(layout);
+                pomodoroList->refreshList(layout);
         }
     }
 }

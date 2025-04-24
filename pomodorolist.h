@@ -25,7 +25,7 @@ public:
     void editTaskDuration(Task* task, int newDuration);
 
     QWidget* createTaskWidget(PomodoroTask* task);
-    void refreshListIn(QVBoxLayout* layout);
+    void refreshList(QVBoxLayout* layout);
     QScrollArea* getScrollArea();
 };
 

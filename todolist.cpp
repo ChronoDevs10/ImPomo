@@ -105,7 +105,7 @@ QWidget* ToDoList::createTaskWidget(Task* task) {
         int index = tasks.indexOf(task);
         if (index > 0) {
             reorderTasks(index, index - 1);
-            refreshListIn(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
+            refreshList(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
         }
     });
 
@@ -113,7 +113,7 @@ QWidget* ToDoList::createTaskWidget(Task* task) {
         int index = tasks.indexOf(task);
         if (index < tasks.size() - 1) {
             reorderTasks(index, index + 1);
-            refreshListIn(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
+            refreshList(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
         }
     });
 
@@ -125,7 +125,7 @@ QWidget* ToDoList::createTaskWidget(Task* task) {
     return fieldWidget;
 }
 
-void ToDoList::refreshListIn(QVBoxLayout* layout) {
+void ToDoList::refreshList(QVBoxLayout* layout) {
     QLayoutItem* child;
     while((child = layout->takeAt(0)) != nullptr) {
         delete child->widget();
