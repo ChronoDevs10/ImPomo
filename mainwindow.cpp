@@ -249,31 +249,28 @@ void MainWindow::addTaskField() {
         Task* task = TaskFactory::createTask("Basic", "New Task");
         toDoList->addTask(task);
 
-        QWidget* scrollContent = scrollArea->widget();
-        QVBoxLayout* scrollLayout = qobject_cast<QVBoxLayout*>(scrollContent->layout());
-
-        if (scrollLayout) {
-            QWidget* taskWidget = toDoList->createTaskWidget(task);
-            scrollLayout->addWidget(taskWidget);
+        QWidget* currentWidget = qobject_cast<QWidget*>(scrollArea->widget());
+        if (currentWidget) {
+            QVBoxLayout* layout = qobject_cast<QVBoxLayout*>(currentWidget->layout());
+            if (layout)
+                toDoList->refreshListIn(layout);
         }
 
         QList<Task*> currentTasks = toDoList->getTasks();
         qDebug() << "=== TO DO LIST ===";
-        for (Task* t : currentTasks) {
+        for (Task* t : currentTasks)
             qDebug() << "- " << t->getName();
-        }
 
     } else if(stackedWidget->currentIndex() == 2) {
         Task* baseTask = TaskFactory::createTask("Pomodoro", "New Pomodoro", 25);
         PomodoroTask* task = dynamic_cast<PomodoroTask*>(baseTask);
         pomodoroList->addTask(task);
 
-        QWidget* scrollContent = imPomodoroScrollArea->widget();
-        QVBoxLayout* scrollLayout = qobject_cast<QVBoxLayout*>(scrollContent->layout());
-
-        if(scrollLayout) {
-            QWidget* taskWidget = pomodoroList->createTaskWidget(task);
-            scrollLayout->addWidget(taskWidget);
+        QWidget* currentWidget = qobject_cast<QWidget*>(imPomodoroScrollArea->widget());
+        if (currentWidget) {
+            QVBoxLayout* layout = qobject_cast<QVBoxLayout*>(currentWidget->layout());
+            if (layout)
+                pomodoroList->refreshListIn(layout);
         }
     }
 }

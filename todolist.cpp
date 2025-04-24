@@ -51,8 +51,7 @@ QWidget* ToDoList::createTaskWidget(Task* task) {
     lineEdit->setFixedSize(400, 60);
     lineEdit->setStyleSheet("QLineEdit { background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 5px; padding: 5px; color: black; }");
 
-    QObject::connect(lineEdit, &QLineEdit::editingFinished, [this, task, lineEdit]() {
-        QString newName = lineEdit->text();
+    QObject::connect(lineEdit, &QLineEdit::textChanged, [task](const QString& newName) {
         task->editName(newName);
     });
 
