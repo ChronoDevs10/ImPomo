@@ -25,14 +25,13 @@ int PomodoroList::taskCount() {
 QVector<PomodoroTask*> PomodoroList::getPTasks() {
      return tasks;
 }
-void PomodoroList::reorderTasks(QVector<Task*> newOrder) {
-    QVector<PomodoroTask*> reordered;
-    for(Task* t : newOrder) {
-        PomodoroTask* pt = dynamic_cast<PomodoroTask*>(t);
-        reordered.append(pt);
-    }
-    tasks = reordered;
+void PomodoroList::reorderTasks(int fromIndex, int toIndex) {
+    if(fromIndex < 0 || toIndex < 0 || fromIndex >= tasks.size() || toIndex >= tasks.size())
+        return;
+
+    tasks.move(fromIndex, toIndex);
 }
+
 void PomodoroList::saveToDatabase() {}
 void PomodoroList::updateInDatabase(Task* task) {}
 void PomodoroList::loadFromDatabase() {}
@@ -90,10 +89,46 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
         fieldWidget->deleteLater();
     });
 
+    QPushButton* upButton = new QPushButton("↑");
+    QPushButton* downButton = new QPushButton("↓");
+
+    upButton->setFixedSize(20, 20);
+    downButton->setFixedSize(20, 20);
+
+    upButton->setStyleSheet("QPushButton { background-color: #64b5f6; color: white; border-radius: 5px; }");
+    downButton->setStyleSheet("QPushButton { background-color: #64b5f6; color: white; border-radius: 5px; }");
+
+    QVBoxLayout* arrowLayout = new QVBoxLayout();
+    arrowLayout->addWidget(upButton);
+    arrowLayout->addWidget(downButton);
+    arrowLayout->setSpacing(2);
+
+    QWidget* arrowWidget = new QWidget();
+    arrowWidget->setLayout(arrowLayout);
+    arrowWidget->setFixedWidth(30);
+
+    QObject::connect(upButton, &QPushButton::clicked, [this, task, fieldWidget]() {
+        int index = tasks.indexOf(task);
+        if (index > 0) {
+            reorderTasks(index, index - 1);
+            refreshListIn(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
+        }
+    });
+
+    QObject::connect(downButton, &QPushButton::clicked, [this, task, fieldWidget]() {
+        int index = tasks.indexOf(task);
+        if (index < tasks.size() - 1) {
+            reorderTasks(index, index + 1);
+            refreshListIn(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
+        }
+    });
+
     inputLayout->addWidget(lineEdit);
     inputLayout->addWidget(durationBox);
     inputLayout->addWidget(deleteButton);
     //inputLayout->addWidget(checkBox);
+    inputLayout->addWidget(arrowWidget);
+
 
     return fieldWidget;
 }

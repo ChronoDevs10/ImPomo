@@ -246,7 +246,7 @@ void MainWindow::showSettings() {
 void MainWindow::addTaskField() {
     if(stackedWidget->currentIndex() == 1) {
         // Dodaj nowe zadanie
-        Task* task = TaskFactory::createTask("Basic", "New Task");
+        Task* task = TaskFactory::createTask("Basic", "...");
         toDoList->addTask(task);
 
         QWidget* currentWidget = qobject_cast<QWidget*>(scrollArea->widget());
@@ -262,7 +262,7 @@ void MainWindow::addTaskField() {
             qDebug() << "- " << t->getName();
 
     } else if(stackedWidget->currentIndex() == 2) {
-        Task* baseTask = TaskFactory::createTask("Pomodoro", "New Pomodoro", 25);
+        Task* baseTask = TaskFactory::createTask("Pomodoro", "...", 25);
         PomodoroTask* task = dynamic_cast<PomodoroTask*>(baseTask);
         pomodoroList->addTask(task);
 

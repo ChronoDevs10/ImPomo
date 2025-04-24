@@ -35,9 +35,13 @@ QVector<Task*> ToDoList::getTasks() {
     return tasks;
 }
 
-void ToDoList::reorderTasks(QVector<Task*> newOrder) {
-    tasks = newOrder;
+void ToDoList::reorderTasks(int fromIndex, int toIndex) {
+    if(fromIndex < 0 || toIndex < 0 || fromIndex >= tasks.size() || toIndex >= tasks.size())
+        return;
+
+    tasks.move(fromIndex, toIndex);
 }
+
 
 void ToDoList::saveToDatabase() {}
 void ToDoList::updateInDatabase(Task* task) {}
@@ -79,10 +83,44 @@ QWidget* ToDoList::createTaskWidget(Task* task) {
         fieldWidget->deleteLater();
     });
 
+    QPushButton* upButton = new QPushButton("↑");
+    QPushButton* downButton = new QPushButton("↓");
+
+    upButton->setFixedSize(20, 20);
+    downButton->setFixedSize(20, 20);
+
+    upButton->setStyleSheet("QPushButton { background-color: #64b5f6; color: white; border-radius: 5px; }");
+    downButton->setStyleSheet("QPushButton { background-color: #64b5f6; color: white; border-radius: 5px; }");
+
+    QVBoxLayout* arrowLayout = new QVBoxLayout();
+    arrowLayout->addWidget(upButton);
+    arrowLayout->addWidget(downButton);
+    arrowLayout->setSpacing(2);
+
+    QWidget* arrowWidget = new QWidget();
+    arrowWidget->setLayout(arrowLayout);
+    arrowWidget->setFixedWidth(30);
+
+    QObject::connect(upButton, &QPushButton::clicked, [this, task, fieldWidget]() {
+        int index = tasks.indexOf(task);
+        if (index > 0) {
+            reorderTasks(index, index - 1);
+            refreshListIn(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
+        }
+    });
+
+    QObject::connect(downButton, &QPushButton::clicked, [this, task, fieldWidget]() {
+        int index = tasks.indexOf(task);
+        if (index < tasks.size() - 1) {
+            reorderTasks(index, index + 1);
+            refreshListIn(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
+        }
+    });
+
     inputLayout->addWidget(lineEdit);
     inputLayout->addWidget(checkBox);
     inputLayout->addWidget(deleteButton);
-
+    inputLayout->addWidget(arrowWidget);
 
     return fieldWidget;
 }

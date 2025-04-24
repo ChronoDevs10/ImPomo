@@ -5,7 +5,10 @@ void Task::editStatus() {
     isCompleted = !isCompleted;
 }
 void Task::editName(QString newName) {
-    name = newName;
+    if(name == " ")
+        name = "Task";
+    else
+        name = newName;
 }
 bool Task::getStatus()  {
     return isCompleted;
