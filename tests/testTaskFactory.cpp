@@ -11,16 +11,19 @@ private slots:
 };
 
 void TestTaskFactory::testCreateRegularTask() {
-    Task* task = TaskFactory::createTask("regular", "Test Task");
+    Task* task = TaskFactory::createTask("Basic", "Test Task");
     QVERIFY(task != nullptr);
     QCOMPARE(task->getName(), QString("Test Task"));
     delete task;
 }
 
 void TestTaskFactory::testCreatePomodoroTask() {
-    Task* task = TaskFactory::createTask("pomodoro", "Test Task", 25);
+    Task* task = TaskFactory::createTask("Pomodoro", "Test", 25);
+    PomodoroTask* PTask = dynamic_cast<PomodoroTask*>(task);
+
     QVERIFY(task != nullptr);
-    QCOMPARE(task->getName(), QString("Test Task"));
+    QCOMPARE(PTask->getName(), QString("Test"));
+    QCOMPARE(PTask->getDuration(), 25);
     delete task;
 }
 
