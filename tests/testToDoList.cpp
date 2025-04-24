@@ -54,17 +54,36 @@ void TestToDoList::testReorderTasks() {
     ToDoList list;
     Task task1("Test Task1");
     Task task2("Test Task2");
+    Task task3("Test Task3");
 
     list.addTask(&task1);
     list.addTask(&task2);
+    list.addTask(&task3);
 
-    QVector<Task*> newOrder = {&task2, &task1};
-    list.reorderTasks(newOrder);
+    list.reorderTasks(0, 2);
+
     QVector<Task*> currentOrder = list.getTasks();
 
-    QCOMPARE(currentOrder.size(), newOrder.size());
-    for (int i = 0; i < newOrder.size(); ++i)
-        QCOMPARE(currentOrder[i], newOrder[i]);
+    QCOMPARE(currentOrder.size(), 3);
+    QCOMPARE(currentOrder[0], &task2);
+    QCOMPARE(currentOrder[1], &task3);
+    QCOMPARE(currentOrder[2], &task1);
+
+    list.reorderTasks(1, 2);
+
+    currentOrder = list.getTasks();
+
+    QCOMPARE(currentOrder[0], &task2);
+    QCOMPARE(currentOrder[1], &task1);
+    QCOMPARE(currentOrder[2], &task3);
+
+    list.reorderTasks(0, 1);
+
+    currentOrder = list.getTasks();
+
+    QCOMPARE(currentOrder[0], &task1);
+    QCOMPARE(currentOrder[1], &task2);
+    QCOMPARE(currentOrder[2], &task3);
 }
 
 void TestToDoList::testSaveAndLoad() {
