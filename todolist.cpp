@@ -51,10 +51,15 @@ QWidget* ToDoList::createTaskWidget(Task* task) {
     lineEdit->setFixedSize(400, 60);
     lineEdit->setStyleSheet("QLineEdit { background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 5px; padding: 5px; color: black; }");
 
+    QObject::connect(lineEdit, &QLineEdit::editingFinished, [this, task, lineEdit]() {
+        QString newName = lineEdit->text();
+        task->editName(newName);
+    });
+
     QCheckBox* checkBox = new QCheckBox("✔");
     checkBox->setChecked(task->getStatus());
 
-    if (task->getStatus())
+    if(task->getStatus())
         lineEdit->setStyleSheet("QLineEdit { background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 5px; padding: 5px; color: black; text-decoration: line-through; }");
 
     QObject::connect(checkBox, &QCheckBox::toggled, [this, task, lineEdit](bool checked) {
@@ -79,16 +84,17 @@ QWidget* ToDoList::createTaskWidget(Task* task) {
     inputLayout->addWidget(checkBox);
     inputLayout->addWidget(deleteButton);
 
+
     return fieldWidget;
 }
 
 void ToDoList::refreshListIn(QVBoxLayout* layout) {
     QLayoutItem* child;
-    while ((child = layout->takeAt(0)) != nullptr) {
+    while((child = layout->takeAt(0)) != nullptr) {
         delete child->widget();
         delete child;
     }
 
-    for (Task* task : tasks)
+    for(Task* task : tasks)
         layout->addWidget(createTaskWidget(task), 0, Qt::AlignHCenter);
 }

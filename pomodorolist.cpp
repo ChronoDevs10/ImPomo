@@ -27,7 +27,7 @@ QVector<PomodoroTask*> PomodoroList::getPTasks() {
 }
 void PomodoroList::reorderTasks(QVector<Task*> newOrder) {
     QVector<PomodoroTask*> reordered;
-    for (Task* t : newOrder) {
+    for(Task* t : newOrder) {
         PomodoroTask* pt = dynamic_cast<PomodoroTask*>(t);
         reordered.append(pt);
     }
@@ -100,11 +100,11 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
 
 void PomodoroList::refreshListIn(QVBoxLayout* layout) {
     QLayoutItem* child;
-    while ((child = layout->takeAt(0)) != nullptr) {
+    while((child = layout->takeAt(0)) != nullptr) {
         delete child->widget();
         delete child;
     }
 
-    for (PomodoroTask* task : tasks)
+    for(PomodoroTask* task : tasks)
         layout->addWidget(createTaskWidget(task), 0, Qt::AlignLeft);
 }
