@@ -109,7 +109,7 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
 
     QObject::connect(upButton, &QPushButton::clicked, [this, task, fieldWidget]() {
         int index = tasks.indexOf(task);
-        if (index > 0) {
+        if(index > 0) {
             reorderTasks(index, index - 1);
             refreshList(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
         }
@@ -117,7 +117,7 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
 
     QObject::connect(downButton, &QPushButton::clicked, [this, task, fieldWidget]() {
         int index = tasks.indexOf(task);
-        if (index < tasks.size() - 1) {
+        if(index < tasks.size() - 1) {
             reorderTasks(index, index + 1);
             refreshList(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
         }

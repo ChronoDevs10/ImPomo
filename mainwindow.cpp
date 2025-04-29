@@ -92,7 +92,6 @@ void MainWindow::setupHomeTab() {
 
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, [timeLabel]() {
-        // Pobieranie aktualnego czasu
         QTime currentTime = QTime::currentTime();
         QString timeString = currentTime.toString("hh:mm:ss AP");
         timeLabel->setText(timeString);
