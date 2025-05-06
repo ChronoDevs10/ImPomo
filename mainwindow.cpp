@@ -19,6 +19,7 @@ MainWindow::~MainWindow()
 #include "task.h"
 #include "todolist.h"
 #include "taskfactory.h"
+#include "timer.h"
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QStackedWidget>
@@ -64,6 +65,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow() {
     delete toDoList;
     delete pomodoroList;
+    delete classicPomodoro;
 }
 
 void MainWindow::setupHomeTab() {
@@ -148,21 +150,57 @@ void MainWindow::setupImPomodoroTab() {
 void MainWindow::setupPomodoroTab() {
     QWidget *pomodoroTab = new QWidget();
     QVBoxLayout *layout = new QVBoxLayout(pomodoroTab);
-    QLabel *label = new QLabel("Work in progress");
 
-    label->setStyleSheet(
-        "font-family: 'Freestyle Script'; "
-        "font-size: 40px; "
+    classicPomodoro = new ClassicPomodoro();//konstruktor!
+    classicPomodoro->timer = new Timer;
+
+    //--------------------------------------
+    classicPomodoro->changeProperties(5*60,5*60,5*60,5);
+    classicPomodoro->setCurrentPhase("Work");
+    //--------------------------------------
+
+    classicPomodoro->timer->setTime(classicPomodoro->getWorkDuration());
+
+    classicPomodoro->timer->timeLabel->setStyleSheet(
+        "font-size: 60px; "
         "font-weight: bold; "
-        "color: #fce4ec; "
-        "letter-spacing: 2px; "
-        "background-color: #000000; "
-        "border-radius: 10px; "
-        "padding: 10px;"
+        "color: #3a3a3a ; "
+        "background-color: #ff99cc; "
+        "border: 2px solid #000000; "
+        "border-radius: 15px; "
+        "padding: 20px; "
+        "margin: 20px;"
         );
+    classicPomodoro->timer->timeLabel->setAlignment(Qt::AlignCenter);
 
-    label->setAlignment(Qt::AlignCenter);
-    layout->addWidget(label);
+    QString buttonStyle =
+        "QPushButton {"
+        "   font-size: 16px; "
+        "   padding: 10px 20px; "
+        "   border-radius: 5px; "
+        "   background-color: #ff66cc; "
+        "   color: #3a3a3a; "
+        "   margin: 5px; "
+        "}"
+        "QPushButton:hover { background-color: #cc3399; }";
+
+    classicPomodoro->timer->startButton->setStyleSheet(buttonStyle);
+    classicPomodoro->timer->pauseButton->setStyleSheet(buttonStyle);
+    classicPomodoro->timer->resetButton->setStyleSheet(buttonStyle);
+
+    QLabel *phaseLabel = new QLabel("Current phase: " + classicPomodoro->getcurrentPhase());
+    phaseLabel->setStyleSheet("font-size: 18px; font-weight: bold; margin: 10px;");
+
+    QHBoxLayout *buttonLayout = new QHBoxLayout();
+    buttonLayout->addWidget(classicPomodoro->timer->startButton);
+    buttonLayout->addWidget(classicPomodoro->timer->pauseButton);
+    buttonLayout->addWidget(classicPomodoro->timer->resetButton);
+
+    layout->addWidget(phaseLabel, 0, Qt::AlignCenter);
+    layout->addWidget(classicPomodoro->timer->timeLabel, 0, Qt::AlignCenter);
+    layout->addLayout(buttonLayout);
+    layout->addStretch();
+
     stackedWidget->addWidget(pomodoroTab);
 }
 
@@ -281,11 +319,12 @@ void MainWindow::addTaskField() {
             if (layout)
                 toDoList->refreshList(layout);
         }
-
+    //--------- Debug --------------------------------
         QList<Task*> currentTasks = toDoList->getTasks();
         qDebug() << "=== TO DO LIST ===";
         for (Task* t : currentTasks)
             qDebug() << "- " << t->getName();
+    //------------------------------------------------
 
     } else if(stackedWidget->currentIndex() == 2) {
         Task* baseTask = TaskFactory::createTask("Pomodoro", "...", 25);

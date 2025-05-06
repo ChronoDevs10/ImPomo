@@ -11,6 +11,7 @@
 
 #include "todolist.h"
 #include "pomodorolist.h"
+#include "classicpomodoro.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -35,9 +36,11 @@ private:
     QScrollArea *scrollArea;
     QPushButton *addButton;
     QStackedWidget *stackedWidget;
-    ToDoList *toDoList;
 
+    ToDoList *toDoList;
     PomodoroList* pomodoroList;
+    ClassicPomodoro* classicPomodoro;
+
     QScrollArea* imPomodoroScrollArea;
     QVBoxLayout* imPomodoroScrollLayout;
 

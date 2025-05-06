@@ -15,7 +15,7 @@ private:
     int workBlocksInCycle;
     QString currentPhase;
 public:
-    Timer timer;
+    Timer* timer;
     void start() override;
     void pause() override;
     void reset() override;
@@ -25,6 +25,7 @@ public:
     void update() override;
 
     void changeProperties(int newWork, int newShortBreak, int newLongBreak, int newCycles);
+    void setCurrentPhase(QString newPhase);
     int getWorkDuration();
     int getShortBreakDuration();
     int getLongBreakDuration();
@@ -33,6 +34,5 @@ public:
     void loadSettingsFromFile();
     void saveSettingsToFile();
 };
-
 
 #endif // CLASSICPOMODORO_H

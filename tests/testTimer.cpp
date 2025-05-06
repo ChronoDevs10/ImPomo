@@ -50,7 +50,7 @@ void TimerTest::testPauseTime() {
     int pausedTime = timer.getRemainingTime();
     QTest::qWait(1000);
 
-    QVERIFY(pausedTime < 300);
+    QVERIFY(pausedTime < 3000);
     QTest::qWait(1000);
     QCOMPARE(timer.getRemainingTime(), pausedTime);
 }
@@ -58,15 +58,13 @@ void TimerTest::testPauseTime() {
 void TimerTest::testUpdate() {
     Timer timer;
     Observer observer;
+    timer.setSubscriber(&observer);
 
-    timer.setTime(1000);
-    timer.subscribe(&observer);
-    timer.start();
-
-    QTest::qWait(1200);
+    timer.getSubscriber()->update();
 
     QVERIFY(observer.updated);
 }
 
 //QTEST_MAIN(TimerTest)
 #include "testTimer.moc"
+

@@ -1,27 +1,41 @@
 #include "classicpomodoro.h"
 
-void ClassicPomodoro::start() {}
-void ClassicPomodoro::pause() {}
-void ClassicPomodoro::reset() {}
+void ClassicPomodoro::start() {
+    timer->start();
+}
+void ClassicPomodoro::pause() {
+    timer->pause();
+}
+void ClassicPomodoro::reset() {
+    timer->reset();
+}
 void ClassicPomodoro::nextPhase() {}
 int ClassicPomodoro::getWorkDuration() {
-    return -1;
+    return workDuration;
 }
 int ClassicPomodoro::getShortBreakDuration() {
-    return -1;
+    return shortBreakDuration;
 }
 int ClassicPomodoro::getLongBreakDuration() {
-    return -1;
+    return longBreakDuration;
 }
 int ClassicPomodoro::getCycles() {
-    return -1;
+    return cycles;
 }
 QString ClassicPomodoro::getcurrentPhase() {
-    return "Work";
+    return currentPhase;
+}
+void ClassicPomodoro::setCurrentPhase(QString newPhase) {
+    currentPhase = newPhase;
 }
 void ClassicPomodoro::saveSessionStateToFile() {}
 void ClassicPomodoro::loadSessionStateFromFile() {}
-void ClassicPomodoro::changeProperties(int newWork, int newShortBreak, int newLongBreak, int newCycles) {}
+void ClassicPomodoro::changeProperties(int newWork, int newShortBreak, int newLongBreak, int newCycles) {
+    workDuration = newWork;
+    shortBreakDuration = newShortBreak;
+    longBreakDuration = newLongBreak;
+    cycles = newCycles;
+}
 void ClassicPomodoro::update() {}
 void ClassicPomodoro::loadSettingsFromFile() {}
 void ClassicPomodoro::saveSettingsToFile() {}

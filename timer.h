@@ -3,22 +3,41 @@
 
 #include "itimer.h"
 #include "itimerobserver.h"
-#include <QVector>
+#include <QWidget>
+#include <QPushButton>
+#include <QLabel>
+#include <QTimer>
 
-class Timer : public ITimer {
-
+class Timer : public QObject, public ITimer{
+    Q_OBJECT
 private:
+    int startTime;
     int remainingTime;
-    QVector<ITimerObserver*> subscribers;
+    ITimerObserver* subscriber;
 public:
+    QTimer* timer;
+    bool isRunning;
+
+    Timer();
+    ~Timer();
+
     void setTime(int duration) override;
     void start() override;
     void pause() override;
     void reset() override;
-    void subscribe(ITimerObserver* observer) override;
-    void unsubscribe(ITimerObserver* observer) override;
 
     int getRemainingTime();
+    int getStartTime();
+    void updateTime();
+    void updateLabel();
+
+    void setSubscriber(ITimerObserver* observer);
+    ITimerObserver* getSubscriber();
+
+    QLabel* timeLabel;
+    QPushButton* startButton;
+    QPushButton* pauseButton;
+    QPushButton* resetButton;
 };
 
 #endif // TIMER_H

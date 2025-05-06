@@ -39,7 +39,7 @@ void TestClassicPomodoro::testStart() {
     pomodoro.changeProperties(2, 1, 5, 4);
     pomodoro.start();
     QTest::qWait(1500);
-    QVERIFY(pomodoro.timer.getRemainingTime() < 2 * 60);
+    QVERIFY(pomodoro.timer->getRemainingTime() < 2 * 60);
 }
 
 void TestClassicPomodoro::testStop() {
@@ -48,9 +48,9 @@ void TestClassicPomodoro::testStop() {
     pomodoro.start();
     QTest::qWait(1000);
     pomodoro.pause();
-    int remaining = pomodoro.timer.getRemainingTime();
+    int remaining = pomodoro.timer->getRemainingTime();
     QTest::qWait(1000);
-    QCOMPARE(pomodoro.timer.getRemainingTime(), remaining);
+    QCOMPARE(pomodoro.timer->getRemainingTime(), remaining);
 }
 
 void TestClassicPomodoro::testSaveAndLoadSettingsToFile() {
