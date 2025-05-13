@@ -1,5 +1,4 @@
 #include <QTest>
-#include <QDebug>
 #include "../classicpomodoro.h"
 
 class TestClassicPomodoro : public QObject {
