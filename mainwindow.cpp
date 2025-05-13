@@ -285,39 +285,39 @@ void MainWindow::PomodoroSettings() {
         "}";
     dialog.setStyleSheet(style);
 
-    QVBoxLayout *layout = new QVBoxLayout(&dialog);
+    QVBoxLayout* layout = new QVBoxLayout(&dialog);
 
-    QLineEdit *workLineEdit = new QLineEdit();
+    QLineEdit* workLineEdit = new QLineEdit();
     workLineEdit->setText(QString::number(classicPomodoro->getWorkDuration()));
     workLineEdit->setValidator(new QIntValidator(1, 120));
     layout->addWidget(new QLabel("Work duration (min):"));
     layout->addWidget(workLineEdit);
 
-    QLineEdit *shortBreakLineEdit = new QLineEdit();
+    QLineEdit* shortBreakLineEdit = new QLineEdit();
     shortBreakLineEdit->setText(QString::number(classicPomodoro->getShortBreakDuration()));
     shortBreakLineEdit->setValidator(new QIntValidator(1, 60));
     layout->addWidget(new QLabel("Short break (min):"));
     layout->addWidget(shortBreakLineEdit);
 
-    QLineEdit *longBreakLineEdit = new QLineEdit();
+    QLineEdit* longBreakLineEdit = new QLineEdit();
     longBreakLineEdit->setText(QString::number(classicPomodoro->getLongBreakDuration()));
     longBreakLineEdit->setValidator(new QIntValidator(1, 60));
     layout->addWidget(new QLabel("Long break (min):"));
     layout->addWidget(longBreakLineEdit);
 
-    QLineEdit *cyclesLineEdit = new QLineEdit();
+    QLineEdit* cyclesLineEdit = new QLineEdit();
     cyclesLineEdit->setText(QString::number(classicPomodoro->getCycles()));
     cyclesLineEdit->setValidator(new QIntValidator(1, 15));
     layout->addWidget(new QLabel("Number of cycles:"));
     layout->addWidget(cyclesLineEdit);
 
-    QLineEdit *workBlocksLineEdit = new QLineEdit();
+    QLineEdit* workBlocksLineEdit = new QLineEdit();
     workBlocksLineEdit->setText(QString::number(classicPomodoro->getWorkBlocks()));
     workBlocksLineEdit->setValidator(new QIntValidator(1, 15));
     layout->addWidget(new QLabel("Number of work blocks per cycle:"));
     layout->addWidget(workBlocksLineEdit);
 
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    QDialogButtonBox* buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     layout->addWidget(buttonBox);
 
     connect(buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
@@ -328,7 +328,8 @@ void MainWindow::PomodoroSettings() {
             workLineEdit->text().toInt(),
             shortBreakLineEdit->text().toInt(),
             longBreakLineEdit->text().toInt(),
-            cyclesLineEdit->text().toInt()
+            cyclesLineEdit->text().toInt(),
+            workBlocksLineEdit->text().toInt()
             );
     }
 }

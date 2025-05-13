@@ -29,7 +29,7 @@ public:
     void loadSessionStateFromFile() override;
     void update() override;
 
-    void changeProperties(int newWork, int newShortBreak, int newLongBreak, int newCycles);
+    void changeProperties(int newWork, int newShortBreak, int newLongBreak, int newCycles, int workBlocks);
     void setCurrentPhase(QString newPhase);
     int getWorkDuration();
     int getShortBreakDuration();

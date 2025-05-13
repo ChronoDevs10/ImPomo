@@ -56,18 +56,11 @@ int Timer::getStartTime(){
     return startTime;
 }
 
-void Timer::setRemainingTime(int newTime) {
-    remainingTime = newTime;
-}
-void Timer::setStartTime(int newTime) {
-    startTime = newTime;
-}
-
 void Timer::updateTime() {
     if(remainingTime > 0) {
         --remainingTime;
         updateLabel();
-    }else {
+    } else {
         timer->stop();
         isRunning = false;
         subscriber->update();

@@ -28,8 +28,6 @@ public:
 
     int getRemainingTime();
     int getStartTime();
-    void setRemainingTime(int newTime);
-    void setStartTime(int newTime);
 
     void updateTime();
     void updateLabel();
