@@ -1,7 +1,6 @@
 #include "timer.h"
 
 Timer::Timer() : remainingTime(0), isRunning(false) {
-
     timeLabel = new QLabel("00:00");
     startButton = new QPushButton("Start");
     pauseButton = new QPushButton("Pause");
@@ -30,7 +29,7 @@ void Timer::setTime(int duration) {
 }
 
 void Timer::start() {
-    if(!isRunning && remainingTime > 0) {
+    if(!isRunning) {
         timer->start(1000);
         isRunning = true;
     }
@@ -56,6 +55,14 @@ int Timer::getRemainingTime() {
 int Timer::getStartTime(){
     return startTime;
 }
+
+void Timer::setRemainingTime(int newTime) {
+    remainingTime = newTime;
+}
+void Timer::setStartTime(int newTime) {
+    startTime = newTime;
+}
+
 void Timer::updateTime() {
     if(remainingTime > 0) {
         --remainingTime;

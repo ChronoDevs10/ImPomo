@@ -10,9 +10,9 @@ void Task::editName(QString newName) {
     else
         name = newName;
 }
-bool Task::getStatus()  {
+bool Task::getStatus() {
     return isCompleted;
 }
-QString Task::getName()  {
+QString Task::getName() {
     return name;
 }

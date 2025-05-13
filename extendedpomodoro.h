@@ -21,7 +21,6 @@ public:
     void loadSessionStateFromFile() override;
     void update() override;
 
-    //ExtendedPomodoro(PomodoroList* taskList = nullptr, QObject* parent = nullptr);
     PomodoroTask getcurrent();
     void reorderTasks(QVector<PomodoroTask*> newOrder);
 };

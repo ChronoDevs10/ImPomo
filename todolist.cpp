@@ -67,7 +67,7 @@ QWidget* ToDoList::createTaskWidget(Task* task) {
 
     QObject::connect(checkBox, &QCheckBox::toggled, [this, task, lineEdit](bool checked) {
         task->editStatus();
-        if (checked)
+        if(checked)
             lineEdit->setStyleSheet("QLineEdit { background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 5px; padding: 5px; color: black; text-decoration: line-through; }");
         else
             lineEdit->setStyleSheet("QLineEdit { background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 5px; padding: 5px; color: black; }");
@@ -103,7 +103,7 @@ QWidget* ToDoList::createTaskWidget(Task* task) {
 
     QObject::connect(upButton, &QPushButton::clicked, [this, task, fieldWidget]() {
         int index = tasks.indexOf(task);
-        if (index > 0) {
+        if(index > 0) {
             reorderTasks(index, index - 1);
             refreshList(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
         }
@@ -111,7 +111,7 @@ QWidget* ToDoList::createTaskWidget(Task* task) {
 
     QObject::connect(downButton, &QPushButton::clicked, [this, task, fieldWidget]() {
         int index = tasks.indexOf(task);
-        if (index < tasks.size() - 1) {
+        if(index < tasks.size() - 1) {
             reorderTasks(index, index + 1);
             refreshList(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
         }

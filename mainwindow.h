@@ -29,6 +29,7 @@ private slots:
     void showPomodoro();
     void showStatistics();
     void showSettings();
+    void PomodoroSettings();
 
 private:
     QWidget *central;
@@ -51,8 +52,6 @@ private:
     void setupStatisticsTab();
     void setupSettingsTab();
     QPushButton* createMenuButton();
-
-    //void refreshPomodoroTab();
 };
 
 #endif // MAINWINDOW_H

@@ -31,10 +31,6 @@ void PomodoroList::reorderTasks(int fromIndex, int toIndex) {
 
     tasks.move(fromIndex, toIndex);
 }
-
-void PomodoroList::saveToDatabase() {}
-void PomodoroList::updateInDatabase(Task* task) {}
-void PomodoroList::loadFromDatabase() {}
 void PomodoroList::editTaskDuration(Task* task, int newDuration) {
     PomodoroTask* pt = dynamic_cast<PomodoroTask*>(task);
     pt->editDuration(newDuration);
@@ -53,24 +49,6 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
     durationBox->setMaximum(180);
     durationBox->setValue(task->getDuration());
     durationBox->setSuffix(" min");
-
-    /*
-    QCheckBox* checkBox = new QCheckBox("Check");
-    checkBox->setChecked(task->getStatus());
-
-    if (task->getStatus()) {
-        lineEdit->setStyleSheet("QLineEdit { background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 5px; padding: 5px; color: black; text-decoration: line-through; }");
-    }
-
-    QObject::connect(checkBox, &QCheckBox::toggled, [this, task, lineEdit](bool checked) {
-        task->editStatus();
-        if (checked) {
-            lineEdit->setStyleSheet("QLineEdit { background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 5px; padding: 5px; color: black; text-decoration: line-through; }");
-        } else {
-            lineEdit->setStyleSheet("QLineEdit { background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 5px; padding: 5px; color: black; }");
-        }
-    });
-    */
 
     QObject::connect(lineEdit, &QLineEdit::textChanged, [task](const QString& newName) {
         task->editName(newName);
@@ -126,9 +104,7 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
     inputLayout->addWidget(lineEdit);
     inputLayout->addWidget(durationBox);
     inputLayout->addWidget(deleteButton);
-    //inputLayout->addWidget(checkBox);
     inputLayout->addWidget(arrowWidget);
-
 
     return fieldWidget;
 }
@@ -143,3 +119,7 @@ void PomodoroList::refreshList(QVBoxLayout* layout) {
     for(PomodoroTask* task : tasks)
         layout->addWidget(createTaskWidget(task), 0, Qt::AlignLeft);
 }
+
+void PomodoroList::saveToDatabase() {}
+void PomodoroList::updateInDatabase(Task* task) {}
+void PomodoroList::loadFromDatabase() {}

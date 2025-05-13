@@ -35,7 +35,9 @@ public:
     int getShortBreakDuration();
     int getLongBreakDuration();
     int getCycles();
+    int getWorkBlocks();
     QString getcurrentPhase();
+
     void loadSettingsFromFile();
     void saveSettingsToFile();
 };

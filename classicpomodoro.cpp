@@ -16,9 +16,10 @@ ClassicPomodoro::ClassicPomodoro() {
 
     timer = new Timer();
     timer->setSubscriber(this);
+    timer->setTime(workDuration);
 
     phaseLabel = new QLabel("Current phase: " + currentPhase);
-    phaseLabel->setStyleSheet("font-size: 18px; font-weight: bold; margin: 10px;");
+    phaseLabel->setStyleSheet("font-size: 25px; font-weight: bold; margin: 10px;");
 }
 
 void ClassicPomodoro::start() {
@@ -31,8 +32,7 @@ void ClassicPomodoro::reset() {
     timer->reset();
 }
 void ClassicPomodoro::nextPhase() {
-    //tylko wstępnie: trzeba doddać zależność od liczby cylki i ich długości, aktualizacje aktualnego
-    //cyklu (więcej informacji na label?)!!!
+    //więcej informacji na label?
     if((currentPhase == "Work")) {
         phaseLabel->setText("Current phase: Short break");
         currentPhase = "Short break";
@@ -65,6 +65,9 @@ int ClassicPomodoro::getLongBreakDuration() {
 int ClassicPomodoro::getCycles() {
     return cycles;
 }
+int ClassicPomodoro::getWorkBlocks() {
+    return workBlocksInCycle;
+}
 QString ClassicPomodoro::getcurrentPhase() {
     return currentPhase;
 }
@@ -76,6 +79,22 @@ void ClassicPomodoro::changeProperties(int newWork, int newShortBreak, int newLo
     shortBreakDuration = newShortBreak;
     longBreakDuration = newLongBreak;
     cycles = newCycles;
+
+    if(!(timer->isRunning)){
+        if(currentPhase == "Work") {
+            timer->setStartTime(newWork);
+            timer->setRemainingTime(newWork);
+        }
+        else if(currentPhase == "Short break") {
+            timer->setStartTime(newShortBreak);
+            timer->setRemainingTime(newShortBreak);
+        }
+        else if(currentPhase == "Long break") {
+            timer->setStartTime(newLongBreak);
+            timer->setRemainingTime(newLongBreak);
+        }
+    }
+    timer->updateLabel();
 }
 void ClassicPomodoro::update() {
     nextPhase();

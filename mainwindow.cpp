@@ -31,9 +31,16 @@ MainWindow::~MainWindow()
 #include <QDebug>
 #include <QLabel>
 #include <QMovie>
+#include <QDialog>
+#include <QSpinBox>
+#include <QLineEdit>
+
+#include <QDialogButtonBox>
+
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), toDoList(new ToDoList()), pomodoroList(new PomodoroList())
+    : QMainWindow(parent), toDoList(new ToDoList()),
+    pomodoroList(new PomodoroList()), classicPomodoro(new ClassicPomodoro())
 {
     central = new QWidget(this);
     mainLayout = new QVBoxLayout(central);
@@ -74,39 +81,13 @@ void MainWindow::setupHomeTab() {
 
     QLabel *welcomeLabel = new QLabel("Welcome to ✨ImPomo✨");
     welcomeLabel->setAlignment(Qt::AlignCenter);
-    welcomeLabel->setStyleSheet("font-size: 40px; font-weight: bold;");
+    welcomeLabel->setStyleSheet("font-size: 60px; font-weight: bold;");
 
     QLabel *hintLabel = new QLabel("Select a tab from the menu to get started");
-
     hintLabel->setAlignment(Qt::AlignCenter);
-    /* Zegar
-    QLabel *timeLabel = new QLabel(this);
-    timeLabel->setAlignment(Qt::AlignCenter);
-    timeLabel->setStyleSheet(
-        "font-size: 30px; "
-        "font-weight: bold; "
-        "color: #000000; "
-        "background-color: #fce4ec; "
-        "border: 2px solid #000000; "
-        "border-radius: 10px; "
-        "padding: 10px; "
-        );
-
-    QTimer *timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, [timeLabel]() {
-        QTime currentTime = QTime::currentTime();
-        QString timeString = currentTime.toString("hh:mm:ss AP");
-        timeLabel->setText(timeString);
-    });
-    timer->start(1000);
-
-    QTime currentTime = QTime::currentTime();
-    timeLabel->setText(currentTime.toString("hh:mm:ss AP"));
-    */
 
     layout->addWidget(welcomeLabel);
     layout->addWidget(hintLabel);
-    //layout->addWidget(timeLabel);
 
     stackedWidget->addWidget(startTab);
 }
@@ -151,28 +132,37 @@ void MainWindow::setupPomodoroTab() {
     QWidget *pomodoroTab = new QWidget();
     QVBoxLayout *layout = new QVBoxLayout(pomodoroTab);
 
-    classicPomodoro = new ClassicPomodoro();
-
-    classicPomodoro->timer->setTime(classicPomodoro->getWorkDuration());
+    QPushButton *settingsButton = new QPushButton("⚙️");
+    settingsButton->setStyleSheet(
+        "QPushButton {"
+        "   font-size: 30px; "
+        "   padding: 10px 10px; "
+        "   border-radius: 10px; "
+        "   background-color: #ff99cc; "
+        "   color: #3a3a3a; "
+        "}"
+        "QPushButton:hover { background-color: #cc3399; }");
+    settingsButton->setFixedSize(60, 60);
+    connect(settingsButton, &QPushButton::clicked, this, &MainWindow::PomodoroSettings);
 
     //--------------------------------------------------------------------------------
     //do przeniesienia do konstruktora Timera, jeżeli będzie jednolity styl zegarów
     //w całej aplikacji
     classicPomodoro->timer->timeLabel->setStyleSheet(
-        "font-size: 60px; "
+        "font-size: 100px; "
         "font-weight: bold; "
         "color: #3a3a3a ; "
         "background-color: #ff99cc; "
         "border: 2px solid #000000; "
-        "border-radius: 15px; "
-        "padding: 20px; "
+        "border-radius: 30px; "
+        "padding: 50px 90px; "
         "margin: 20px;"
         );
 
     QString buttonStyle =
         "QPushButton {"
-        "   font-size: 16px; "
-        "   padding: 10px 20px; "
+        "   font-size: 25px; "
+        "   padding: 30px 35px; "
         "   border-radius: 5px; "
         "   background-color: #ff66cc; "
         "   color: #3a3a3a; "
@@ -190,8 +180,10 @@ void MainWindow::setupPomodoroTab() {
     buttonLayout->addWidget(classicPomodoro->timer->pauseButton);
     buttonLayout->addWidget(classicPomodoro->timer->resetButton);
 
+    layout->addWidget(settingsButton, Qt::AlignLeft | Qt::AlignTop);
     layout->addWidget(classicPomodoro->phaseLabel, 0, Qt::AlignCenter);
     layout->addWidget(classicPomodoro->timer->timeLabel, 0, Qt::AlignCenter);
+
     classicPomodoro->timer->timeLabel->setAlignment(Qt::AlignCenter);
 
     layout->addLayout(buttonLayout);
@@ -240,6 +232,105 @@ void MainWindow::setupSettingsTab() {
     label->setAlignment(Qt::AlignCenter);
     layout->addWidget(label);
     stackedWidget->addWidget(settingsTab);
+}
+
+void MainWindow::PomodoroSettings() {
+    QDialog dialog(this);
+    dialog.setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+
+    dialog.setWindowTitle("Pomodoro Settings");
+    dialog.setFixedSize(400, 400);
+
+    QString style =
+        "QDialog {"
+        "   background-color: #121212;"
+        "   color: #ffffff;"
+        "   font-family: 'Segoe UI', sans-serif;"
+        "   font-size: 14px;"
+        "}"
+
+        "QLabel {"
+        "   color: #ffb6c1;"
+        "   font-size: 16px;"
+        "   font-weight: bold;"
+        "   margin-top: 10px;"
+        "}"
+
+        "QLineEdit {"
+        "   background-color: #1e1e1e;"
+        "   color: #ffffff;"
+        "   border: 1px solid #ffb6c1;"
+        "   border-radius: 5px;"
+        "   padding: 4px;"
+        "   min-width: 120px;"
+        "   height: 40px;"
+        "}"
+
+        "QDialogButtonBox QPushButton {"
+        "   background-color: #ffb6c1;"
+        "   color: #121212;"
+        "   padding: 8px 16px;"
+        "   border: none;"
+        "   border-radius: 6px;"
+        "   font-weight: bold;"
+        "   min-width: 80px;"
+        "}"
+
+        "QDialogButtonBox QPushButton:hover {"
+        "   background-color: #ff8da1;"
+        "}"
+
+        "QDialogButtonBox QPushButton:pressed {"
+        "   background-color: #ff6b8b; "
+        "}";
+    dialog.setStyleSheet(style);
+
+    QVBoxLayout *layout = new QVBoxLayout(&dialog);
+
+    QLineEdit *workLineEdit = new QLineEdit();
+    workLineEdit->setText(QString::number(classicPomodoro->getWorkDuration()));
+    workLineEdit->setValidator(new QIntValidator(1, 120));
+    layout->addWidget(new QLabel("Work duration (min):"));
+    layout->addWidget(workLineEdit);
+
+    QLineEdit *shortBreakLineEdit = new QLineEdit();
+    shortBreakLineEdit->setText(QString::number(classicPomodoro->getShortBreakDuration()));
+    shortBreakLineEdit->setValidator(new QIntValidator(1, 60));
+    layout->addWidget(new QLabel("Short break (min):"));
+    layout->addWidget(shortBreakLineEdit);
+
+    QLineEdit *longBreakLineEdit = new QLineEdit();
+    longBreakLineEdit->setText(QString::number(classicPomodoro->getLongBreakDuration()));
+    longBreakLineEdit->setValidator(new QIntValidator(1, 60));
+    layout->addWidget(new QLabel("Long break (min):"));
+    layout->addWidget(longBreakLineEdit);
+
+    QLineEdit *cyclesLineEdit = new QLineEdit();
+    cyclesLineEdit->setText(QString::number(classicPomodoro->getCycles()));
+    cyclesLineEdit->setValidator(new QIntValidator(1, 15));
+    layout->addWidget(new QLabel("Number of cycles:"));
+    layout->addWidget(cyclesLineEdit);
+
+    QLineEdit *workBlocksLineEdit = new QLineEdit();
+    workBlocksLineEdit->setText(QString::number(classicPomodoro->getWorkBlocks()));
+    workBlocksLineEdit->setValidator(new QIntValidator(1, 15));
+    layout->addWidget(new QLabel("Number of work blocks per cycle:"));
+    layout->addWidget(workBlocksLineEdit);
+
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    layout->addWidget(buttonBox);
+
+    connect(buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+
+    if(dialog.exec() == QDialog::Accepted) {
+        classicPomodoro->changeProperties(
+            workLineEdit->text().toInt(),
+            shortBreakLineEdit->text().toInt(),
+            longBreakLineEdit->text().toInt(),
+            cyclesLineEdit->text().toInt()
+            );
+    }
 }
 
 QPushButton* MainWindow::createMenuButton() {
@@ -305,22 +396,15 @@ void MainWindow::showSettings() {
 
 void MainWindow::addTaskField() {
     if(stackedWidget->currentIndex() == 1) {
-
         Task* task = TaskFactory::createTask("Basic", "...");
         toDoList->addTask(task);
 
         QWidget* currentWidget = qobject_cast<QWidget*>(scrollArea->widget());
-        if (currentWidget) {
+        if(currentWidget) {
             QVBoxLayout* layout = qobject_cast<QVBoxLayout*>(currentWidget->layout());
-            if (layout)
+            if(layout)
                 toDoList->refreshList(layout);
         }
-    //--------- Debug --------------------------------
-        QList<Task*> currentTasks = toDoList->getTasks();
-        qDebug() << "=== TO DO LIST ===";
-        for (Task* t : currentTasks)
-            qDebug() << "- " << t->getName();
-    //------------------------------------------------
 
     } else if(stackedWidget->currentIndex() == 2) {
         Task* baseTask = TaskFactory::createTask("Pomodoro", "...", 25);
@@ -328,9 +412,9 @@ void MainWindow::addTaskField() {
         pomodoroList->addTask(task);
 
         QWidget* currentWidget = qobject_cast<QWidget*>(imPomodoroScrollArea->widget());
-        if (currentWidget) {
+        if(currentWidget) {
             QVBoxLayout* layout = qobject_cast<QVBoxLayout*>(currentWidget->layout());
-            if (layout)
+            if(layout)
                 pomodoroList->refreshList(layout);
         }
     }
