@@ -151,16 +151,13 @@ void MainWindow::setupPomodoroTab() {
     QWidget *pomodoroTab = new QWidget();
     QVBoxLayout *layout = new QVBoxLayout(pomodoroTab);
 
-    classicPomodoro = new ClassicPomodoro();//konstruktor!
-    classicPomodoro->timer = new Timer;
-
-    //--------------------------------------
-    classicPomodoro->changeProperties(5*60,5*60,5*60,5);
-    classicPomodoro->setCurrentPhase("Work");
-    //--------------------------------------
+    classicPomodoro = new ClassicPomodoro();
 
     classicPomodoro->timer->setTime(classicPomodoro->getWorkDuration());
 
+    //--------------------------------------------------------------------------------
+    //do przeniesienia do konstruktora Timera, jeżeli będzie jednolity styl zegarów
+    //w całej aplikacji
     classicPomodoro->timer->timeLabel->setStyleSheet(
         "font-size: 60px; "
         "font-weight: bold; "
@@ -171,7 +168,6 @@ void MainWindow::setupPomodoroTab() {
         "padding: 20px; "
         "margin: 20px;"
         );
-    classicPomodoro->timer->timeLabel->setAlignment(Qt::AlignCenter);
 
     QString buttonStyle =
         "QPushButton {"
@@ -187,17 +183,17 @@ void MainWindow::setupPomodoroTab() {
     classicPomodoro->timer->startButton->setStyleSheet(buttonStyle);
     classicPomodoro->timer->pauseButton->setStyleSheet(buttonStyle);
     classicPomodoro->timer->resetButton->setStyleSheet(buttonStyle);
-
-    QLabel *phaseLabel = new QLabel("Current phase: " + classicPomodoro->getcurrentPhase());
-    phaseLabel->setStyleSheet("font-size: 18px; font-weight: bold; margin: 10px;");
+    //-------------------------------------------------------------------------------------------------
 
     QHBoxLayout *buttonLayout = new QHBoxLayout();
     buttonLayout->addWidget(classicPomodoro->timer->startButton);
     buttonLayout->addWidget(classicPomodoro->timer->pauseButton);
     buttonLayout->addWidget(classicPomodoro->timer->resetButton);
 
-    layout->addWidget(phaseLabel, 0, Qt::AlignCenter);
+    layout->addWidget(classicPomodoro->phaseLabel, 0, Qt::AlignCenter);
     layout->addWidget(classicPomodoro->timer->timeLabel, 0, Qt::AlignCenter);
+    classicPomodoro->timer->timeLabel->setAlignment(Qt::AlignCenter);
+
     layout->addLayout(buttonLayout);
     layout->addStretch();
 
@@ -309,7 +305,7 @@ void MainWindow::showSettings() {
 
 void MainWindow::addTaskField() {
     if(stackedWidget->currentIndex() == 1) {
-        // Dodaj nowe zadanie
+
         Task* task = TaskFactory::createTask("Basic", "...");
         toDoList->addTask(task);
 

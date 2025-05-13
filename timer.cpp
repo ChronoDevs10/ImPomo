@@ -63,6 +63,7 @@ void Timer::updateTime() {
     }else {
         timer->stop();
         isRunning = false;
+        subscriber->update();
     }
 }
 

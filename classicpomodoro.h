@@ -13,9 +13,14 @@ private:
     int longBreakDuration;
     int cycles;
     int workBlocksInCycle;
+    int currentWorkBlock;
+    int currentCycle;
     QString currentPhase;
 public:
     Timer* timer;
+    QLabel* phaseLabel;
+
+    ClassicPomodoro();
     void start() override;
     void pause() override;
     void reset() override;
