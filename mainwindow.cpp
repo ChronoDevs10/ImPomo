@@ -455,13 +455,13 @@ void MainWindow::addTaskField() {
     } else if(stackedWidget->currentIndex() == 2) {
         Task* baseTask = TaskFactory::createTask("Pomodoro", "...", 25);
         PomodoroTask* task = dynamic_cast<PomodoroTask*>(baseTask);
-        pomodoroList->addTask(task);
+        extendedPomodoro->list->addTask(task);
 
         QWidget* currentWidget = qobject_cast<QWidget*>(imPomodoroScrollArea->widget());
         if(currentWidget) {
             QVBoxLayout* layout = qobject_cast<QVBoxLayout*>(currentWidget->layout());
             if(layout)
-                pomodoroList->refreshList(layout);
+                extendedPomodoro->list->refreshList(layout);
         }
     }
 }

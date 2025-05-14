@@ -3,19 +3,22 @@
 ExtendedPomodoro::ExtendedPomodoro() {
     current = nullptr;
     list = nullptr;
+
     timer = new Timer();
     timer->setSubscriber(this);
+    currTaskLabel = new QLabel("No tasks on the list");
 }
 
 ExtendedPomodoro::ExtendedPomodoro(PomodoroList* List) {
     list = List;
+    list->parent = this;
 
     if(list->taskCount() == 0) {
         current = nullptr;
-        currTaskLabel = new QLabel("Current task: ");
+        currTaskLabel = new QLabel("No tasks on the list");
     }
-    else {
-        current = list->getPTasks()[0];
+    else{ //pod ładowanie z bazy danych
+        current = list->getPTasks().at(0);
         currTaskLabel = new QLabel("Current task: " + current->getName());
     }
     currTaskLabel->setStyleSheet("font-size: 25px; font-weight: bold; margin: 10px;");
@@ -43,6 +46,13 @@ void ExtendedPomodoro::setcurrent(PomodoroTask* newCurr) {
 
 void ExtendedPomodoro::update() {}
 void ExtendedPomodoro::reorderTasks() {}
+void ExtendedPomodoro::updateCurrentTaskLabel() {
+    if(list->taskCount() > 0) {
+        currTaskLabel->setText("Current task: " + list->getPTasks().at(0)->getName());
+    } else {
+        currTaskLabel->setText("No tasks on the list");
+    }
+}
 
 
 void ExtendedPomodoro::saveSessionStateToFile() {}

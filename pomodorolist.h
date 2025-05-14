@@ -7,10 +7,15 @@
 #include <QScrollArea>
 #include <QWidget>
 
+class ExtendedPomodoro;
+
 class PomodoroList : public ITaskList {
 private:
     QVector<PomodoroTask*> tasks;
+
 public:
+    ExtendedPomodoro* parent;
+
     void addTask(Task* task) override;
     void removeTask(Task* task) override;
     void editTaskName(Task* task, QString newName) override;

@@ -28,6 +28,7 @@ public:
 
     PomodoroTask* getcurrent();
     void setcurrent(PomodoroTask* newCurr);
+    void updateCurrentTaskLabel();
     void reorderTasks();
 };
 

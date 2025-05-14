@@ -1,4 +1,5 @@
 #include "pomodorolist.h"
+#include "extendedpomodoro.h"
 #include <QLineEdit>
 #include <QCheckBox>
 #include <QSpinBox>
@@ -8,13 +9,16 @@
 void PomodoroList::addTask(Task* task) {
     PomodoroTask* pt = dynamic_cast<PomodoroTask*>(task);
     tasks.append(pt);
+    parent->updateCurrentTaskLabel();
 }
 void PomodoroList::removeTask(Task* task) {
     PomodoroTask* pt = dynamic_cast<PomodoroTask*>(task);
     tasks.removeOne(pt);
+    parent->updateCurrentTaskLabel();
 }
 void PomodoroList::editTaskName(Task* task, QString newName) {
     task->editName(newName);
+    parent->updateCurrentTaskLabel();
 }
 void PomodoroList::editTaskStatus(Task* task) {
     task->editStatus();
@@ -30,6 +34,7 @@ void PomodoroList::reorderTasks(int fromIndex, int toIndex) {
         return;
 
     tasks.move(fromIndex, toIndex);
+    parent->updateCurrentTaskLabel();
 }
 void PomodoroList::editTaskDuration(Task* task, int newDuration) {
     PomodoroTask* pt = dynamic_cast<PomodoroTask*>(task);
@@ -79,8 +84,8 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
         "QSpinBox::up-button, QSpinBox::down-button { width: 0; height: 0; border: none; }"
         );
 
-    QObject::connect(lineEdit, &QLineEdit::textChanged, [task](const QString& newName) {
-        task->editName(newName);
+    QObject::connect(lineEdit, &QLineEdit::textChanged, [this, task](const QString& newName) {
+        this->editTaskName(task, newName);
     });
 
     QObject::connect(durationBox, &QSpinBox::valueChanged, [this, task](int newDuration) {
