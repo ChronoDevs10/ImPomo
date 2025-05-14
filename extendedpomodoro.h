@@ -12,17 +12,23 @@ private:
     PomodoroTask* current;
 public:
     PomodoroList* list;
-    Timer timer;
+    Timer* timer;
+    QLabel* currTaskLabel;
+
+    ExtendedPomodoro();
+    ExtendedPomodoro(PomodoroList* List);
     void start() override;
     void pause() override;
     void reset() override;
     void nextPhase() override;
-    void saveSessionStateToFile() override;
-    void loadSessionStateFromFile() override;
     void update() override;
 
-    PomodoroTask getcurrent();
-    void reorderTasks(QVector<PomodoroTask*> newOrder);
+    void saveSessionStateToFile() override;
+    void loadSessionStateFromFile() override;
+
+    PomodoroTask* getcurrent();
+    void setcurrent(PomodoroTask* newCurr);
+    void reorderTasks();
 };
 
 #endif // EXTENDEDPOMODORO_H

@@ -6,8 +6,8 @@
 #include <QPushButton>
 
 void PomodoroList::addTask(Task* task) {
-    PomodoroTask* PomoTask = dynamic_cast<PomodoroTask*>(task);
-    tasks.append(PomoTask);
+    PomodoroTask* pt = dynamic_cast<PomodoroTask*>(task);
+    tasks.append(pt);
 }
 void PomodoroList::removeTask(Task* task) {
     PomodoroTask* pt = dynamic_cast<PomodoroTask*>(task);
@@ -38,29 +38,65 @@ void PomodoroList::editTaskDuration(Task* task, int newDuration) {
 
 QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
     QWidget* fieldWidget = new QWidget();
+    //fieldWidget->setFixedHeight(100);
+
     QHBoxLayout* inputLayout = new QHBoxLayout(fieldWidget);
+    inputLayout->setContentsMargins(10, 10, 10, 10);
+    inputLayout->setSpacing(0);
 
     QLineEdit* lineEdit = new QLineEdit(task->getName());
-    lineEdit->setFixedSize(300, 50);
-    lineEdit->setStyleSheet("QLineEdit { background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 5px; padding: 5px; color: black; }");
+    lineEdit->setFixedSize(400, 50);
+    lineEdit->setStyleSheet(
+        "QLineEdit {"
+        "   font-size: 16px;"
+        "   background-color: #f0f0f0;"
+        "   border: 1px solid #ccc;"
+        "   border-right: 1px solid #999;"
+        "   border-top-left-radius: 5px;"
+        "   border-bottom-left-radius: 5px;"
+        "   padding: 5px 10px;"
+        "   color: black;"
+        "}"
+    );
 
     QSpinBox* durationBox = new QSpinBox();
+    durationBox->setFixedHeight(50);
     durationBox->setMinimum(1);
     durationBox->setMaximum(180);
     durationBox->setValue(task->getDuration());
     durationBox->setSuffix(" min");
+    durationBox->setStyleSheet(
+        "QSpinBox {"
+        "   font-size: 16px;"
+        "   background-color: #f0f0f0;"
+        "   border: 1px solid #ccc;"
+        "   border-left: none;"
+        "   border-top-right-radius: 5px;"
+        "   border-bottom-right-radius: 5px;"
+        "   padding: 5px 10px;"
+        "   color: black;"
+        "}"
+        "QSpinBox::up-button, QSpinBox::down-button { width: 0; height: 0; border: none; }"
+        );
 
     QObject::connect(lineEdit, &QLineEdit::textChanged, [task](const QString& newName) {
         task->editName(newName);
     });
 
-    QObject::connect(durationBox, QOverload<int>::of(&QSpinBox::valueChanged), [this, task](int newDuration) {
+    QObject::connect(durationBox, &QSpinBox::valueChanged, [this, task](int newDuration) {
         this->editTaskDuration(task, newDuration);
     });
 
     QPushButton* deleteButton = new QPushButton("🗑");
-    deleteButton->setFixedSize(40, 40);
-    deleteButton->setStyleSheet("QPushButton { background-color: #e57373; color: white; border-radius: 5px; }");
+    deleteButton->setFixedSize(50, 50);
+    deleteButton->setStyleSheet(
+        "QPushButton {"
+        "   background-color: #e57373;"
+        "   color: white;"
+        "   border-radius: 5px;"
+        "   font-size: 18px;"
+        "}"
+    );
 
     QObject::connect(deleteButton, &QPushButton::clicked, [this, task, fieldWidget]() {
         removeTask(task);
@@ -70,20 +106,30 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
     QPushButton* upButton = new QPushButton("↑");
     QPushButton* downButton = new QPushButton("↓");
 
-    upButton->setFixedSize(20, 20);
-    downButton->setFixedSize(20, 20);
+    upButton->setFixedSize(25, 25);
+    downButton->setFixedSize(25, 25);
 
-    upButton->setStyleSheet("QPushButton { background-color: #64b5f6; color: white; border-radius: 5px; }");
-    downButton->setStyleSheet("QPushButton { background-color: #64b5f6; color: white; border-radius: 5px; }");
+    QString arrowStyle =
+        "QPushButton {"
+        "   background-color: #64b5f6;"
+        "   color: white;"
+        "   border: 1px solid black;"
+        "   border-radius: 5px;"
+        "   height: 25px;"
+        "}";
+
+    upButton->setStyleSheet(arrowStyle);
+    downButton->setStyleSheet(arrowStyle);
 
     QVBoxLayout* arrowLayout = new QVBoxLayout();
     arrowLayout->addWidget(upButton);
     arrowLayout->addWidget(downButton);
-    arrowLayout->setSpacing(2);
+    arrowLayout->setSpacing(0);
+    arrowLayout->setContentsMargins(0, 0, 0, 0);
 
     QWidget* arrowWidget = new QWidget();
     arrowWidget->setLayout(arrowLayout);
-    arrowWidget->setFixedWidth(30);
+    arrowWidget->setFixedWidth(50);
 
     QObject::connect(upButton, &QPushButton::clicked, [this, task, fieldWidget]() {
         int index = tasks.indexOf(task);
@@ -103,7 +149,9 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
 
     inputLayout->addWidget(lineEdit);
     inputLayout->addWidget(durationBox);
+    inputLayout->addSpacing(10);
     inputLayout->addWidget(deleteButton);
+    inputLayout->addSpacing(10);
     inputLayout->addWidget(arrowWidget);
 
     return fieldWidget;

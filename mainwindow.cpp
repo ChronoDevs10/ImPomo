@@ -40,7 +40,7 @@ MainWindow::~MainWindow()
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), toDoList(new ToDoList()),
-    pomodoroList(new PomodoroList()), classicPomodoro(new ClassicPomodoro())
+    pomodoroList(new PomodoroList()), classicPomodoro(new ClassicPomodoro()), extendedPomodoro(new ExtendedPomodoro(pomodoroList))
 {
     central = new QWidget(this);
     mainLayout = new QVBoxLayout(central);
@@ -73,6 +73,7 @@ MainWindow::~MainWindow() {
     delete toDoList;
     delete pomodoroList;
     delete classicPomodoro;
+    delete extendedPomodoro;
 }
 
 void MainWindow::setupHomeTab() {
@@ -110,9 +111,10 @@ void MainWindow::setupToDoListTab() {
     stackedWidget->addWidget(toDoListTab);
 }
 
+
 void MainWindow::setupImPomodoroTab() {
     QWidget* imPomodoroTab = new QWidget();
-    QVBoxLayout* layout = new QVBoxLayout(imPomodoroTab);
+    QHBoxLayout* mainLayout = new QHBoxLayout(imPomodoroTab);
 
     imPomodoroScrollArea = new QScrollArea();
     imPomodoroScrollArea->setWidgetResizable(true);
@@ -124,7 +126,50 @@ void MainWindow::setupImPomodoroTab() {
     pomodoroList->refreshList(imPomodoroScrollLayout);
     imPomodoroScrollArea->setWidget(scrollContent);
 
-    layout->addWidget(imPomodoroScrollArea);
+    mainLayout->addWidget(imPomodoroScrollArea, 1);
+
+    QWidget* timeWidget = new QWidget();
+    QVBoxLayout* timeLayout = new QVBoxLayout(timeWidget);
+
+    extendedPomodoro->timer->timeLabel->setStyleSheet(
+        "font-size: 100px; "
+        "font-weight: bold; "
+        "color: #3a3a3a ; "
+        "background-color: #ff99cc; "
+        "border: 2px solid #000000; "
+        "border-radius: 30px; "
+        "padding: 50px 90px; "
+        "margin: 20px;"
+        );
+
+    QString buttonStyle =
+        "QPushButton {"
+        "   font-size: 25px; "
+        "   padding: 30px 35px; "
+        "   border-radius: 5px; "
+        "   background-color: #ff66cc; "
+        "   color: #3a3a3a; "
+        "   margin: 5px; "
+        "}"
+        "QPushButton:hover { background-color: #cc3399; }";
+
+    extendedPomodoro->timer->startButton->setStyleSheet(buttonStyle);
+    extendedPomodoro->timer->pauseButton->setStyleSheet(buttonStyle);
+    extendedPomodoro->timer->resetButton->setStyleSheet(buttonStyle);
+
+    QHBoxLayout* buttonLayout = new QHBoxLayout();
+    buttonLayout->addWidget(extendedPomodoro->timer->startButton);
+    buttonLayout->addWidget(extendedPomodoro->timer->pauseButton);
+    buttonLayout->addWidget(extendedPomodoro->timer->resetButton);
+
+    timeLayout->addStretch(1);
+    timeLayout->addWidget(extendedPomodoro->currTaskLabel, 0, Qt::AlignCenter);
+    timeLayout->addWidget(extendedPomodoro->timer->timeLabel, 0, Qt::AlignCenter);
+    extendedPomodoro->timer->timeLabel->setAlignment(Qt::AlignCenter);
+    timeLayout->addLayout(buttonLayout);
+    timeLayout->addStretch(1);
+    mainLayout->addWidget(timeWidget, 1);
+
     stackedWidget->addWidget(imPomodoroTab);
 }
 

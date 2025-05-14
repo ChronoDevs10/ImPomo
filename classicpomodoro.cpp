@@ -99,21 +99,18 @@ void ClassicPomodoro::changeProperties(int newWork, int newShortBreak, int newLo
     workDuration = newWork;
     shortBreakDuration = newShortBreak;
     longBreakDuration = newLongBreak;
-    cycles = newCycles;
-    workBlocksInCycle = workBlocks;
 
-    if(!(timer->isRunning)){
-        if(currentPhase == "Work")
-            timer->setTime(newWork);
-        else if(currentPhase == "Short break")
-            timer->setTime(newShortBreak);
-        else if(currentPhase == "Long break")
-            timer->setTime(newLongBreak);
+    if(currentPhase == "Work")
+        timer->setTime(newWork);
+    else if(currentPhase == "Short break")
+        timer->setTime(newShortBreak);
+    else if(currentPhase == "Long break")
+        timer->setTime(newLongBreak);
 
-        /*Zmiana cycles i workBlocks/blokada zmiany*/
-    }
-
-    timer->updateLabel();
+    if(newCycles >= currentCycle + 1)
+        cycles = newCycles;
+    if(workBlocks >= currentWorkBlock + 1)
+        workBlocksInCycle = workBlocks;
 }
 void ClassicPomodoro::update() {
     nextPhase();
