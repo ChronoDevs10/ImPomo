@@ -4,6 +4,7 @@ QT += testlib
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
+CONFIG += console
 RESOURCES += \
     resources.qrc
 
@@ -68,4 +69,3 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 DISTFILES += \
     tst_task.qml
 
-RESOURCES +=

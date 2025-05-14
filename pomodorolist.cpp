@@ -5,6 +5,8 @@
 #include <QSpinBox>
 #include <QHBoxLayout>
 #include <QPushButton>
+#include <QDebug>
+
 
 void PomodoroList::addTask(Task* task) {
     PomodoroTask* pt = dynamic_cast<PomodoroTask*>(task);
@@ -39,6 +41,7 @@ void PomodoroList::reorderTasks(int fromIndex, int toIndex) {
 void PomodoroList::editTaskDuration(Task* task, int newDuration) {
     PomodoroTask* pt = dynamic_cast<PomodoroTask*>(task);
     pt->editDuration(newDuration);
+    parent->updateCurrentTaskLabel();
 }
 
 QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
@@ -50,7 +53,7 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
     inputLayout->setSpacing(0);
 
     QLineEdit* lineEdit = new QLineEdit(task->getName());
-    lineEdit->setFixedSize(400, 50);
+    lineEdit->setFixedSize(300, 50);
     lineEdit->setStyleSheet(
         "QLineEdit {"
         "   font-size: 16px;"

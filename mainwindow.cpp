@@ -46,6 +46,7 @@ MainWindow::MainWindow(QWidget *parent)
     mainLayout = new QVBoxLayout(central);
     setCentralWidget(central);
 
+
     stackedWidget = new QStackedWidget(this);
     mainLayout->addWidget(createMenuButton(), 0, Qt::AlignTop | Qt::AlignRight);
     mainLayout->addWidget(stackedWidget);
@@ -453,7 +454,7 @@ void MainWindow::addTaskField() {
         }
 
     } else if(stackedWidget->currentIndex() == 2) {
-        Task* baseTask = TaskFactory::createTask("Pomodoro", "...", 25);
+        Task* baseTask = TaskFactory::createTask("Pomodoro", "...", 7);
         PomodoroTask* task = dynamic_cast<PomodoroTask*>(baseTask);
         extendedPomodoro->list->addTask(task);
 

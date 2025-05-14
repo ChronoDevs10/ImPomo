@@ -40,14 +40,14 @@ void TestExtendedPomodoro::testCurrentTask() {
 
     pomodoro.list = &list;
     pomodoro.start();
-    QCOMPARE(pomodoro.getcurrent()->getName(), "Task 1");
+    QCOMPARE(pomodoro.list->getPTasks().at(pomodoro.getcurrent())->getName(), "Task 1");
 }
 
 void TestExtendedPomodoro::testAutoTransition() {
     PomodoroList list;
     PomodoroTask task1("Task 1", 1);
     PomodoroTask task2("Task 2", 1);
-    list.addTask(&task1); // 1 minuta
+    list.addTask(&task1);
     list.addTask(&task2);
 
     ExtendedPomodoro pomodoro;
@@ -56,7 +56,7 @@ void TestExtendedPomodoro::testAutoTransition() {
 
     QTest::qWait(61000);
 
-    QCOMPARE(pomodoro.getcurrent()->getName(), "Task 2");
+    QCOMPARE(pomodoro.list->getPTasks().at(pomodoro.getcurrent())->getName(), "Task 2");
 }
 
 //QTEST_MAIN(TestExtendedPomodoro)

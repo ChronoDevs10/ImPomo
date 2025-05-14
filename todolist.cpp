@@ -6,6 +6,7 @@
 #include <QTimer>
 #include <QPushButton>
 #include <QApplication>
+#include <QDebug>
 
 ToDoList::ToDoList() {
     tasks = QVector<Task*>();

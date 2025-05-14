@@ -9,7 +9,7 @@
 
 class ExtendedPomodoro : public IPomodoroMode, public ITimerObserver {
 private:
-    PomodoroTask* current;
+    int current;
 public:
     PomodoroList* list;
     Timer* timer;
@@ -26,8 +26,8 @@ public:
     void saveSessionStateToFile() override;
     void loadSessionStateFromFile() override;
 
-    PomodoroTask* getcurrent();
-    void setcurrent(PomodoroTask* newCurr);
+    int getcurrent();
+    void setcurrent(int newCurr);
     void updateCurrentTaskLabel();
     void reorderTasks();
 };
