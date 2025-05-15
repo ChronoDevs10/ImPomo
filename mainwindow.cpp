@@ -34,6 +34,10 @@ MainWindow::~MainWindow()
 #include <QDialog>
 #include <QSpinBox>
 #include <QLineEdit>
+#include <QApplication>
+#include <QApplication>
+#include <QPushButton>
+#include <QScreen>
 
 #include <QDialogButtonBox>
 
@@ -62,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent)
     addButton->hide();
 
     addButton->setFixedSize(60, 60);
-    addButton->setStyleSheet("QPushButton { border-radius: 30px; background-color: red; color: white; font: bold 24px; }");
+    addButton->setStyleSheet("QPushButton { border-radius: 5px; background-color: #ff99cc; color: white; font: bold 24px; }");
     connect(addButton, &QPushButton::clicked, this, &MainWindow::addTaskField);
     mainLayout->addWidget(addButton, 0, Qt::AlignHCenter);
 
@@ -132,6 +136,7 @@ void MainWindow::setupImPomodoroTab() {
     QWidget* timeWidget = new QWidget();
     QVBoxLayout* timeLayout = new QVBoxLayout(timeWidget);
 
+    //-------------------------------------------------------------------------------------------------
     extendedPomodoro->timer->timeLabel->setStyleSheet(
         "font-size: 100px; "
         "font-weight: bold; "
@@ -157,7 +162,7 @@ void MainWindow::setupImPomodoroTab() {
     extendedPomodoro->timer->startButton->setStyleSheet(buttonStyle);
     extendedPomodoro->timer->pauseButton->setStyleSheet(buttonStyle);
     extendedPomodoro->timer->resetButton->setStyleSheet(buttonStyle);
-
+    //-------------------------------------------------------------------------------------------------
     QHBoxLayout* buttonLayout = new QHBoxLayout();
     buttonLayout->addWidget(extendedPomodoro->timer->startButton);
     buttonLayout->addWidget(extendedPomodoro->timer->pauseButton);
@@ -454,7 +459,7 @@ void MainWindow::addTaskField() {
         }
 
     } else if(stackedWidget->currentIndex() == 2) {
-        Task* baseTask = TaskFactory::createTask("Pomodoro", "...", 7);
+        Task* baseTask = TaskFactory::createTask("Pomodoro", "...", 3);
         PomodoroTask* task = dynamic_cast<PomodoroTask*>(baseTask);
         extendedPomodoro->list->addTask(task);
 

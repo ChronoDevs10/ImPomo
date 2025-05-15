@@ -2,7 +2,8 @@
 #define ITASKLIST_H
 #pragma once
 
-#include "Task.h"
+#include "task.h"
+#include "pomodorotask.h"
 #include <QVector>
 
 class ITaskList {

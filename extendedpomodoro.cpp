@@ -7,6 +7,7 @@ ExtendedPomodoro::ExtendedPomodoro() {
 
     timer = new Timer();
     timer->setSubscriber(this);
+    timer->type = 1;
     currTaskLabel = new QLabel("No tasks on the list");
 }
 
@@ -19,13 +20,14 @@ ExtendedPomodoro::ExtendedPomodoro(PomodoroList* List) {
         currTaskLabel = new QLabel("No tasks on the list");
     }
     else{ //pod ładowanie z bazy danych
-        current = 0;
+        current = 0;//ostatnio zapisany indeks
         currTaskLabel = new QLabel("Current task: " + list->getPTasks().at(0)->getName());
     }
     currTaskLabel->setStyleSheet("font-size: 25px; font-weight: bold; margin: 10px;");
 
     timer = new Timer();
     timer->setSubscriber(this);
+    timer->type = 1;
 }
 
 void ExtendedPomodoro::start() {
@@ -38,7 +40,22 @@ void ExtendedPomodoro::reset() {
     timer->reset();
 }
 void ExtendedPomodoro::nextPhase() {
+    list->getPTasks().at(current)->lineEdit->setStyleSheet(
+        "QLineEdit {"
+        "   font-size: 16px;"
+        "   background-color: #ccc;"
+        "   border: 1px solid #ccc;"
+        "   border-right: 1px solid #999;"
+        "   border-top-left-radius: 5px;"
+        "   border-bottom-left-radius: 5px;"
+        "   padding: 5px 10px;"
+        "   color: black;"
+        "   text-decoration: line-through;"
+        "}"
+    );
+
     if(current < (list->taskCount() - 1)){
+        list->getPTasks().at(current)->editStatus();
         current++;
         timer->setTime(list->getPTasks().at(current)->getDuration());
         currTaskLabel->setText("Current task: " + list->getPTasks().at(current)->getName());
@@ -46,6 +63,7 @@ void ExtendedPomodoro::nextPhase() {
     }
     else {
         currTaskLabel->setText("All tasks finished");
+        pause();
     }
 }
 int ExtendedPomodoro::getcurrent() {
@@ -61,14 +79,10 @@ void ExtendedPomodoro::update() {
 void ExtendedPomodoro::reorderTasks() {}
 void ExtendedPomodoro::updateCurrentTaskLabel() {
     if(list->taskCount() > 0) {
-        QString taskName = list->getPTasks().at(0)->getName();
-        int taskDuration = list->getPTasks().at(0)->getDuration();
-
+        QString taskName = list->getPTasks().at(current)->getName();
         currTaskLabel->setText("Current task: " + taskName);
-        timer->setTime(taskDuration);
-    } else {
+    } else
         currTaskLabel->setText("No tasks on the list");
-    }
 }
 
 void ExtendedPomodoro::saveSessionStateToFile() {}

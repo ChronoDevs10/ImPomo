@@ -17,6 +17,7 @@ void PomodoroList::removeTask(Task* task) {
     PomodoroTask* pt = dynamic_cast<PomodoroTask*>(task);
     tasks.removeOne(pt);
     parent->updateCurrentTaskLabel();
+
 }
 void PomodoroList::editTaskName(Task* task, QString newName) {
     task->editName(newName);
@@ -32,6 +33,7 @@ QVector<PomodoroTask*> PomodoroList::getPTasks() {
      return tasks;
 }
 void PomodoroList::reorderTasks(int fromIndex, int toIndex) {
+    qDebug() << parent->getcurrent();
     if(fromIndex < 0 || toIndex < 0 || fromIndex >= tasks.size() || toIndex >= tasks.size())
         return;
 
@@ -40,6 +42,7 @@ void PomodoroList::reorderTasks(int fromIndex, int toIndex) {
 }
 void PomodoroList::editTaskDuration(Task* task, int newDuration) {
     PomodoroTask* pt = dynamic_cast<PomodoroTask*>(task);
+
     pt->editDuration(newDuration);
     parent->updateCurrentTaskLabel();
 }
@@ -52,9 +55,9 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
     inputLayout->setContentsMargins(10, 10, 10, 10);
     inputLayout->setSpacing(0);
 
-    QLineEdit* lineEdit = new QLineEdit(task->getName());
-    lineEdit->setFixedSize(300, 50);
-    lineEdit->setStyleSheet(
+    task->lineEdit = new QLineEdit(task->getName());
+    task->lineEdit->setFixedSize(300, 50);
+    task->lineEdit->setStyleSheet(
         "QLineEdit {"
         "   font-size: 16px;"
         "   background-color: #f0f0f0;"
@@ -87,12 +90,15 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
         "QSpinBox::up-button, QSpinBox::down-button { width: 0; height: 0; border: none; }"
         );
 
-    QObject::connect(lineEdit, &QLineEdit::textChanged, [this, task](const QString& newName) {
+    QObject::connect(task->lineEdit, &QLineEdit::textChanged, [this, task](const QString& newName) {
         this->editTaskName(task, newName);
     });
 
     QObject::connect(durationBox, &QSpinBox::valueChanged, [this, task](int newDuration) {
-        this->editTaskDuration(task, newDuration);
+        PomodoroTask* pt = dynamic_cast<PomodoroTask*>(task);
+        int index = tasks.indexOf(pt);
+        if(index > parent->getcurrent())
+            this->editTaskDuration(task, newDuration);
     });
 
     QPushButton* deleteButton = new QPushButton("🗑");
@@ -107,8 +113,13 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
     );
 
     QObject::connect(deleteButton, &QPushButton::clicked, [this, task, fieldWidget]() {
-        removeTask(task);
-        fieldWidget->deleteLater();
+        PomodoroTask* pt = dynamic_cast<PomodoroTask*>(task);
+        int index = tasks.indexOf(pt);
+
+        if(index > parent->getcurrent()) {
+            this->removeTask(task);
+            fieldWidget->deleteLater();
+        }
     });
 
     QPushButton* upButton = new QPushButton("↑");
@@ -141,7 +152,7 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
 
     QObject::connect(upButton, &QPushButton::clicked, [this, task, fieldWidget]() {
         int index = tasks.indexOf(task);
-        if(index > 0) {
+        if(index > 0 && index > parent->getcurrent() && (index - 1) > parent->getcurrent()) {
             reorderTasks(index, index - 1);
             refreshList(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
         }
@@ -149,13 +160,13 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
 
     QObject::connect(downButton, &QPushButton::clicked, [this, task, fieldWidget]() {
         int index = tasks.indexOf(task);
-        if(index < tasks.size() - 1) {
+        if(index < tasks.size() - 1 && index > parent->getcurrent() && (index - 1) > parent->getcurrent()) {
             reorderTasks(index, index + 1);
             refreshList(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
         }
     });
 
-    inputLayout->addWidget(lineEdit);
+    inputLayout->addWidget(task->lineEdit);
     inputLayout->addWidget(durationBox);
     inputLayout->addSpacing(10);
     inputLayout->addWidget(deleteButton);
@@ -167,13 +178,34 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
 
 void PomodoroList::refreshList(QVBoxLayout* layout) {
     QLayoutItem* child;
-    while((child = layout->takeAt(0)) != nullptr) {
+    while ((child = layout->takeAt(0)) != nullptr) {
         delete child->widget();
         delete child;
     }
 
-    for(PomodoroTask* task : tasks)
-        layout->addWidget(createTaskWidget(task), 0, Qt::AlignLeft);
+    for(PomodoroTask* task : tasks) {
+        QWidget* taskWidget = createTaskWidget(task);
+        layout->addWidget(taskWidget, 0, Qt::AlignLeft);
+
+        if(task->getStatus()) {
+            QLineEdit* lineEdit = taskWidget->findChild<QLineEdit*>();
+            if(lineEdit) {
+                lineEdit->setStyleSheet(
+                    "QLineEdit {"
+                    "   font-size: 16px;"
+                    "   background-color: #ccc;"
+                    "   border: 1px solid #ccc;"
+                    "   border-right: 1px solid #999;"
+                    "   border-top-left-radius: 5px;"
+                    "   border-bottom-left-radius: 5px;"
+                    "   padding: 5px 10px;"
+                    "   color: black;"
+                    "   text-decoration: line-through;"
+                    "}"
+                );
+            }
+        }
+    }
 }
 
 void PomodoroList::saveToDatabase() {}
