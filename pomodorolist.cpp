@@ -57,6 +57,7 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
 
     task->lineEdit = new QLineEdit(task->getName());
     task->lineEdit->setFixedSize(300, 50);
+    task->lineEdit->setPlaceholderText("Enter task name");
     task->lineEdit->setStyleSheet(
         "QLineEdit {"
         "   font-size: 16px;"
@@ -94,11 +95,17 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
         this->editTaskName(task, newName);
     });
 
-    QObject::connect(durationBox, &QSpinBox::valueChanged, [this, task](int newDuration) {
+    QObject::connect(durationBox, &QSpinBox::valueChanged, [this, task, durationBox](int newDuration) {
         PomodoroTask* pt = dynamic_cast<PomodoroTask*>(task);
         int index = tasks.indexOf(pt);
+
         if(index > parent->getcurrent())
             this->editTaskDuration(task, newDuration);
+        else {
+            durationBox->blockSignals(true);
+            durationBox->setValue(pt->getDuration());
+            durationBox->blockSignals(false);
+        }
     });
 
     QPushButton* deleteButton = new QPushButton("🗑");
@@ -160,11 +167,26 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
 
     QObject::connect(downButton, &QPushButton::clicked, [this, task, fieldWidget]() {
         int index = tasks.indexOf(task);
-        if(index < tasks.size() - 1 && index > parent->getcurrent() && (index - 1) > parent->getcurrent()) {
+        if(index < tasks.size() - 1 && index > parent->getcurrent() && (index + 1) > parent->getcurrent()) {
             reorderTasks(index, index + 1);
             refreshList(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
         }
     });
+
+    if(task->getStatus())
+        task->lineEdit->setStyleSheet(
+            "QLineEdit {"
+            "   font-size: 16px;"
+            "   background-color: #ccc;"
+            "   border: 1px solid #ccc;"
+            "   border-right: 1px solid #999;"
+            "   border-top-left-radius: 5px;"
+            "   border-bottom-left-radius: 5px;"
+            "   padding: 5px 10px;"
+            "   color: black;"
+            "   text-decoration: line-through;"
+            "}"
+            );
 
     inputLayout->addWidget(task->lineEdit);
     inputLayout->addWidget(durationBox);
@@ -183,29 +205,8 @@ void PomodoroList::refreshList(QVBoxLayout* layout) {
         delete child;
     }
 
-    for(PomodoroTask* task : tasks) {
-        QWidget* taskWidget = createTaskWidget(task);
-        layout->addWidget(taskWidget, 0, Qt::AlignLeft);
-
-        if(task->getStatus()) {
-            QLineEdit* lineEdit = taskWidget->findChild<QLineEdit*>();
-            if(lineEdit) {
-                lineEdit->setStyleSheet(
-                    "QLineEdit {"
-                    "   font-size: 16px;"
-                    "   background-color: #ccc;"
-                    "   border: 1px solid #ccc;"
-                    "   border-right: 1px solid #999;"
-                    "   border-top-left-radius: 5px;"
-                    "   border-bottom-left-radius: 5px;"
-                    "   padding: 5px 10px;"
-                    "   color: black;"
-                    "   text-decoration: line-through;"
-                    "}"
-                );
-            }
-        }
-    }
+    for(PomodoroTask* task : tasks)
+        layout->addWidget(createTaskWidget(task), 0, Qt::AlignLeft);
 }
 
 void PomodoroList::saveToDatabase() {}

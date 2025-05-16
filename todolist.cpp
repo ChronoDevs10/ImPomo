@@ -55,6 +55,7 @@ QWidget* ToDoList::createTaskWidget(Task* task) {
     QLineEdit* lineEdit = new QLineEdit(task->getName());
     lineEdit->setFixedSize(400, 60);
     lineEdit->setStyleSheet("QLineEdit { background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 5px; padding: 5px; color: black; }");
+    lineEdit->setPlaceholderText("Enter task name");
 
     QObject::connect(lineEdit, &QLineEdit::textChanged, [task](const QString& newName) {
         task->editName(newName);

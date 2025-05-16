@@ -17,7 +17,6 @@ private:
 public:
     QTimer* timer;
     bool isRunning;
-    bool type;
 
     Timer();
     ~Timer();

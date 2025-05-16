@@ -47,6 +47,8 @@ private:
     QScrollArea* imPomodoroScrollArea;
     QVBoxLayout* imPomodoroScrollLayout;
 
+    int taskIdx;
+
     void setupHomeTab();
     void setupToDoListTab();
     void setupImPomodoroTab();

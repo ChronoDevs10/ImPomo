@@ -44,7 +44,8 @@ MainWindow::~MainWindow()
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), toDoList(new ToDoList()),
-    pomodoroList(new PomodoroList()), classicPomodoro(new ClassicPomodoro()), extendedPomodoro(new ExtendedPomodoro(pomodoroList))
+    pomodoroList(new PomodoroList()), classicPomodoro(new ClassicPomodoro()), extendedPomodoro(new ExtendedPomodoro(pomodoroList)),
+    taskIdx(0)
 {
     central = new QWidget(this);
     mainLayout = new QVBoxLayout(central);
@@ -448,7 +449,7 @@ void MainWindow::showSettings() {
 
 void MainWindow::addTaskField() {
     if(stackedWidget->currentIndex() == 1) {
-        Task* task = TaskFactory::createTask("Basic", "...");
+        Task* task = TaskFactory::createTask("Basic", "");
         toDoList->addTask(task);
 
         QWidget* currentWidget = qobject_cast<QWidget*>(scrollArea->widget());
@@ -459,7 +460,9 @@ void MainWindow::addTaskField() {
         }
 
     } else if(stackedWidget->currentIndex() == 2) {
-        Task* baseTask = TaskFactory::createTask("Pomodoro", "...", 3);
+        QString taskIdxStr = QString::number(taskIdx);
+        Task* baseTask = TaskFactory::createTask("Pomodoro", taskIdxStr, 5);
+        taskIdx++;
         PomodoroTask* task = dynamic_cast<PomodoroTask*>(baseTask);
         extendedPomodoro->list->addTask(task);
 
