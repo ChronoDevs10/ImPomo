@@ -175,8 +175,29 @@ void MainWindow::setupImPomodoroTab() {
     extendedPomodoro->timer->timeLabel->setAlignment(Qt::AlignCenter);
     timeLayout->addLayout(buttonLayout);
     timeLayout->addStretch(1);
-    mainLayout->addWidget(timeWidget, 1);
 
+
+    QPushButton* resetAllButton = new QPushButton("Clear All Tasks");
+    resetAllButton->setStyleSheet(
+        "QPushButton {"
+        "   font-size: 20px; "
+        "   padding: 15px 20px; "
+        "   border-radius: 5px; "
+        "   background-color: #ff6666; "
+        "   color: white; "
+        "   margin: 10px; "
+        "}"
+        "QPushButton:hover { background-color: #cc3333; }"
+        );
+
+    timeLayout->addWidget(resetAllButton, 0, Qt::AlignRight);
+
+    QObject::connect(resetAllButton, &QPushButton::clicked, [this]() {
+        extendedPomodoro->clearAllTasks();
+        pomodoroList->refreshList(imPomodoroScrollLayout);
+    });
+
+    mainLayout->addWidget(timeWidget, 1);
 
     stackedWidget->addWidget(imPomodoroTab);
 }

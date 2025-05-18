@@ -91,6 +91,21 @@ void ExtendedPomodoro::updateCurrentTaskLabel() {
     } else
         currTaskLabel->setText("No tasks on the list");
 }
+void ExtendedPomodoro::clearAllTasks() {
+    for(int i = list->taskCount() - 1; i >= 0; i--) {
+        PomodoroTask* task = list->getPTasks().at(i);
+        list->removeTask(task);
+        delete task;
+    }
+
+    current = 0;
+    tasksFinished = 0;
+    wasStarted = false;
+    pause();
+    timer->setTime(0);
+    currTaskLabel->setText("No tasks on the list");
+}
+
 
 void ExtendedPomodoro::saveSessionStateToFile() {}
 void ExtendedPomodoro::loadSessionStateFromFile() {}

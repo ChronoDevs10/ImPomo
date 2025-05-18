@@ -7,7 +7,7 @@
 #include "timer.h"
 #include "itimerobserver.h"
 
-class ExtendedPomodoro :public IPomodoroMode, public ITimerObserver  {
+class ExtendedPomodoro: public IPomodoroMode, public ITimerObserver  {
 private:
     int current;
 public:
@@ -32,6 +32,7 @@ public:
     void setcurrent(int newCurr);
     void updateCurrentTaskLabel();
     void reorderTasks();
+    void clearAllTasks();
 };
 
 #endif // EXTENDEDPOMODORO_H
