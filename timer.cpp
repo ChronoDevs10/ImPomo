@@ -1,4 +1,5 @@
 #include "timer.h"
+#include <QDebug>
 
 Timer::Timer() : remainingTime(0), isRunning(false) {
     timeLabel = new QLabel("00:00");
@@ -6,6 +7,8 @@ Timer::Timer() : remainingTime(0), isRunning(false) {
     pauseButton = new QPushButton("Pause");
     resetButton = new QPushButton("Reset");
     timer = new QTimer();
+    remainingTime = 0;
+    startTime = 0;
 
     QObject::connect(startButton, &QPushButton::clicked, this, &Timer::start);
     QObject::connect(pauseButton, &QPushButton::clicked, this, &Timer::pause);

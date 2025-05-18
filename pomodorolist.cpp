@@ -10,8 +10,14 @@
 
 void PomodoroList::addTask(Task* task) {
     PomodoroTask* pt = dynamic_cast<PomodoroTask*>(task);
+    if(tasks.size() == parent->tasksFinished) {
+        parent->timer->setTime(pt->getDuration());
+        parent->setcurrent(parent->tasksFinished);
+    }
     tasks.append(pt);
-    parent->updateCurrentTaskLabel();
+
+    if(parent != nullptr)
+        parent->updateCurrentTaskLabel();
 }
 void PomodoroList::removeTask(Task* task) {
     PomodoroTask* pt = dynamic_cast<PomodoroTask*>(task);
@@ -33,12 +39,13 @@ QVector<PomodoroTask*> PomodoroList::getPTasks() {
      return tasks;
 }
 void PomodoroList::reorderTasks(int fromIndex, int toIndex) {
-    qDebug() << parent->getcurrent();
     if(fromIndex < 0 || toIndex < 0 || fromIndex >= tasks.size() || toIndex >= tasks.size())
         return;
 
     tasks.move(fromIndex, toIndex);
-    parent->updateCurrentTaskLabel();
+
+    if(parent != nullptr)
+        parent->updateCurrentTaskLabel();
 }
 void PomodoroList::editTaskDuration(Task* task, int newDuration) {
     PomodoroTask* pt = dynamic_cast<PomodoroTask*>(task);

@@ -4,6 +4,7 @@
 ExtendedPomodoro::ExtendedPomodoro() {
     current = 0;
     list = nullptr;
+    tasksFinished = 0;
 
     timer = new Timer();
     timer->setSubscriber(this);
@@ -13,6 +14,10 @@ ExtendedPomodoro::ExtendedPomodoro() {
 ExtendedPomodoro::ExtendedPomodoro(PomodoroList* List) {
     list = List;
     list->parent = this;
+    tasksFinished = 0;
+
+    timer = new Timer();
+    timer->setSubscriber(this);
 
     if(list->taskCount() == 0) {
         current = 0;
@@ -20,12 +25,10 @@ ExtendedPomodoro::ExtendedPomodoro(PomodoroList* List) {
     }
     else {
         current = 0;
+        timer->setTime(list->getPTasks().at(0)->getDuration());
         currTaskLabel = new QLabel("Current task: " + list->getPTasks().at(0)->getName());
     }
     currTaskLabel->setStyleSheet("font-size: 25px; font-weight: bold; margin: 10px;");
-
-    timer = new Timer();
-    timer->setSubscriber(this);
 }
 
 void ExtendedPomodoro::start() {
@@ -38,6 +41,10 @@ void ExtendedPomodoro::reset() {
     timer->reset();
 }
 void ExtendedPomodoro::nextPhase() {
+
+    if(list->taskCount() == tasksFinished)
+        return;
+
     list->getPTasks().at(current)->lineEdit->setStyleSheet(
         "QLineEdit {"
         "   font-size: 16px;"
@@ -60,6 +67,8 @@ void ExtendedPomodoro::nextPhase() {
         start();
     }
     else {
+        list->getPTasks().at(current)->editStatus();
+        tasksFinished = list->taskCount();
         currTaskLabel->setText("All tasks finished");
         pause();
     }
@@ -71,6 +80,7 @@ void ExtendedPomodoro::setcurrent(int newCurr) {
     current = newCurr;
 }
 void ExtendedPomodoro::update() {
+    wasStarted = true;
     nextPhase();
 }
 void ExtendedPomodoro::reorderTasks() {}

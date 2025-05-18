@@ -7,13 +7,15 @@
 #include "timer.h"
 #include "itimerobserver.h"
 
-class ExtendedPomodoro : public IPomodoroMode, public ITimerObserver {
+class ExtendedPomodoro :public IPomodoroMode, public ITimerObserver  {
 private:
     int current;
 public:
     PomodoroList* list;
     Timer* timer;
     QLabel* currTaskLabel;
+    int tasksFinished;
+    bool wasStarted;
 
     ExtendedPomodoro();
     ExtendedPomodoro(PomodoroList* List);

@@ -177,6 +177,7 @@ void MainWindow::setupImPomodoroTab() {
     timeLayout->addStretch(1);
     mainLayout->addWidget(timeWidget, 1);
 
+
     stackedWidget->addWidget(imPomodoroTab);
 }
 
