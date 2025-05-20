@@ -1,5 +1,10 @@
 #include "appsettings.h"
 
+AppSettings::AppSettings() {
+    soundStatus = true;
+    QString theme = "Dark";
+}
+
 bool AppSettings::getSoundStatus() {
     return soundStatus;
 }

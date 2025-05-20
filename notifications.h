@@ -2,11 +2,13 @@
 #define NOTIFICATIONS_H
 
 #include <QString>
+#include "appsettings.h"
 
 class Notifications {
 public:
-    bool playSound();
-    bool sendNotification(QString message);
+    AppSettings* settings;
+    void playSound();
+    void sendNotification(QString message);
 };
 
 #endif // NOTIFICATIONS_H

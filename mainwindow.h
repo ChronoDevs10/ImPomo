@@ -9,12 +9,15 @@
 #include <QCheckBox>
 
 
+
+
 #include "todolist.h"
 #include "pomodorolist.h"
 #include "classicpomodoro.h"
 #include "extendedpomodoro.h"
 #include "statistics.h"
 #include "appsettings.h"
+#include "notifications.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -47,6 +50,7 @@ private:
     ExtendedPomodoro* extendedPomodoro;
     AppSettings* appSettings;
     Statistics* statistics;
+    Notifications* notifications;
 
     QScrollArea* imPomodoroScrollArea;
     QVBoxLayout* imPomodoroScrollLayout;
@@ -60,6 +64,14 @@ private:
     void setupStatisticsTab();
     void setupSettingsTab();
     QPushButton* createMenuButton();
+    void setStyle(int style);
+    void setStyleHome(int style);
+    void setStyleToDo(int style);
+    void setStyleImPomo(int style);
+    void setStyleClassPomo(int style);
+    void setStyleStats(int style);
+    void setStyleSett(int style);
+
 };
 
 #endif // MAINWINDOW_H

@@ -82,6 +82,7 @@ void ExtendedPomodoro::setcurrent(int newCurr) {
 void ExtendedPomodoro::update() {
     wasStarted = true;
     nextPhase();
+    notifications->playSound();
 }
 void ExtendedPomodoro::reorderTasks() {}
 void ExtendedPomodoro::updateCurrentTaskLabel() {

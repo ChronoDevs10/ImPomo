@@ -114,7 +114,7 @@ void ClassicPomodoro::changeProperties(int newWork, int newShortBreak, int newLo
 }
 void ClassicPomodoro::update() {
     nextPhase();
-    //powiadomienia
+    notifications->playSound();
 }
 
 void ClassicPomodoro::loadSettingsFromFile() {}

@@ -1,20 +1,3 @@
-/*
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
-
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
-{
-    ui->setupUi(this);
-}
-
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
-*/
-
 #include "mainwindow.h"
 #include "task.h"
 #include "todolist.h"
@@ -43,15 +26,30 @@ MainWindow::~MainWindow()
 #include <QComboBox>
 #include <QRadioButton>
 #include <QGroupBox>
-
 #include <QDialogButtonBox>
 
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), toDoList(new ToDoList()),
-    pomodoroList(new PomodoroList()), classicPomodoro(new ClassicPomodoro()), extendedPomodoro(new ExtendedPomodoro(pomodoroList)),
-    appSettings(new AppSettings()), statistics(new Statistics())
+    : QMainWindow(parent), toDoList(new ToDoList()), pomodoroList(new PomodoroList()),
+    classicPomodoro(new ClassicPomodoro()), extendedPomodoro(new ExtendedPomodoro(pomodoroList)),
+    appSettings(new AppSettings()), statistics(new Statistics()), notifications(new Notifications())
 {
+    appSettings->setTheme("Dark");
+    notifications->settings = appSettings;
+    extendedPomodoro->settings = appSettings;
+    toDoList->settings = appSettings;
+    pomodoroList->settings = appSettings;
+
+    extendedPomodoro->notifications = notifications;
+
+
+
+
+
+
+
+
+
     central = new QWidget(this);
     mainLayout = new QVBoxLayout(central);
     setCentralWidget(central);
@@ -72,7 +70,6 @@ MainWindow::MainWindow(QWidget *parent)
     addButton->hide();
 
     addButton->setFixedSize(60, 60);
-    addButton->setStyleSheet("QPushButton { border-radius: 5px; background-color: #ff99cc; color: white; font: bold 24px; }");
     connect(addButton, &QPushButton::clicked, this, &MainWindow::addTaskField);
     mainLayout->addWidget(addButton, 0, Qt::AlignHCenter);
 
@@ -87,6 +84,9 @@ MainWindow::~MainWindow() {
     delete pomodoroList;
     delete classicPomodoro;
     delete extendedPomodoro;
+    delete appSettings;
+    delete notifications;
+    delete statistics;
 }
 
 void MainWindow::setupHomeTab() {
@@ -94,16 +94,18 @@ void MainWindow::setupHomeTab() {
     QVBoxLayout *layout = new QVBoxLayout(startTab);
 
     QLabel *welcomeLabel = new QLabel("Welcome to ✨ImPomo✨");
+    welcomeLabel->setObjectName("Welcome label");
     welcomeLabel->setAlignment(Qt::AlignCenter);
-    welcomeLabel->setStyleSheet("font-size: 60px; font-weight: bold;");
 
     QLabel *hintLabel = new QLabel("Select a tab from the menu to get started");
+    hintLabel->setObjectName("hint");
     hintLabel->setAlignment(Qt::AlignCenter);
 
     layout->addWidget(welcomeLabel);
     layout->addWidget(hintLabel);
 
     stackedWidget->addWidget(startTab);
+    setStyleHome(1);
 }
 
 void MainWindow::setupToDoListTab() {
@@ -114,7 +116,9 @@ void MainWindow::setupToDoListTab() {
     scrollArea->setWidgetResizable(true);
 
     QWidget *scrollContent = new QWidget();
+    scrollContent->setObjectName("toDoScrollContent");
     QVBoxLayout *scrollLayout = new QVBoxLayout(scrollContent);
+    scrollLayout->setObjectName("scrollLayout");
     scrollLayout->setAlignment(Qt::AlignTop);
 
     toDoList->refreshList(scrollLayout);
@@ -122,8 +126,9 @@ void MainWindow::setupToDoListTab() {
 
     toDoListLayout->addWidget(scrollArea);
     stackedWidget->addWidget(toDoListTab);
-}
 
+    setStyleToDo(1);
+}
 
 void MainWindow::setupImPomodoroTab() {
     QWidget* imPomodoroTab = new QWidget();
@@ -278,7 +283,7 @@ void MainWindow::setupStatisticsTab() {
     QVBoxLayout *layout = new QVBoxLayout(statsTab);
 
     QLabel *titleLabel = new QLabel("Choose a day to view the report");
-    titleLabel->setAlignment(Qt::AlignHCenter | Qt::AlignTop);  // Do góry i wyśrodkowany horyzontalnie
+    titleLabel->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
     titleLabel->setStyleSheet(
         "QLabel {"
         "   font-size: 24px;"
@@ -302,21 +307,21 @@ void MainWindow::setupStatisticsTab() {
         "   color: #e0e0e0;"
         "}"
         "QCalendarWidget QWidget#qt_calendar_navigationbar {"
-        "   background-color: #000000;"  // Czarny pasek nawigacji (miesiąc/rok)
+        "   background-color: #000000;"
         "}"
         "QCalendarWidget QToolButton {"
-        "   background-color: #000000;"   // Domyślny styl przycisków
+        "   background-color: #000000;"
         "   color: #eeeeee;"
         "   font-size: 18px;"
         "   padding: 8px 12px;"
         "   border-radius: 5px;"
         "}"
         "QCalendarWidget QToolButton:hover {"
-        "   background-color: #222222;"   // Ciemniejszy szary przy hover
+        "   background-color: #222222;"
         "}"
         "QCalendarWidget QToolButton#qt_calendar_prevmonth,"
         "QCalendarWidget QToolButton#qt_calendar_nextmonth {"
-        "   background-color: transparent;"  // Przezroczyste tło strzałek
+        "   background-color: transparent;"
         "   border: none;"
         "}"
         "QCalendarWidget QMenu {"
@@ -364,7 +369,7 @@ void MainWindow::setupSettingsTab() {
     QVBoxLayout *layout = new QVBoxLayout(container);
     layout->setSpacing(15);
     layout->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
-    layout->setSizeConstraint(QLayout::SetFixedSize); // wymuszamy rozmiar dopasowany do zawartości
+    layout->setSizeConstraint(QLayout::SetFixedSize);
 
     // --- Sound toggle ---
     QCheckBox *soundToggle = new QCheckBox("Sound notifications");
@@ -405,24 +410,26 @@ void MainWindow::setupSettingsTab() {
     themeLayout->addWidget(lightTheme);
 
     QString currentTheme = appSettings->getTheme();
-    if (currentTheme == "dark") {
-        darkTheme->setChecked(true);
-    } else {
+    if(currentTheme == "Light") {
         lightTheme->setChecked(true);
+    } else {
+        darkTheme->setChecked(true);
     }
 
     layout->addWidget(themeGroup);
 
     connect(lightTheme, &QRadioButton::toggled, this, [=](bool checked) {
-        if (checked) {
-            appSettings->setTheme("light");
+        if(checked) {
+            appSettings->setTheme("Light");
             appSettings->saveSettingsToFile();
+            setStyle(0);
         }
     });
     connect(darkTheme, &QRadioButton::toggled, this, [=](bool checked) {
-        if (checked) {
-            appSettings->setTheme("dark");
+        if(checked) {
+            appSettings->setTheme("Dark");
             appSettings->saveSettingsToFile();
+            setStyle(1);
         }
     });
 
@@ -707,4 +714,149 @@ void MainWindow::addTaskField() {
                 extendedPomodoro->list->refreshList(layout);
         }
     }
+}
+void MainWindow::setStyleHome(int style) {
+    QWidget* tab = stackedWidget->widget(0);
+    QLabel* welcomelabel = tab->findChild<QLabel*>("Welcome label");
+    QLabel* hint = tab->findChild<QLabel*>("hint");
+
+    if(style == 0) {
+        tab->setStyleSheet("background-color: #ffecb3;");
+        welcomelabel->setStyleSheet("font-size: 60px; font-weight: bold; color: black;");
+        hint->setStyleSheet("color: black;");
+    } else if(style == 1) {
+        tab->setStyleSheet("background-color: #1f1f1f;");
+        welcomelabel->setStyleSheet("font-size: 60px; font-weight: bold; color: white;");
+        hint->setStyleSheet("color: white;");
+    }
+
+}
+void MainWindow::setStyleToDo(int style) {
+    QWidget* tab = stackedWidget->widget(1);
+    QVBoxLayout* layout = qobject_cast<QVBoxLayout*>(tab->layout());
+    QVBoxLayout* refreshTasks = scrollArea->findChild<QVBoxLayout*>("scrollLayout");
+
+    if(style == 0) {
+        tab->setStyleSheet("background-color: #ffecb3;");
+
+
+    } else if(style == 1) {
+        tab->setStyleSheet("background-color: #1f1f1f;");
+    }
+    toDoList->refreshList(refreshTasks);
+}
+void MainWindow::setStyleImPomo(int style) {
+    QWidget* tab = stackedWidget->widget(2);
+
+    if(style == 0) {
+        tab->setStyleSheet("background-color: #ffecb3;");
+
+
+
+
+
+    } else if(style == 1) {
+        tab->setStyleSheet("background-color: #1f1f1f;");
+
+
+    }
+
+
+    pomodoroList->refreshList(imPomodoroScrollLayout);
+}
+void MainWindow::setStyleClassPomo(int style) {
+    QWidget* tab = stackedWidget->widget(3);
+
+    if(style == 0) {
+        tab->setStyleSheet("background-color: #ffecb3;");
+
+
+    } else if(style == 1) {
+        tab->setStyleSheet("background-color: #1f1f1f;");
+
+    }
+
+}
+void MainWindow::setStyleStats(int style) {
+    QWidget* tab = stackedWidget->widget(4);
+
+    if(style == 0) {
+        tab->setStyleSheet("background-color: #ffecb3;");
+
+    } else if(style == 1) {
+        tab->setStyleSheet("background-color: #1f1f1f;");
+    }
+
+}
+void MainWindow::setStyleSett(int style) {
+    QWidget* tab = stackedWidget->widget(5);
+
+    if(style == 0) {
+        tab->setStyleSheet("background-color: #ffecb3;");
+
+    } else if(style == 1) {
+        tab->setStyleSheet("background-color: #1f1f1f;");
+    }
+
+}
+void MainWindow::setStyle(int style) {
+    QString TimerStyle;
+    QString TimerButtonStyle;
+
+    if(style == 0) {
+        addButton->setStyleSheet("QPushButton { border-radius: 5px; background-color: #fffde7; color: black; font: bold 24px; }");
+        TimerStyle =
+            "font-size: 100px; "
+            "font-weight: bold; "
+            "color: black; "
+            "background-color: #ffe0b2; "
+            "border: 1px solid #4c4c4c; "
+            "border-radius: 30px; "
+            "padding: 50px 90px; "
+            "margin: 20px;";
+
+        TimerButtonStyle =
+            "QPushButton {"
+            "   font-size: 25px; "
+            "   padding: 30px 35px; "
+            "   border-radius: 5px; "
+            "   background-color: #ffe0b2; "
+            "   color: black; "
+            "   border: 1px solid #4c4c4c; "
+            "   margin: 5px; "
+            "}"
+            "QPushButton:hover { background-color: #ffcc80; }";
+
+    }
+    else if(style == 1) {
+        addButton->setStyleSheet("QPushButton { border-radius: 5px; background-color: #2a2a2a; color: white; font-size: 24px; font-weight: 900; }");
+        TimerStyle =
+            "font-size: 100px; "
+            "font-weight: bold; "
+            "color: white; "
+            "background-color: #000000; "
+            "border: 1px solid #5f5f5f; "
+            "border-radius: 30px; "
+            "padding: 50px 90px; "
+            "margin: 20px;";
+
+        TimerButtonStyle =
+            "QPushButton {"
+            "   font-size: 25px; "
+            "   padding: 30px 35px; "
+            "   border-radius: 5px; "
+            "   background-color: #000000; "
+            "   color: white; "
+            "   border: 1px solid #5f5f5f; "
+            "   margin: 5px; "
+            "}"
+            "QPushButton:hover { background-color: #1a1a1a; }";
+    }
+
+    setStyleHome(style);
+    setStyleToDo(style);
+    setStyleImPomo(style);
+    setStyleClassPomo(style);
+    setStyleStats(style);
+    setStyleSett(style);
 }

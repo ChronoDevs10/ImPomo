@@ -3,6 +3,7 @@
 
 #include "ITaskList.h"
 #include "pomodorotask.h"
+#include "appsettings.h"
 #include <QVBoxLayout>
 #include <QScrollArea>
 #include <QWidget>
@@ -15,6 +16,7 @@ private:
 
 public:
     ExtendedPomodoro* parent;
+    AppSettings* settings;
 
     void addTask(Task* task) override;
     void removeTask(Task* task) override;

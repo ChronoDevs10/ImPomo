@@ -56,8 +56,6 @@ void PomodoroList::editTaskDuration(Task* task, int newDuration) {
 
 QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
     QWidget* fieldWidget = new QWidget();
-    //fieldWidget->setFixedHeight(100);
-
     QHBoxLayout* inputLayout = new QHBoxLayout(fieldWidget);
     inputLayout->setContentsMargins(10, 10, 10, 10);
     inputLayout->setSpacing(0);
@@ -65,18 +63,6 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
     task->lineEdit = new QLineEdit(task->getName());
     task->lineEdit->setFixedSize(300, 50);
     task->lineEdit->setPlaceholderText("Enter task name");
-    task->lineEdit->setStyleSheet(
-        "QLineEdit {"
-        "   font-size: 16px;"
-        "   background-color: #f0f0f0;"
-        "   border: 1px solid #ccc;"
-        "   border-right: 1px solid #999;"
-        "   border-top-left-radius: 5px;"
-        "   border-bottom-left-radius: 5px;"
-        "   padding: 5px 10px;"
-        "   color: black;"
-        "}"
-    );
 
     QSpinBox* durationBox = new QSpinBox();
     durationBox->setFixedHeight(50);
@@ -84,19 +70,38 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
     durationBox->setMaximum(180);
     durationBox->setValue(task->getDuration());
     durationBox->setSuffix(" min");
-    durationBox->setStyleSheet(
-        "QSpinBox {"
-        "   font-size: 16px;"
-        "   background-color: #f0f0f0;"
-        "   border: 1px solid #ccc;"
-        "   border-left: none;"
-        "   border-top-right-radius: 5px;"
-        "   border-bottom-right-radius: 5px;"
-        "   padding: 5px 10px;"
-        "   color: black;"
-        "}"
-        "QSpinBox::up-button, QSpinBox::down-button { width: 0; height: 0; border: none; }"
-        );
+
+    QString lineEditStyle;
+    QString durationStyle;
+
+    if(settings->getTheme() == "Light") {
+        lineEditStyle = "background-color: #ffe0b2; border: 1px solid #4c4c4c; border-radius: 5px; padding: 5px; color: black;";
+        durationStyle =
+            "QSpinBox {"
+            "   font-size: 16px;"
+            "   background-color: #ffe0b2;"
+            "   border: 1px solid #4c4c4c;"
+            "   border-radius: 5px;"
+            "   padding: 5px 10px;"
+            "   color: black;"
+            "}"
+            "QSpinBox::up-button, QSpinBox::down-button { width: 0; height: 0; border: none; }";
+    } else if(settings->getTheme() == "Dark") {
+        lineEditStyle = "background-color: #000000; border: 1px solid #5f5f5f; border-radius: 5px; padding: 5px; color: white;";
+        durationStyle =
+            "QSpinBox {"
+            "   font-size: 16px;"
+            "   background-color: #000000;"
+            "   border: 1px solid #5f5f5f;"
+            "   border-radius: 5px;"
+            "   padding: 5px 10px;"
+            "   color: white;"
+            "}"
+            "QSpinBox::up-button, QSpinBox::down-button { width: 0; height: 0; border: none; }";
+    }
+
+    durationBox->setStyleSheet(durationStyle);
+    task->lineEdit->setStyleSheet(lineEditStyle);
 
     QObject::connect(task->lineEdit, &QLineEdit::textChanged, [this, task](const QString& newName) {
         this->editTaskName(task, newName);
@@ -142,18 +147,6 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
     upButton->setFixedSize(25, 25);
     downButton->setFixedSize(25, 25);
 
-    QString arrowStyle =
-        "QPushButton {"
-        "   background-color: #64b5f6;"
-        "   color: white;"
-        "   border: 1px solid black;"
-        "   border-radius: 5px;"
-        "   height: 25px;"
-        "}";
-
-    upButton->setStyleSheet(arrowStyle);
-    downButton->setStyleSheet(arrowStyle);
-
     QVBoxLayout* arrowLayout = new QVBoxLayout();
     arrowLayout->addWidget(upButton);
     arrowLayout->addWidget(downButton);
@@ -181,19 +174,7 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
     });
 
     if(task->getStatus())
-        task->lineEdit->setStyleSheet(
-            "QLineEdit {"
-            "   font-size: 16px;"
-            "   background-color: #ccc;"
-            "   border: 1px solid #ccc;"
-            "   border-right: 1px solid #999;"
-            "   border-top-left-radius: 5px;"
-            "   border-bottom-left-radius: 5px;"
-            "   padding: 5px 10px;"
-            "   color: black;"
-            "   text-decoration: line-through;"
-            "}"
-            );
+        task->lineEdit->setStyleSheet(lineEditStyle + "text-decoration: line-through;");
 
     inputLayout->addWidget(task->lineEdit);
     inputLayout->addWidget(durationBox);
@@ -201,6 +182,20 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
     inputLayout->addWidget(deleteButton);
     inputLayout->addSpacing(10);
     inputLayout->addWidget(arrowWidget);
+
+
+    if(settings->getTheme() == "Light") {
+        deleteButton->setStyleSheet("QPushButton { background-color: #ffa726; color: black; border-radius: 5px; }");
+
+        upButton->setStyleSheet("QPushButton { background-color: #ffe0b2; color: black; border-radius: 5px; }");
+        downButton->setStyleSheet("QPushButton { background-color: #ffe0b2; color: black; border-radius: 5px; }");
+    }
+    else if(settings->getTheme() == "Dark") {
+        deleteButton->setStyleSheet("QPushButton { background-color: #dd2c00; color: white; border-radius: 5px; }");
+
+        upButton->setStyleSheet("QPushButton { background-color: #7c7c7c; color: white; border-radius: 5px; }");
+        downButton->setStyleSheet("QPushButton { background-color: #7c7c7c; color: white; border-radius: 5px; }");
+    }
 
     return fieldWidget;
 }

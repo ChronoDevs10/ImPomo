@@ -18,6 +18,7 @@ public:
     void loadFromFile();
     void saveToFile();
     void displayReport(QString date);
+    void changeStyle();
 };
 
 #endif // STATISTICS_H

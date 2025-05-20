@@ -5,6 +5,8 @@
 #include "ipomodoromode.h"
 #include "timer.h"
 #include "itimerobserver.h"
+#include "appsettings.h"
+#include "notifications.h"
 
 class ClassicPomodoro : public IPomodoroMode, public ITimerObserver {
 private:
@@ -17,6 +19,8 @@ private:
     int currentCycle;
     QString currentPhase;
 public:
+    AppSettings* settings;
+    Notifications* notifications;
     Timer* timer;
     QLabel* phaseLabel;
 
@@ -37,6 +41,7 @@ public:
     int getCycles();
     int getWorkBlocks();
     QString getcurrentPhase();
+    void changeStyle();
 
     void loadSettingsFromFile();
     void saveSettingsToFile();

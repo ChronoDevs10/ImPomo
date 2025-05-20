@@ -54,31 +54,38 @@ QWidget* ToDoList::createTaskWidget(Task* task) {
 
     QLineEdit* lineEdit = new QLineEdit(task->getName());
     lineEdit->setFixedSize(400, 60);
-    lineEdit->setStyleSheet("QLineEdit { background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 5px; padding: 5px; color: black; }");
     lineEdit->setPlaceholderText("Enter task name");
+
+    QString lineEditStyle;
+
+    if(settings->getTheme() == "Light")
+        lineEditStyle = "background-color: #ffe0b2; border: 1px solid #4c4c4c; border-radius: 5px; padding: 5px; color: black; ";
+    else if(settings->getTheme() == "Dark")
+        lineEditStyle = "background-color: #000000 ; border: 1px solid #5f5f5f; border-radius: 5px; padding: 5px; color: white; ";
+
+
+    lineEdit->setStyleSheet(lineEditStyle);
 
     QObject::connect(lineEdit, &QLineEdit::textChanged, [task](const QString& newName) {
         task->editName(newName);
     });
 
-    QCheckBox* checkBox = new QCheckBox("✔");
+    QCheckBox* checkBox = new QCheckBox(" ");
     checkBox->setChecked(task->getStatus());
 
     if(task->getStatus())
-        lineEdit->setStyleSheet("QLineEdit { background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 5px; padding: 5px; color: black; text-decoration: line-through; }");
+        lineEdit->setStyleSheet(lineEditStyle + "text-decoration: line-through;");
 
-    QObject::connect(checkBox, &QCheckBox::toggled, [this, task, lineEdit](bool checked) {
+    QObject::connect(checkBox, &QCheckBox::toggled, [this, task, lineEdit, lineEditStyle](bool checked) {
         task->editStatus();
         if(checked)
-            lineEdit->setStyleSheet("QLineEdit { background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 5px; padding: 5px; color: black; text-decoration: line-through; }");
+            lineEdit->setStyleSheet(lineEditStyle + "text-decoration: line-through;");
         else
-            lineEdit->setStyleSheet("QLineEdit { background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 5px; padding: 5px; color: black; }");
-
+            lineEdit->setStyleSheet(lineEditStyle);
     });
 
     QPushButton* deleteButton = new QPushButton("🗑");
     deleteButton->setFixedSize(40, 40);
-    deleteButton->setStyleSheet("QPushButton { background-color: #e57373; color: white; border-radius: 5px; }");
 
     QObject::connect(deleteButton, &QPushButton::clicked, [this, task, fieldWidget]() {
         removeTask(task);
@@ -90,9 +97,6 @@ QWidget* ToDoList::createTaskWidget(Task* task) {
 
     upButton->setFixedSize(20, 20);
     downButton->setFixedSize(20, 20);
-
-    upButton->setStyleSheet("QPushButton { background-color: #64b5f6; color: white; border-radius: 5px; }");
-    downButton->setStyleSheet("QPushButton { background-color: #64b5f6; color: white; border-radius: 5px; }");
 
     QVBoxLayout* arrowLayout = new QVBoxLayout();
     arrowLayout->addWidget(upButton);
@@ -124,6 +128,29 @@ QWidget* ToDoList::createTaskWidget(Task* task) {
     inputLayout->addWidget(deleteButton);
     inputLayout->addWidget(arrowWidget);
 
+
+    if(settings->getTheme() == "Light") {
+        checkBox->setStyleSheet(
+            "QCheckBox::indicator { width: 16px; height: 16px; border-radius: 4px; border: 1px solid gray; }"
+            "QCheckBox::indicator:checked { background-color: #ff9800; }"
+            );
+
+        deleteButton->setStyleSheet("QPushButton { background-color: #ffa726; color: black; border-radius: 5px; }");
+
+        upButton->setStyleSheet("QPushButton { background-color: #ffe0b2; color: black; border-radius: 5px; }");
+        downButton->setStyleSheet("QPushButton { background-color: #ffe0b2; color: black; border-radius: 5px; }");
+    }
+    else if(settings->getTheme() == "Dark") {
+        checkBox->setStyleSheet(
+            "QCheckBox::indicator { width: 16px; height: 16px; border-radius: 4px; background-color: #afafaf; }"
+            "QCheckBox::indicator:checked { background-color: #626262; }"
+            );
+
+        deleteButton->setStyleSheet("QPushButton { background-color: #dd2c00; color: white; border-radius: 5px; }");
+
+        upButton->setStyleSheet("QPushButton { background-color: #7c7c7c; color: white; border-radius: 5px; }");
+        downButton->setStyleSheet("QPushButton { background-color: #7c7c7c; color: white; border-radius: 5px; }");
+    }
     return fieldWidget;
 }
 

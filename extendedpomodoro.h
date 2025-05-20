@@ -6,6 +6,9 @@
 #include "pomodorotask.h"
 #include "timer.h"
 #include "itimerobserver.h"
+#include "notifications.h"
+#include "appsettings.h"
+#include "notifications.h"
 
 class ExtendedPomodoro: public IPomodoroMode, public ITimerObserver  {
 private:
@@ -16,6 +19,8 @@ public:
     QLabel* currTaskLabel;
     int tasksFinished;
     bool wasStarted;
+    AppSettings* settings;
+    Notifications* notifications;
 
     ExtendedPomodoro();
     ExtendedPomodoro(PomodoroList* List);
@@ -33,6 +38,7 @@ public:
     void updateCurrentTaskLabel();
     void reorderTasks();
     void clearAllTasks();
+    void changeStyle();
 };
 
 #endif // EXTENDEDPOMODORO_H

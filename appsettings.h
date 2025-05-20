@@ -9,6 +9,7 @@ private:
     QString theme;
     QString sound;
 public:
+    AppSettings();
     bool getSoundStatus();
     QString getTheme();
     QString getSoundType();
