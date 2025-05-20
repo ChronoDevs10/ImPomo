@@ -143,7 +143,7 @@ QWidget* ToDoList::createTaskWidget(Task* task) {
     else if(settings->getTheme() == "Dark") {
         checkBox->setStyleSheet(
             "QCheckBox::indicator { width: 16px; height: 16px; border-radius: 4px; background-color: #afafaf; }"
-            "QCheckBox::indicator:checked { background-color: #626262; }"
+            "QCheckBox::indicator:checked { background-color: #4f4f4f; }"
             );
 
         deleteButton->setStyleSheet("QPushButton { background-color: #dd2c00; color: white; border-radius: 5px; }");

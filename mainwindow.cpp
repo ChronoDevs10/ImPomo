@@ -149,33 +149,6 @@ void MainWindow::setupImPomodoroTab() {
     QWidget* timeWidget = new QWidget();
     QVBoxLayout* timeLayout = new QVBoxLayout(timeWidget);
 
-    //-------------------------------------------------------------------------------------------------
-    extendedPomodoro->timer->timeLabel->setStyleSheet(
-        "font-size: 100px; "
-        "font-weight: bold; "
-        "color: #3a3a3a ; "
-        "background-color: #ff99cc; "
-        "border: 2px solid #000000; "
-        "border-radius: 30px; "
-        "padding: 50px 90px; "
-        "margin: 20px;"
-        );
-
-    QString buttonStyle =
-        "QPushButton {"
-        "   font-size: 25px; "
-        "   padding: 30px 35px; "
-        "   border-radius: 5px; "
-        "   background-color: #ff66cc; "
-        "   color: #3a3a3a; "
-        "   margin: 5px; "
-        "}"
-        "QPushButton:hover { background-color: #cc3399; }";
-
-    extendedPomodoro->timer->startButton->setStyleSheet(buttonStyle);
-    extendedPomodoro->timer->pauseButton->setStyleSheet(buttonStyle);
-    extendedPomodoro->timer->resetButton->setStyleSheet(buttonStyle);
-    //-------------------------------------------------------------------------------------------------
     QHBoxLayout* buttonLayout = new QHBoxLayout();
     buttonLayout->addWidget(extendedPomodoro->timer->startButton);
     buttonLayout->addWidget(extendedPomodoro->timer->pauseButton);
@@ -188,19 +161,8 @@ void MainWindow::setupImPomodoroTab() {
     timeLayout->addLayout(buttonLayout);
     timeLayout->addStretch(1);
 
-
     QPushButton* resetAllButton = new QPushButton("Clear All Tasks");
-    resetAllButton->setStyleSheet(
-        "QPushButton {"
-        "   font-size: 20px; "
-        "   padding: 15px 20px; "
-        "   border-radius: 5px; "
-        "   background-color: #ff6666; "
-        "   color: white; "
-        "   margin: 10px; "
-        "}"
-        "QPushButton:hover { background-color: #cc3333; }"
-        );
+    resetAllButton->setObjectName("resetAllButton");
 
     timeLayout->addWidget(resetAllButton, 0, Qt::AlignRight);
 
@@ -212,6 +174,7 @@ void MainWindow::setupImPomodoroTab() {
     mainLayout->addWidget(timeWidget, 1);
 
     stackedWidget->addWidget(imPomodoroTab);
+    setStyleImPomo(1);
 }
 
 void MainWindow::setupPomodoroTab() {
@@ -231,36 +194,6 @@ void MainWindow::setupPomodoroTab() {
     settingsButton->setFixedSize(60, 60);
     connect(settingsButton, &QPushButton::clicked, this, &MainWindow::PomodoroSettings);
 
-    //--------------------------------------------------------------------------------
-    //do przeniesienia do konstruktora Timera, jeżeli będzie jednolity styl zegarów
-    //w całej aplikacji
-    classicPomodoro->timer->timeLabel->setStyleSheet(
-        "font-size: 100px; "
-        "font-weight: bold; "
-        "color: #3a3a3a ; "
-        "background-color: #ff99cc; "
-        "border: 2px solid #000000; "
-        "border-radius: 30px; "
-        "padding: 50px 90px; "
-        "margin: 20px;"
-        );
-
-    QString buttonStyle =
-        "QPushButton {"
-        "   font-size: 25px; "
-        "   padding: 30px 35px; "
-        "   border-radius: 5px; "
-        "   background-color: #ff66cc; "
-        "   color: #3a3a3a; "
-        "   margin: 5px; "
-        "}"
-        "QPushButton:hover { background-color: #cc3399; }";
-
-    classicPomodoro->timer->startButton->setStyleSheet(buttonStyle);
-    classicPomodoro->timer->pauseButton->setStyleSheet(buttonStyle);
-    classicPomodoro->timer->resetButton->setStyleSheet(buttonStyle);
-    //-------------------------------------------------------------------------------------------------
-
     QHBoxLayout *buttonLayout = new QHBoxLayout();
     buttonLayout->addWidget(classicPomodoro->timer->startButton);
     buttonLayout->addWidget(classicPomodoro->timer->pauseButton);
@@ -276,6 +209,7 @@ void MainWindow::setupPomodoroTab() {
     layout->addStretch();
 
     stackedWidget->addWidget(pomodoroTab);
+    setStyleClassPomo(1);
 }
 
 void MainWindow::setupStatisticsTab() {
@@ -525,6 +459,8 @@ void MainWindow::setupSettingsTab() {
 
     settingsTab->setObjectName("settingsTab");
     settingsTab->setStyleSheet(style);
+
+    setStyleSett(1);
 }
 
 void MainWindow::PomodoroSettings() {
@@ -747,34 +683,64 @@ void MainWindow::setStyleToDo(int style) {
 }
 void MainWindow::setStyleImPomo(int style) {
     QWidget* tab = stackedWidget->widget(2);
+    QPushButton* resetAllButton = tab->findChild<QPushButton*>("resetAllButton");
+    QString TimerStyle;
+    QString TimerButtonStyle;
 
     if(style == 0) {
         tab->setStyleSheet("background-color: #ffecb3;");
+        TimerStyle = getTimerStyle(0);
+        TimerButtonStyle = getTimerButtonStyle(0);
 
-
-
-
-
+        resetAllButton->setStyleSheet
+        ("QPushButton {font-size: 20px; padding: 15px 20px; "
+        "border-radius: 5px; background-color: #ffb74d; color: black; margin: 10px; "
+        "border: 1px solid #4c4c4c;} "
+        "QPushButton:hover { background-color: #ffa726; }");
     } else if(style == 1) {
         tab->setStyleSheet("background-color: #1f1f1f;");
-
-
+        TimerStyle = getTimerStyle(1);
+        TimerButtonStyle = getTimerButtonStyle(1);
+        resetAllButton->setStyleSheet(
+            "QPushButton {"
+            "   font-size: 20px; "
+            "   padding: 15px 20px; "
+            "   border-radius: 5px; "
+            "   background-color: #ff6666; "
+            "   color: white; "
+            "   margin: 10px; "
+            "   border: 1px solid #5f5f5f;"
+            "}"
+            "QPushButton:hover { background-color: #cc3333; }"
+        );
     }
 
+    extendedPomodoro->timer->startButton->setStyleSheet(TimerButtonStyle);
+    extendedPomodoro->timer->pauseButton->setStyleSheet(TimerButtonStyle);
+    extendedPomodoro->timer->resetButton->setStyleSheet(TimerButtonStyle);
+    extendedPomodoro->timer->timeLabel->setStyleSheet(TimerStyle);
 
     pomodoroList->refreshList(imPomodoroScrollLayout);
 }
 void MainWindow::setStyleClassPomo(int style) {
     QWidget* tab = stackedWidget->widget(3);
+    QString TimerStyle;
+    QString TimerButtonStyle;
 
     if(style == 0) {
         tab->setStyleSheet("background-color: #ffecb3;");
-
+        TimerStyle = getTimerStyle(0);
+        TimerButtonStyle = getTimerButtonStyle(0);
 
     } else if(style == 1) {
         tab->setStyleSheet("background-color: #1f1f1f;");
-
+        TimerStyle = getTimerStyle(1);
+        TimerButtonStyle = getTimerButtonStyle(1);
     }
+    classicPomodoro->timer->startButton->setStyleSheet(TimerButtonStyle);
+    classicPomodoro->timer->pauseButton->setStyleSheet(TimerButtonStyle);
+    classicPomodoro->timer->resetButton->setStyleSheet(TimerButtonStyle);
+    classicPomodoro->timer->timeLabel->setStyleSheet(TimerStyle);
 
 }
 void MainWindow::setStyleStats(int style) {
@@ -800,22 +766,41 @@ void MainWindow::setStyleSett(int style) {
 
 }
 void MainWindow::setStyle(int style) {
-    QString TimerStyle;
-    QString TimerButtonStyle;
+    if(style == 0)
+        addButton->setStyleSheet("QPushButton { border-radius: 5px; background-color: #fffde7; color: black; font: bold 24px; }");
+    else if(style == 1)
+        addButton->setStyleSheet("QPushButton { border-radius: 5px; background-color: #2a2a2a; color: white; font-size: 24px; font-weight: 900; }");
+
+    setStyleHome(style);
+    setStyleToDo(style);
+    setStyleImPomo(style);
+    setStyleClassPomo(style);
+    setStyleStats(style);
+    setStyleSett(style);
+}
+
+QString MainWindow::getTimerStyle(int style) {
 
     if(style == 0) {
-        addButton->setStyleSheet("QPushButton { border-radius: 5px; background-color: #fffde7; color: black; font: bold 24px; }");
-        TimerStyle =
+        return "font-size: 100px; font-weight: bold; color: black; "
+            "background-color: #ffe0b2; border: 1px solid #4c4c4c; "
+            "border-radius: 30px; padding: 50px 90px; margin: 20px;";
+    } else if(style == 1){
+        return
             "font-size: 100px; "
             "font-weight: bold; "
-            "color: black; "
-            "background-color: #ffe0b2; "
-            "border: 1px solid #4c4c4c; "
+            "color: white; "
+            "background-color: #000000; "
+            "border: 1px solid #5f5f5f; "
             "border-radius: 30px; "
             "padding: 50px 90px; "
             "margin: 20px;";
+    }
 
-        TimerButtonStyle =
+}
+QString MainWindow::getTimerButtonStyle(int style) {
+    if(style == 0) {
+        return
             "QPushButton {"
             "   font-size: 25px; "
             "   padding: 30px 35px; "
@@ -826,21 +811,8 @@ void MainWindow::setStyle(int style) {
             "   margin: 5px; "
             "}"
             "QPushButton:hover { background-color: #ffcc80; }";
-
-    }
-    else if(style == 1) {
-        addButton->setStyleSheet("QPushButton { border-radius: 5px; background-color: #2a2a2a; color: white; font-size: 24px; font-weight: 900; }");
-        TimerStyle =
-            "font-size: 100px; "
-            "font-weight: bold; "
-            "color: white; "
-            "background-color: #000000; "
-            "border: 1px solid #5f5f5f; "
-            "border-radius: 30px; "
-            "padding: 50px 90px; "
-            "margin: 20px;";
-
-        TimerButtonStyle =
+    } else if(style == 1){
+        return
             "QPushButton {"
             "   font-size: 25px; "
             "   padding: 30px 35px; "
@@ -852,11 +824,4 @@ void MainWindow::setStyle(int style) {
             "}"
             "QPushButton:hover { background-color: #1a1a1a; }";
     }
-
-    setStyleHome(style);
-    setStyleToDo(style);
-    setStyleImPomo(style);
-    setStyleClassPomo(style);
-    setStyleStats(style);
-    setStyleSett(style);
 }

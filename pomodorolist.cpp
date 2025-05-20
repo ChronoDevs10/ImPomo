@@ -174,7 +174,8 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
     });
 
     if(task->getStatus())
-        task->lineEdit->setStyleSheet(lineEditStyle + "text-decoration: line-through;");
+        task->lineEdit->setStyleSheet( "background-color: #a7a7a7; border: 1px solid #4c4c4c; "
+        "border-radius: 5px; padding: 5px; color: black; text-decoration: line-through;");
 
     inputLayout->addWidget(task->lineEdit);
     inputLayout->addWidget(durationBox);

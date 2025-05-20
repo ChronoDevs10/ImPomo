@@ -71,7 +71,8 @@ private:
     void setStyleClassPomo(int style);
     void setStyleStats(int style);
     void setStyleSett(int style);
-
+    QString getTimerStyle(int style);
+    QString getTimerButtonStyle(int style);
 };
 
 #endif // MAINWINDOW_H

@@ -45,19 +45,8 @@ void ExtendedPomodoro::nextPhase() {
     if(list->taskCount() == tasksFinished)
         return;
 
-    list->getPTasks().at(current)->lineEdit->setStyleSheet(
-        "QLineEdit {"
-        "   font-size: 16px;"
-        "   background-color: #ccc;"
-        "   border: 1px solid #ccc;"
-        "   border-right: 1px solid #999;"
-        "   border-top-left-radius: 5px;"
-        "   border-bottom-left-radius: 5px;"
-        "   padding: 5px 10px;"
-        "   color: black;"
-        "   text-decoration: line-through;"
-        "}"
-    );
+    list->getPTasks().at(current)->lineEdit->setStyleSheet( "background-color: #a7a7a7; border: 1px solid #4c4c4c; "
+    "border-radius: 5px; padding: 5px; color: black; text-decoration: line-through;");
 
     if(current < (list->taskCount() - 1)){
         list->getPTasks().at(current)->editStatus();
