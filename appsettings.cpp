@@ -1,13 +1,24 @@
 #include "appsettings.h"
 
 bool AppSettings::getSoundStatus() {
-    return true;
+    return soundStatus;
 }
-void AppSettings::enableReminders() {}
-void AppSettings::disableReminders() {}
 QString AppSettings::getTheme() {
-    return "";
+    return theme;
 }
-void AppSettings::setTheme(bool isDarkMode) {}
+QString AppSettings::getSoundType() {
+    return sound;
+}
+
+void AppSettings::setSoundStatus(bool isEnabled) {
+    soundStatus = isEnabled;
+}
+void AppSettings::setTheme(QString newTheme) {
+    theme = newTheme;
+}
+void AppSettings::setSound(QString newSound) {
+    sound = newSound;
+}
+
 void AppSettings::saveSettingsToFile() {}
 void AppSettings::loadSettingsFromFile() {}

@@ -5,15 +5,18 @@
 
 class AppSettings {
 private:
-    bool soundEnabled;
-    bool visualEnabled;
+    bool soundStatus;
     QString theme;
+    QString sound;
 public:
     bool getSoundStatus();
-    void enableReminders();
-    void disableReminders();
     QString getTheme();
-    void setTheme(bool isDarkMode);
+    QString getSoundType();
+
+    void setSoundStatus(bool isEnabled);
+    void setTheme(QString theme);
+    void setSound(QString sound);
+
     void saveSettingsToFile();
     void loadSettingsFromFile();
 };

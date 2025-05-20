@@ -13,6 +13,8 @@
 #include "pomodorolist.h"
 #include "classicpomodoro.h"
 #include "extendedpomodoro.h"
+#include "statistics.h"
+#include "appsettings.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -43,6 +45,8 @@ private:
     PomodoroList* pomodoroList;
     ClassicPomodoro* classicPomodoro;
     ExtendedPomodoro* extendedPomodoro;
+    AppSettings* appSettings;
+    Statistics* statistics;
 
     QScrollArea* imPomodoroScrollArea;
     QVBoxLayout* imPomodoroScrollLayout;

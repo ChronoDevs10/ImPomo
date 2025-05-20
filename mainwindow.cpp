@@ -38,6 +38,11 @@ MainWindow::~MainWindow()
 #include <QApplication>
 #include <QPushButton>
 #include <QScreen>
+#include <QCalendarWidget>
+#include <QMessageBox>
+#include <QComboBox>
+#include <QRadioButton>
+#include <QGroupBox>
 
 #include <QDialogButtonBox>
 
@@ -45,7 +50,7 @@ MainWindow::~MainWindow()
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), toDoList(new ToDoList()),
     pomodoroList(new PomodoroList()), classicPomodoro(new ClassicPomodoro()), extendedPomodoro(new ExtendedPomodoro(pomodoroList)),
-    taskIdx(0)
+    appSettings(new AppSettings()), statistics(new Statistics())
 {
     central = new QWidget(this);
     mainLayout = new QVBoxLayout(central);
@@ -73,6 +78,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     setWindowTitle("✨ImPomo✨");
     resize(600, 800);
+
+    taskIdx = 0;
 }
 
 MainWindow::~MainWindow() {
@@ -269,43 +276,248 @@ void MainWindow::setupPomodoroTab() {
 void MainWindow::setupStatisticsTab() {
     QWidget *statsTab = new QWidget();
     QVBoxLayout *layout = new QVBoxLayout(statsTab);
-    QLabel *label = new QLabel("Work in progress");
 
-    label->setStyleSheet(
-        "font-family: 'Freestyle Script'; "
-        "font-size: 40px; "
-        "font-weight: bold; "
-        "color: #fce4ec; "
-        "letter-spacing: 2px; "
-        "background-color: #000000; "
-        "border-radius: 10px; "
-        "padding: 10px;"
+    QLabel *titleLabel = new QLabel("Choose a day to view the report");
+    titleLabel->setAlignment(Qt::AlignHCenter | Qt::AlignTop);  // Do góry i wyśrodkowany horyzontalnie
+    titleLabel->setStyleSheet(
+        "QLabel {"
+        "   font-size: 24px;"
+        "   font-weight: bold;"
+        "   color: #e0e0e0;"
+        "   padding: 10px;"
+        "}"
+        );
+    layout->addWidget(titleLabel, 0, Qt::AlignTop);
+
+    QCalendarWidget *calendar = new QCalendarWidget();
+    calendar->setGridVisible(true);
+    calendar->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
+    calendar->setLocale(QLocale(QLocale::English));
+
+    calendar->setStyleSheet(
+        "QCalendarWidget {"
+        "   border: 2px solid #bb86fc;"
+        "   border-radius: 8px;"
+        "   background-color: #121212;"
+        "   color: #e0e0e0;"
+        "}"
+        "QCalendarWidget QWidget#qt_calendar_navigationbar {"
+        "   background-color: #000000;"  // Czarny pasek nawigacji (miesiąc/rok)
+        "}"
+        "QCalendarWidget QToolButton {"
+        "   background-color: #000000;"   // Domyślny styl przycisków
+        "   color: #eeeeee;"
+        "   font-size: 18px;"
+        "   padding: 8px 12px;"
+        "   border-radius: 5px;"
+        "}"
+        "QCalendarWidget QToolButton:hover {"
+        "   background-color: #222222;"   // Ciemniejszy szary przy hover
+        "}"
+        "QCalendarWidget QToolButton#qt_calendar_prevmonth,"
+        "QCalendarWidget QToolButton#qt_calendar_nextmonth {"
+        "   background-color: transparent;"  // Przezroczyste tło strzałek
+        "   border: none;"
+        "}"
+        "QCalendarWidget QMenu {"
+        "   background-color: #121212;"
+        "   color: #eeeeee;"
+        "}"
+        "QCalendarWidget QAbstractItemView {"
+        "   background-color: #1e1e1e;"
+        "   font-size: 20px;"
+        "   border-radius: 5px;"
+        "   color: #e0e0e0;"
+        "}"
+        "QCalendarWidget QAbstractItemView::item:enabled {"
+        "   color: #e0e0e0;"
+        "}"
+        "QCalendarWidget QAbstractItemView::item:disabled {"
+        "   background-color: #333333;"
+        "   color: #999999;"
+        "}"
+        "QCalendarWidget QAbstractItemView::item:hover {"
+        "   background-color: #6200ee;"
+        "   color: #ffffff;"
+        "}"
         );
 
-    label->setAlignment(Qt::AlignCenter);
-    layout->addWidget(label);
+    layout->addWidget(calendar, 1);
+
+    connect(calendar, &QCalendarWidget::clicked, this, [=](const QDate &date) {
+        QMessageBox::information(this, "Wybrana datAa", "Kliknięto: " + date.toString("dd-MM-yyyy"));
+    });
+
     stackedWidget->addWidget(statsTab);
 }
 
 void MainWindow::setupSettingsTab() {
     QWidget *settingsTab = new QWidget();
-    QVBoxLayout *layout = new QVBoxLayout(settingsTab);
-    QLabel *label = new QLabel("Work in progress");
 
-    label->setStyleSheet(
-        "font-family: 'Freestyle Script'; "
-        "font-size: 40px; "
-        "font-weight: bold; "
-        "color: #fce4ec; "
-        "letter-spacing: 2px; "
-        "background-color: #000000; "
-        "border-radius: 10px; "
-        "padding: 10px;"
-        );
+    QVBoxLayout *outerLayout = new QVBoxLayout(settingsTab);
+    outerLayout->setContentsMargins(50, 50, 50, 50);
+    outerLayout->setAlignment(Qt::AlignCenter);
 
-    label->setAlignment(Qt::AlignCenter);
-    layout->addWidget(label);
+    QWidget *container = new QWidget();
+    container->setObjectName("settingsContainer");
+
+    QVBoxLayout *layout = new QVBoxLayout(container);
+    layout->setSpacing(15);
+    layout->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
+    layout->setSizeConstraint(QLayout::SetFixedSize); // wymuszamy rozmiar dopasowany do zawartości
+
+    // --- Sound toggle ---
+    QCheckBox *soundToggle = new QCheckBox("Sound notifications");
+    soundToggle->setChecked(appSettings->getSoundStatus());
+    layout->addWidget(soundToggle);
+
+    connect(soundToggle, &QCheckBox::toggled, this, [=](bool checked) {
+        appSettings->setSoundStatus(checked);
+        appSettings->saveSettingsToFile();
+    });
+
+    // --- Sound combo box ---
+    QComboBox *soundComboBox = new QComboBox();
+    soundComboBox->addItem("Default");
+    soundComboBox->addItem("Sound 1");
+    soundComboBox->addItem("Sound 2");
+
+    QLabel *soundLabel = new QLabel("Select sound:");
+    layout->addWidget(soundLabel);
+    layout->addWidget(soundComboBox);
+
+    int soundIndex = soundComboBox->findText(appSettings->getSoundType());
+    soundComboBox->setCurrentIndex(soundIndex >= 0 ? soundIndex : 0);
+
+    connect(soundComboBox, &QComboBox::currentTextChanged, this, [=](const QString &text) {
+        appSettings->setSound(text);
+        appSettings->saveSettingsToFile();
+    });
+
+    // --- Theme selection ---
+    QGroupBox *themeGroup = new QGroupBox("Theme");
+    QVBoxLayout *themeLayout = new QVBoxLayout(themeGroup);
+
+    QRadioButton *lightTheme = new QRadioButton("Light");
+    QRadioButton *darkTheme = new QRadioButton("Dark");
+
+    themeLayout->addWidget(darkTheme);
+    themeLayout->addWidget(lightTheme);
+
+    QString currentTheme = appSettings->getTheme();
+    if (currentTheme == "dark") {
+        darkTheme->setChecked(true);
+    } else {
+        lightTheme->setChecked(true);
+    }
+
+    layout->addWidget(themeGroup);
+
+    connect(lightTheme, &QRadioButton::toggled, this, [=](bool checked) {
+        if (checked) {
+            appSettings->setTheme("light");
+            appSettings->saveSettingsToFile();
+        }
+    });
+    connect(darkTheme, &QRadioButton::toggled, this, [=](bool checked) {
+        if (checked) {
+            appSettings->setTheme("dark");
+            appSettings->saveSettingsToFile();
+        }
+    });
+
+    layout->addStretch();
+
+    outerLayout->addWidget(container);
+
     stackedWidget->addWidget(settingsTab);
+
+    QString style = R"(
+    QWidget#settingsTab {
+        background-color: #FFDDE6;
+    }
+    #settingsContainer {
+        background-color: #FFF0F5;
+        border: 5px solid #C71585;
+        border-radius: 25px;
+        padding: 40px;
+    }
+    QCheckBox, QLabel, QRadioButton {
+        color: #4B004B;
+        font-size: 28px;
+        font-weight: 800;
+    }
+    QComboBox {
+        font-size: 28px;
+        color: #4B004B;
+        background-color: #FFF0F5;
+        border: 4px solid #C71585;
+        border-radius: 12px;
+        padding: 12px 20px;
+        min-width: 280px;
+    }
+    QComboBox QAbstractItemView {
+        background-color: #FFDDE6;
+        color: #4B004B;
+        selection-background-color: #C71585;
+        selection-color: #FFF0F5;
+        font-size: 26px;
+    }
+    QGroupBox {
+        font-size: 34px;
+        font-weight: 900;
+        color: #C71585;
+        margin-top: 35px;
+        margin-bottom: 35px;
+        padding: 12px 20px 20px 20px;
+        background: transparent;
+        border: 3px solid #C71585;
+        border-radius: 20px;
+
+        subcontrol-origin: margin;
+        subcontrol-position: top center;
+    }
+    QGroupBox::title {
+        subcontrol-origin: margin;
+        subcontrol-position: top center;
+        padding: 0 12px;
+        background-color: #FFF0F5;
+        color: #C71585;
+    }
+
+    QRadioButton::indicator {
+        width: 20px;
+        height: 20px;
+        border: 2px solid #C71585;
+        border-radius: 10px;
+        background: white;
+    }
+    QRadioButton::indicator:checked {
+        background-color: #C71585;
+        border: 2px solid #9A0040;
+    }
+    QCheckBox::indicator {
+        width: 20px;
+        height: 20px;
+        border: 2px solid #C71585;
+        border-radius: 4px;
+        background: white;
+    }
+    QCheckBox::indicator:checked {
+        background-color: #C71585;
+        border: 2px solid #9A0040;
+    }
+
+    QGroupBox:hover, QGroupBox:focus {
+        background: transparent;
+    }
+    QRadioButton:hover, QRadioButton:focus {
+        background: transparent;
+    }
+    )";
+
+    settingsTab->setObjectName("settingsTab");
+    settingsTab->setStyleSheet(style);
 }
 
 void MainWindow::PomodoroSettings() {
