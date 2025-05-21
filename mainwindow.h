@@ -1,6 +1,35 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "task.h"
+#include "todolist.h"
+#include "taskfactory.h"
+#include "timer.h"
+#include <QVBoxLayout>
+#include <QPushButton>
+#include <QStackedWidget>
+#include <QMenu>
+#include <QAction>
+#include <QScrollArea>
+#include <QTimer>
+#include <QScrollBar>
+#include <QDebug>
+#include <QLabel>
+#include <QMovie>
+#include <QDialog>
+#include <QSpinBox>
+#include <QLineEdit>
+#include <QApplication>
+#include <QApplication>
+#include <QPushButton>
+#include <QScreen>
+#include <QCalendarWidget>
+#include <QMessageBox>
+#include <QComboBox>
+#include <QRadioButton>
+#include <QGroupBox>
+#include <QDialogButtonBox>
+
 #include <QMainWindow>
 #include <QPushButton>
 #include <QVBoxLayout>

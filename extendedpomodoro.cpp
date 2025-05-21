@@ -28,7 +28,6 @@ ExtendedPomodoro::ExtendedPomodoro(PomodoroList* List) {
         timer->setTime(list->getPTasks().at(0)->getDuration());
         currTaskLabel = new QLabel("Current task: " + list->getPTasks().at(0)->getName());
     }
-    currTaskLabel->setStyleSheet("font-size: 25px; font-weight: bold; margin: 10px;");
 }
 
 void ExtendedPomodoro::start() {
@@ -41,7 +40,6 @@ void ExtendedPomodoro::reset() {
     timer->reset();
 }
 void ExtendedPomodoro::nextPhase() {
-
     if(list->taskCount() == tasksFinished)
         return;
 

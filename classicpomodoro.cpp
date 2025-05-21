@@ -20,7 +20,6 @@ ClassicPomodoro::ClassicPomodoro() {
     timer->setTime(workDuration);
 
     phaseLabel = new QLabel("Current phase: " + currentPhase);
-    phaseLabel->setStyleSheet("font-size: 25px; font-weight: bold; margin: 10px;");
 }
 
 void ClassicPomodoro::start() {
