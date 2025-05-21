@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     pomodoroList->settings = appSettings;
 
     extendedPomodoro->notifications = notifications;
+    classicPomodoro->notifications = notifications;
 
 
 
@@ -226,9 +227,8 @@ void MainWindow::setupSettingsTab() {
     });
 
     QComboBox *soundComboBox = new QComboBox();
-    soundComboBox->addItem("Default");
-    soundComboBox->addItem("Sound 1");
-    soundComboBox->addItem("Sound 2");
+    soundComboBox->addItem("Soft Alarm");
+    soundComboBox->addItem("Fanfares");
 
     QLabel *soundLabel = new QLabel("Select sound:");
     layout->addWidget(soundLabel);
@@ -239,6 +239,7 @@ void MainWindow::setupSettingsTab() {
 
     connect(soundComboBox, &QComboBox::currentTextChanged, this, [=](const QString &text) {
         appSettings->setSound(text);
+        notifications->playSound();
         appSettings->saveSettingsToFile();
     });
 

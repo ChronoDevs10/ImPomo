@@ -2,7 +2,8 @@
 
 AppSettings::AppSettings() {
     soundStatus = true;
-    QString theme = "Dark";
+    theme = "Dark";
+    sound = "Soft Alarm";
 }
 
 bool AppSettings::getSoundStatus() {
