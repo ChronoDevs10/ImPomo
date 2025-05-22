@@ -67,6 +67,7 @@ void ExtendedPomodoro::setcurrent(int newCurr) {
 }
 void ExtendedPomodoro::update() {
     wasStarted = true;
+    stats->addImpomoData(list->getPTasks().at(current)->getDuration());
     nextPhase();
     notifications->playSound();
 }

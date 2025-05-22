@@ -30,6 +30,7 @@ void ClassicPomodoro::reset() {
 void ClassicPomodoro::nextPhase() {
     if(currentCycle < cycles) {
         if((currentPhase == "Work") && (currentWorkBlock < workBlocksInCycle - 1)) {
+            stats->addClassicPomodoroData(workDuration);
             currentWorkBlock++;
             phaseLabel->setText("Current phase: Short break");
             currentPhase = "Short break";
@@ -37,6 +38,7 @@ void ClassicPomodoro::nextPhase() {
             timer->start();
         }
         else if((currentPhase == "Work") && (currentWorkBlock == workBlocksInCycle - 1)) {
+            stats->addClassicPomodoroData(workDuration);
             phaseLabel->setText("Current phase: Long break");
             currentPhase = "Long break";
             timer->setTime(longBreakDuration);
@@ -126,11 +128,11 @@ void ClassicPomodoro::loadSettingsFromFile() {
 
     QJsonObject SettingsJson = doc.object();
 
-    workDuration = SettingsJson["workDuration"].toInt(25);
-    shortBreakDuration = SettingsJson["shortBreakDuration"].toInt(5);
-    longBreakDuration = SettingsJson["longBreakDuration"].toInt(15);
-    cycles = SettingsJson["cycles"].toInt(4);
-    workBlocksInCycle = SettingsJson["workBlocksInCycle"].toInt(4);
+    changeProperties(SettingsJson["workDuration"].toInt(25),
+                    SettingsJson["shortBreakDuration"].toInt(5),
+                    SettingsJson["longBreakDuration"].toInt(15),
+                    SettingsJson["cycles"].toInt(4),
+                    SettingsJson["workBlocksInCycle"].toInt(4) );
 }
 
 void ClassicPomodoro::saveSettingsToFile() {

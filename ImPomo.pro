@@ -1,5 +1,5 @@
 QT += core gui sql widgets multimedia
-QT += testlib
+QT += testlib charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

@@ -9,6 +9,7 @@
 #include "notifications.h"
 #include "appsettings.h"
 #include "notifications.h"
+#include "statistics.h"
 
 class ExtendedPomodoro: public IPomodoroMode, public ITimerObserver  {
 private:
@@ -21,6 +22,7 @@ public:
     bool wasStarted;
     AppSettings* settings;
     Notifications* notifications;
+    Statistics* stats;
 
     ExtendedPomodoro();
     ExtendedPomodoro(PomodoroList* List);

@@ -14,6 +14,7 @@
 #include "itimerobserver.h"
 #include "appsettings.h"
 #include "notifications.h"
+#include "statistics.h"
 
 class ClassicPomodoro : public IPomodoroMode, public ITimerObserver {
 private:
@@ -28,6 +29,7 @@ private:
 public:
     AppSettings* settings;
     Notifications* notifications;
+    Statistics* stats;
     Timer* timer;
     QLabel* phaseLabel;
 

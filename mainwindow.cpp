@@ -6,6 +6,9 @@ MainWindow::MainWindow(QWidget *parent)
     appSettings(new AppSettings()), statistics(new Statistics()), notifications(new Notifications())
 {
     notifications->settings = appSettings;
+
+    statistics->appSettings = appSettings;
+
     toDoList->loadFromDatabase();
     toDoList->settings = appSettings;
 
@@ -14,10 +17,11 @@ MainWindow::MainWindow(QWidget *parent)
     extendedPomodoro->settings = appSettings;
     extendedPomodoro->notifications = notifications;
     extendedPomodoro->list->loadFromDatabase();
+    extendedPomodoro->stats = statistics;
 
     classicPomodoro->notifications = notifications;
     classicPomodoro->loadSettingsFromFile();
-
+    classicPomodoro->stats = statistics;
 
     //-----------------------------------------------
     central = new QWidget(this);
@@ -191,8 +195,8 @@ void MainWindow::setupStatisticsTab() {
 
     layout->addWidget(calendar, 1);
 
-    connect(calendar, &QCalendarWidget::clicked, this, [=](const QDate &date) {
-        QMessageBox::information(this, "Wybrana datAa", "Kliknięto: " + date.toString("dd-MM-yyyy"));
+    connect(calendar, &QCalendarWidget::clicked, this, [=](const QDate& date) {
+        statistics->displayReport(date);
     });
 
     stackedWidget->addWidget(statsTab);
@@ -681,8 +685,8 @@ void MainWindow::setStyleSett(int style) {
                            "QComboBox QAbstractItemView { background-color: #1a1a1a; color: #f0f0f0; selection-background-color: #444444; selection-color: white; font-size: 26px; }"
                            "QGroupBox { font-size: 34px; font-weight: 900; color: #d0d0d0; margin-top: 35px; margin-bottom: 35px; padding: 12px 20px 20px 20px; background: transparent; border: 3px solid #5f5f5f; border-radius: 25px; subcontrol-origin: margin; subcontrol-position: top center; }"
                            "QGroupBox::title { subcontrol-origin: margin; subcontrol-position: top center; padding: 0 12px; background-color: #000000; color: #d0d0d0; }"
-                           "QRadioButton::indicator, QCheckBox::indicator { width: 20px; height: 20px; border: 2px solid #5f5f5f; background: #ffffff; }"
-                           "QRadioButton::indicator:checked, QCheckBox::indicator:checked { background-color: #2e2e2e; border: 2px solid #5f5f5f; }"
+                           "QRadioButton::indicator, QCheckBox::indicator { width: 20px; height: 20px; border: 2px solid #5f5f5f; background: #2e2e2e; }"
+                           "QRadioButton::indicator:checked, QCheckBox::indicator:checked { background-color: #ffffff; border: 2px solid #5f5f5f; }"
                            "QGroupBox:hover, QGroupBox:focus, QRadioButton:hover, QRadioButton:focus { background: transparent; }");
     }
 }

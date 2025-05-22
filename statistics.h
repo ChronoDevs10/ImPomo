@@ -1,24 +1,24 @@
 #ifndef STATISTICS_H
 #define STATISTICS_H
 
-#include <QVector>
 #include <QString>
-#include <QMap>
-#include "task.h"
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QDate>
+#include "appsettings.h"
 
 class Statistics {
-private:
-    QMap<QString, QVector<Task*>> completedTasksByDay;
-    QMap<QString, int> dailyTimeWorked;
 public:
-    void addCompletedTaskForDay(Task* task, int timeSpent, QString date);
-    void addClassicPomodoroTime(QString date, int time);
-    int getDailyTimeWorked(QString date);
-    QVector<Task*> getCompletedTasksForDay(QString date);
-    void loadFromFile();
-    void saveToFile();
-    void displayReport(QString date);
-    void changeStyle();
+    AppSettings* appSettings;
+
+    Statistics();
+    void addImpomoData(int timeSpent);
+    void addClassicPomodoroData(int timeSpent);
+    int getDailyTimeImpomo(QString date);
+    int getDailyTimePomodoro(QString date);
+    int getDailyTasksNumber(QString date);
+    void displayReport(const QDate& date);
+    void databaseInit();
 };
 
 #endif // STATISTICS_H
