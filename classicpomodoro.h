@@ -2,6 +2,13 @@
 #define CLASSICPOMODORO_H
 
 #include <Qstring>
+#include <QDebug>
+#include <QLabel>
+#include <QTimer>
+#include <QFile>
+#include <QJsonDocument>
+#include <QJsonObject>
+
 #include "ipomodoromode.h"
 #include "timer.h"
 #include "itimerobserver.h"

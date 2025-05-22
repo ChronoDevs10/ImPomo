@@ -26,8 +26,8 @@ public:
     void reorderTasks(int, int) override;
     void changeStyle();
 
+    void databaseInit();
     void saveToDatabase() override;
-    void updateInDatabase(Task* task) override;
     void loadFromDatabase() override;
 
     QWidget* createTaskWidget(Task* task);

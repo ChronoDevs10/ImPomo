@@ -15,7 +15,6 @@ public:
     virtual int taskCount() = 0;
     virtual void reorderTasks(int, int) = 0;
     virtual void saveToDatabase() = 0;
-    virtual void updateInDatabase(Task* task) = 0;
     virtual void loadFromDatabase() = 0;
 };
 

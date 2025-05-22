@@ -26,7 +26,6 @@ public:
     QVector<PomodoroTask*> getPTasks();
     void reorderTasks(int, int) override;
     void saveToDatabase() override;
-    void updateInDatabase(Task* task) override;
     void loadFromDatabase() override;
 
     void editTaskDuration(Task* task, int newDuration);

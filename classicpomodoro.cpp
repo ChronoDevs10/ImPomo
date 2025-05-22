@@ -1,9 +1,5 @@
 #include "classicpomodoro.h"
 
-#include "classicpomodoro.h"
-#include <QLabel>
-#include <QTimer>
-
 ClassicPomodoro::ClassicPomodoro() {
     workDuration = 10;
     shortBreakDuration = 3;
@@ -116,7 +112,47 @@ void ClassicPomodoro::update() {
     notifications->playSound();
 }
 
-void ClassicPomodoro::loadSettingsFromFile() {}
-void ClassicPomodoro::saveSettingsToFile() {}
+void ClassicPomodoro::loadSettingsFromFile() {
+    QFile file("ClassicPomodoroSettings.json");
+    if (!file.open(QIODevice::ReadOnly))
+        return;
+
+    QByteArray SettingsData = file.readAll();
+    file.close();
+
+    QJsonDocument doc(QJsonDocument::fromJson(SettingsData));
+    if (!doc.isObject())
+        return;
+
+    QJsonObject SettingsJson = doc.object();
+
+    workDuration = SettingsJson["workDuration"].toInt(25);
+    shortBreakDuration = SettingsJson["shortBreakDuration"].toInt(5);
+    longBreakDuration = SettingsJson["longBreakDuration"].toInt(15);
+    cycles = SettingsJson["cycles"].toInt(4);
+    workBlocksInCycle = SettingsJson["workBlocksInCycle"].toInt(4);
+}
+
+void ClassicPomodoro::saveSettingsToFile() {
+    QJsonObject settings;
+    settings["workDuration"] = workDuration;
+    settings["shortBreakDuration"] = shortBreakDuration;
+    settings["longBreakDuration"] = longBreakDuration;
+    settings["cycles"] = cycles;
+    settings["workBlocksInCycle"] = workBlocksInCycle;
+
+    QJsonDocument SettingsFile(settings);
+
+    QFile file("ClassicPomodoroSettings.json");
+    if (!file.open(QIODevice::WriteOnly))
+        return;
+
+    file.write(SettingsFile.toJson());
+    file.close();
+}
+
+
+
+
 void ClassicPomodoro::saveSessionStateToFile() {}
 void ClassicPomodoro::loadSessionStateFromFile() {}

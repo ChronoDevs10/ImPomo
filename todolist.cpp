@@ -6,26 +6,33 @@
 #include <QTimer>
 #include <QPushButton>
 #include <QApplication>
+#include <QSqlDatabase>
+#include <QSqlQuery>
 #include <QDebug>
 
 ToDoList::ToDoList() {
     tasks = QVector<Task*>();
+    databaseInit();
 }
 
 void ToDoList::addTask(Task* task) {
     tasks.append(task);
+    saveToDatabase();
 }
 
 void ToDoList::removeTask(Task* task) {
     tasks.removeOne(task);
+    saveToDatabase();
 }
 
 void ToDoList::editTaskName(Task* task, QString newName) {
     task->editName(newName);
+    saveToDatabase();
 }
 
 void ToDoList::editTaskStatus(Task* task) {
     task->editStatus();
+    saveToDatabase();
 }
 
 int ToDoList::taskCount() {
@@ -41,12 +48,8 @@ void ToDoList::reorderTasks(int fromIndex, int toIndex) {
         return;
 
     tasks.move(fromIndex, toIndex);
+    saveToDatabase();
 }
-
-
-void ToDoList::saveToDatabase() {}
-void ToDoList::updateInDatabase(Task* task) {}
-void ToDoList::loadFromDatabase() {}
 
 QWidget* ToDoList::createTaskWidget(Task* task) {
     QWidget* fieldWidget = new QWidget();
@@ -63,11 +66,10 @@ QWidget* ToDoList::createTaskWidget(Task* task) {
     else if(settings->getTheme() == "Dark")
         lineEditStyle = "background-color: #000000 ; border: 1px solid #5f5f5f; border-radius: 5px; padding: 5px; color: white; ";
 
-
     lineEdit->setStyleSheet(lineEditStyle);
 
-    QObject::connect(lineEdit, &QLineEdit::textChanged, [task](const QString& newName) {
-        task->editName(newName);
+    QObject::connect(lineEdit, &QLineEdit::textChanged, [this, task](const QString& newName) {
+        editTaskName(task, newName);
     });
 
     QCheckBox* checkBox = new QCheckBox(" ");
@@ -77,7 +79,7 @@ QWidget* ToDoList::createTaskWidget(Task* task) {
         lineEdit->setStyleSheet(lineEditStyle + "text-decoration: line-through;");
 
     QObject::connect(checkBox, &QCheckBox::toggled, [this, task, lineEdit, lineEditStyle](bool checked) {
-        task->editStatus();
+        editTaskStatus(task);
         if(checked)
             lineEdit->setStyleSheet(lineEditStyle + "text-decoration: line-through;");
         else
@@ -128,12 +130,10 @@ QWidget* ToDoList::createTaskWidget(Task* task) {
     inputLayout->addWidget(deleteButton);
     inputLayout->addWidget(arrowWidget);
 
-
     if(settings->getTheme() == "Light") {
         checkBox->setStyleSheet(
             "QCheckBox::indicator { width: 16px; height: 16px; border-radius: 4px; border: 1px solid gray; }"
-            "QCheckBox::indicator:checked { background-color: #ff9800; }"
-            );
+            "QCheckBox::indicator:checked { background-color: #ff9800; }");
 
         deleteButton->setStyleSheet("QPushButton { background-color: #ffa726; color: black; border-radius: 5px; }");
 
@@ -143,8 +143,7 @@ QWidget* ToDoList::createTaskWidget(Task* task) {
     else if(settings->getTheme() == "Dark") {
         checkBox->setStyleSheet(
             "QCheckBox::indicator { width: 16px; height: 16px; border-radius: 4px; background-color: #afafaf; }"
-            "QCheckBox::indicator:checked { background-color: #4f4f4f; }"
-            );
+            "QCheckBox::indicator:checked { background-color: #4f4f4f; }");
 
         deleteButton->setStyleSheet("QPushButton { background-color: #dd2c00; color: white; border-radius: 5px; }");
 
@@ -163,4 +162,69 @@ void ToDoList::refreshList(QVBoxLayout* layout) {
 
     for(Task* task : tasks)
         layout->addWidget(createTaskWidget(task), 0, Qt::AlignHCenter);
+}
+
+void ToDoList::databaseInit() {
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("tasks.db");
+
+    if(!db.open())
+        return;
+
+    QSqlQuery query;
+    QString createTable = R"(
+        CREATE TABLE IF NOT EXISTS tasks (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            isCompleted INTEGER NOT NULL
+        )
+    )";
+
+    if(!query.exec(createTable))
+        return;
+}
+
+void ToDoList::saveToDatabase() {
+    QSqlDatabase db = QSqlDatabase::database();
+    if(!db.isOpen())
+        return;
+
+    QSqlQuery query;
+
+    if(!query.exec("DELETE FROM tasks"))
+        return;
+
+    query.prepare("INSERT INTO tasks (name, isCompleted) VALUES (:name, :isCompleted)");
+
+    for(Task* task : tasks) {
+        query.bindValue(":name", task->getName());
+        query.bindValue(":isCompleted", task->getStatus() ? 1 : 0);
+
+        if(!query.exec())
+            return;
+    }
+}
+
+void ToDoList::loadFromDatabase() {
+    QSqlDatabase db = QSqlDatabase::database();
+
+    if(!db.isOpen())
+        return;
+
+    QSqlQuery query("SELECT name, isCompleted FROM tasks");
+    if(!query.exec())
+        return;
+
+    tasks.clear();
+
+    while(query.next()) {
+        QString name = query.value(0).toString();
+        bool isCompleted = query.value(1).toInt() == 1;
+
+        Task* newTask = new Task(name);
+        if(isCompleted)
+            newTask->editStatus();
+
+        tasks.append(newTask);
+    }
 }

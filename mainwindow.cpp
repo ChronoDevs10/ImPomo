@@ -5,27 +5,23 @@ MainWindow::MainWindow(QWidget *parent)
     classicPomodoro(new ClassicPomodoro()), extendedPomodoro(new ExtendedPomodoro(pomodoroList)),
     appSettings(new AppSettings()), statistics(new Statistics()), notifications(new Notifications())
 {
-    appSettings->setTheme("Dark");
     notifications->settings = appSettings;
-    extendedPomodoro->settings = appSettings;
+    toDoList->loadFromDatabase();
     toDoList->settings = appSettings;
+
     pomodoroList->settings = appSettings;
 
+    extendedPomodoro->settings = appSettings;
     extendedPomodoro->notifications = notifications;
+
     classicPomodoro->notifications = notifications;
+    classicPomodoro->loadSettingsFromFile();
 
 
-
-
-
-
-
-
-
+    //-----------------------------------------------
     central = new QWidget(this);
     mainLayout = new QVBoxLayout(central);
     setCentralWidget(central);
-
 
     stackedWidget = new QStackedWidget(this);
     mainLayout->addWidget(createMenuButton(), 0, Qt::AlignTop | Qt::AlignRight);
@@ -355,6 +351,7 @@ void MainWindow::PomodoroSettings() {
             cyclesLineEdit->text().toInt(),
             workBlocksLineEdit->text().toInt()
             );
+        classicPomodoro->saveSettingsToFile();
     }
 }
 

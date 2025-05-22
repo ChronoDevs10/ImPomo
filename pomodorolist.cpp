@@ -213,5 +213,4 @@ void PomodoroList::refreshList(QVBoxLayout* layout) {
 }
 
 void PomodoroList::saveToDatabase() {}
-void PomodoroList::updateInDatabase(Task* task) {}
 void PomodoroList::loadFromDatabase() {}
