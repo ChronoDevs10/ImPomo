@@ -18,15 +18,18 @@ public:
     ExtendedPomodoro* parent;
     AppSettings* settings;
 
+    PomodoroList();
     void addTask(Task* task) override;
     void removeTask(Task* task) override;
     void editTaskName(Task* task, QString newName) override;
-    void editTaskStatus(Task* task) override;
+    void editTaskStatus(Task* task, bool status) override;
     int taskCount() override;
     QVector<PomodoroTask*> getPTasks();
     void reorderTasks(int, int) override;
+
     void saveToDatabase() override;
     void loadFromDatabase() override;
+    void databaseInit();
 
     void editTaskDuration(Task* task, int newDuration);
 

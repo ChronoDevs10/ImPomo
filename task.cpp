@@ -1,8 +1,11 @@
 #include "task.h"
 
 Task::Task(QString taskName) : name(taskName), isCompleted(false) {}
-void Task::editStatus() {
-    isCompleted = !isCompleted;
+void Task::setStatus(bool status) {
+    if(status == false)
+        isCompleted = false;
+    else
+        isCompleted = true;
 }
 void Task::editName(QString newName) {
     if(name == " ")

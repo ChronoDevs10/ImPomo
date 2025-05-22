@@ -41,11 +41,11 @@ void TestPomodoroTask::testEditDurationLargeValue() {
 
 void TestPomodoroTask::testEditStatus() {
     PomodoroTask task("Test Task", 25);
-    task.editStatus();
+    task.setStatus(true);
     QVERIFY(task.getStatus() == true);
 
-    task.editStatus();
-    task.editStatus();
+    task.setStatus(false);
+    task.setStatus(true);
     QVERIFY(task.getStatus() == true);
 }
 

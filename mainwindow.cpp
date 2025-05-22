@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     extendedPomodoro->settings = appSettings;
     extendedPomodoro->notifications = notifications;
+    extendedPomodoro->list->loadFromDatabase();
 
     classicPomodoro->notifications = notifications;
     classicPomodoro->loadSettingsFromFile();

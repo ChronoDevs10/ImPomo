@@ -9,7 +9,7 @@ protected:
     bool isCompleted;
 public:
     Task(QString name);
-    virtual void editStatus();
+    virtual void setStatus(bool status);
     virtual void editName(QString newName);
     virtual bool getStatus();
     virtual QString getName();

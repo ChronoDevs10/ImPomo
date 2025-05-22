@@ -30,8 +30,8 @@ void ToDoList::editTaskName(Task* task, QString newName) {
     saveToDatabase();
 }
 
-void ToDoList::editTaskStatus(Task* task) {
-    task->editStatus();
+void ToDoList::editTaskStatus(Task* task, bool status) {
+    task->setStatus(status);
     saveToDatabase();
 }
 
@@ -79,7 +79,7 @@ QWidget* ToDoList::createTaskWidget(Task* task) {
         lineEdit->setStyleSheet(lineEditStyle + "text-decoration: line-through;");
 
     QObject::connect(checkBox, &QCheckBox::toggled, [this, task, lineEdit, lineEditStyle](bool checked) {
-        editTaskStatus(task);
+        editTaskStatus(task, checked);
         if(checked)
             lineEdit->setStyleSheet(lineEditStyle + "text-decoration: line-through;");
         else
@@ -165,13 +165,13 @@ void ToDoList::refreshList(QVBoxLayout* layout) {
 }
 
 void ToDoList::databaseInit() {
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE", "ToDoConnection");
     db.setDatabaseName("tasks.db");
 
     if(!db.open())
         return;
 
-    QSqlQuery query;
+    QSqlQuery query(db);
     QString createTable = R"(
         CREATE TABLE IF NOT EXISTS tasks (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -185,11 +185,11 @@ void ToDoList::databaseInit() {
 }
 
 void ToDoList::saveToDatabase() {
-    QSqlDatabase db = QSqlDatabase::database();
+    QSqlDatabase db = QSqlDatabase::database("ToDoConnection");
     if(!db.isOpen())
         return;
 
-    QSqlQuery query;
+    QSqlQuery query(db);
 
     if(!query.exec("DELETE FROM tasks"))
         return;
@@ -206,15 +206,16 @@ void ToDoList::saveToDatabase() {
 }
 
 void ToDoList::loadFromDatabase() {
-    QSqlDatabase db = QSqlDatabase::database();
+    QSqlDatabase db = QSqlDatabase::database("ToDoConnection");
 
     if(!db.isOpen())
         return;
 
-    QSqlQuery query("SELECT name, isCompleted FROM tasks");
-    if(!query.exec())
+    QSqlQuery query(db);
+    if (!query.exec("SELECT name, isCompleted FROM tasks"))
         return;
 
+    qDeleteAll(tasks);
     tasks.clear();
 
     while(query.next()) {
@@ -223,7 +224,7 @@ void ToDoList::loadFromDatabase() {
 
         Task* newTask = new Task(name);
         if(isCompleted)
-            newTask->editStatus();
+            newTask->setStatus(true);
 
         tasks.append(newTask);
     }

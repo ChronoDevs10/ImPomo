@@ -11,7 +11,7 @@ public:
     virtual void addTask(Task* task) = 0;
     virtual void removeTask(Task* task) = 0;
     virtual void editTaskName(Task* task, QString newName) = 0;
-    virtual void editTaskStatus(Task* task) = 0;
+    virtual void editTaskStatus(Task* task, bool status) = 0;
     virtual int taskCount() = 0;
     virtual void reorderTasks(int, int) = 0;
     virtual void saveToDatabase() = 0;

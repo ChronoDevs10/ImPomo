@@ -5,8 +5,13 @@
 #include <QSpinBox>
 #include <QHBoxLayout>
 #include <QPushButton>
+#include <QSqlDatabase>
+#include <QSqlQuery>
 #include <QDebug>
 
+PomodoroList::PomodoroList() {
+    databaseInit();
+}
 
 void PomodoroList::addTask(Task* task) {
     PomodoroTask* pt = dynamic_cast<PomodoroTask*>(task);
@@ -18,19 +23,23 @@ void PomodoroList::addTask(Task* task) {
 
     if(parent != nullptr)
         parent->updateCurrentTaskLabel();
+
+    saveToDatabase();
 }
 void PomodoroList::removeTask(Task* task) {
     PomodoroTask* pt = dynamic_cast<PomodoroTask*>(task);
     tasks.removeOne(pt);
     parent->updateCurrentTaskLabel();
-
+    saveToDatabase();
 }
 void PomodoroList::editTaskName(Task* task, QString newName) {
     task->editName(newName);
     parent->updateCurrentTaskLabel();
+    saveToDatabase();
 }
-void PomodoroList::editTaskStatus(Task* task) {
-    task->editStatus();
+void PomodoroList::editTaskStatus(Task* task, bool status) {
+    task->setStatus(status);
+    saveToDatabase();
 }
 int PomodoroList::taskCount() {
     return tasks.size();
@@ -46,12 +55,14 @@ void PomodoroList::reorderTasks(int fromIndex, int toIndex) {
 
     if(parent != nullptr)
         parent->updateCurrentTaskLabel();
+    saveToDatabase();
 }
 void PomodoroList::editTaskDuration(Task* task, int newDuration) {
     PomodoroTask* pt = dynamic_cast<PomodoroTask*>(task);
 
     pt->editDuration(newDuration);
     parent->updateCurrentTaskLabel();
+    saveToDatabase();
 }
 
 QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
@@ -104,7 +115,7 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
     task->lineEdit->setStyleSheet(lineEditStyle);
 
     QObject::connect(task->lineEdit, &QLineEdit::textChanged, [this, task](const QString& newName) {
-        this->editTaskName(task, newName);
+        editTaskName(task, newName);
     });
 
     QObject::connect(durationBox, &QSpinBox::valueChanged, [this, task, durationBox](int newDuration) {
@@ -112,7 +123,7 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
         int index = tasks.indexOf(pt);
 
         if(index > parent->getcurrent())
-            this->editTaskDuration(task, newDuration);
+            editTaskDuration(task, newDuration);
         else {
             durationBox->blockSignals(true);
             durationBox->setValue(pt->getDuration());
@@ -136,7 +147,7 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
         int index = tasks.indexOf(pt);
 
         if(index > parent->getcurrent()) {
-            this->removeTask(task);
+            removeTask(task);
             fieldWidget->deleteLater();
         }
     });
@@ -212,5 +223,71 @@ void PomodoroList::refreshList(QVBoxLayout* layout) {
         layout->addWidget(createTaskWidget(task), 0, Qt::AlignLeft);
 }
 
-void PomodoroList::saveToDatabase() {}
-void PomodoroList::loadFromDatabase() {}
+void PomodoroList::databaseInit() {
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE", "PomodoroConnection");
+    db.setDatabaseName("pomodoroTasks.db");
+
+    if(!db.open())
+        return;
+
+    QSqlQuery query(db);
+    QString createTable = R"(
+        CREATE TABLE IF NOT EXISTS pomodoroTasks (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            isCompleted INTEGER NOT NULL,
+            duration INTEGER NOT NULL
+        )
+    )";
+
+    if(!query.exec(createTable))
+        return;
+}
+
+void PomodoroList::saveToDatabase() {
+    QSqlDatabase db = QSqlDatabase::database("PomodoroConnection");
+
+    if(!db.isOpen())
+        return;
+
+    QSqlQuery query(db);
+
+    if(!query.exec("DELETE FROM pomodoroTasks"))
+        return;
+
+    query.prepare("INSERT INTO pomodoroTasks (name, isCompleted, duration) VALUES (:name, :isCompleted, :duration)");
+
+    for(PomodoroTask* task : tasks) {
+        query.bindValue(":name", task->getName());
+        query.bindValue(":isCompleted", task->getStatus() ? 1 : 0);
+        query.bindValue(":duration", task->getDuration());
+
+        if(!query.exec())
+            return;
+    }
+}
+void PomodoroList::loadFromDatabase() {
+    QSqlDatabase db = QSqlDatabase::database("PomodoroConnection");
+
+    if(!db.isOpen())
+        return;
+
+    QSqlQuery query(db);
+    if(!query.exec("SELECT name, isCompleted, duration FROM pomodoroTasks"))
+        return;
+
+    qDeleteAll(tasks);
+    tasks.clear();
+
+    while(query.next()) {
+        QString name = query.value(0).toString();
+        bool isCompleted = query.value(1).toInt() == 1;
+        int duration = query.value(2).toInt();
+
+        PomodoroTask* newTask = new PomodoroTask(name, duration);
+        if(isCompleted)
+            newTask->setStatus(true);
+
+        tasks.append(newTask);
+    }
+}

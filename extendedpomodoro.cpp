@@ -45,16 +45,15 @@ void ExtendedPomodoro::nextPhase() {
 
     list->getPTasks().at(current)->lineEdit->setStyleSheet( "background-color: #a7a7a7; border: 1px solid #4c4c4c; "
     "border-radius: 5px; padding: 5px; color: black; text-decoration: line-through;");
+    list->editTaskStatus(list->getPTasks().at(current), true);
 
     if(current < (list->taskCount() - 1)){
-        list->getPTasks().at(current)->editStatus();
         current++;
         timer->setTime(list->getPTasks().at(current)->getDuration());
         currTaskLabel->setText("Current task: " + list->getPTasks().at(current)->getName());
         start();
     }
     else {
-        list->getPTasks().at(current)->editStatus();
         tasksFinished = list->taskCount();
         currTaskLabel->setText("All tasks finished");
         pause();

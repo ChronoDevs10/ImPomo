@@ -20,7 +20,7 @@ public:
     void addTask(Task* task) override;
     void removeTask(Task* task) override;
     void editTaskName(Task* task, QString newName) override;
-    void editTaskStatus(Task* task) override;
+    void editTaskStatus(Task* task, bool status) override;
     int taskCount() override;
     QVector<Task*> getTasks();
     void reorderTasks(int, int) override;
