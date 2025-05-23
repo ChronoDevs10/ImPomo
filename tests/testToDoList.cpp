@@ -11,8 +11,6 @@ private slots:
     void testEditTaskName();
     void testEditTaskStatus();
     void testReorderTasks();
-    //void testSaveAndLoad();
-    //void testUpdate();
 };
 
 void TestToDoList::testAddTask() {
@@ -46,7 +44,7 @@ void TestToDoList::testEditTaskStatus() {
     Task task("Test Task");
     list.addTask(&task);
 
-   // list.editTaskStatus(&task);
+    list.editTaskStatus(&task, true);
     QVERIFY(task.getStatus() == true);
 }
 
@@ -85,39 +83,6 @@ void TestToDoList::testReorderTasks() {
     QCOMPARE(currentOrder[1], &task2);
     QCOMPARE(currentOrder[2], &task3);
 }
-/*
-void TestToDoList::testSaveAndLoad() {
-    Task t1("task 1");
-    Task t2("task 2");
 
-    ToDoList list;
-    list.addTask(&t1);
-    list.addTask(&t2);
-
-    list.saveToDatabase();
-
-    ToDoList loaded;
-    loaded.loadFromDatabase();
-
-    QCOMPARE(loaded.taskCount(), 2);
-    QVERIFY(!loaded.getTasks().empty());
-    QCOMPARE(loaded.getTasks()[0]->getName(), QString("task 1"));
-}
-
-void TestToDoList::testUpdate() {
-    Task original("Task A");
-    ToDoList list;
-    list.addTask(&original);
-    list.saveToDatabase();
-
-    original.editName("Task B");
-    list.updateInDatabase(&original);
-
-    ToDoList loaded;
-    loaded.loadFromDatabase();
-    QVERIFY(!loaded.getTasks().empty());
-    QCOMPARE(loaded.getTasks()[0]->getName(), QString("Task B"));
-}
-*/
 //QTEST_MAIN(TestToDoList)
 #include "testToDoList.moc"

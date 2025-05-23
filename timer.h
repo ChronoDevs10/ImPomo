@@ -39,6 +39,9 @@ public:
     QPushButton* startButton;
     QPushButton* pauseButton;
     QPushButton* resetButton;
+
+signals:
+    void started();
 };
 
 #endif // TIMER_H

@@ -32,6 +32,7 @@ void Timer::setTime(int duration) {
 }
 
 void Timer::start() {
+    emit started();
     if(!isRunning) {
         timer->start(1000);
         isRunning = true;

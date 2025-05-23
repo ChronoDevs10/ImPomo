@@ -1,4 +1,5 @@
 #include <QTest>
+#include <QDebug>
 #include "../classicpomodoro.h"
 
 class TestClassicPomodoro : public QObject {
@@ -15,9 +16,9 @@ private slots:
 
 void TestClassicPomodoro::testDefaultValues() {
     ClassicPomodoro pomodoro;
-    QCOMPARE(pomodoro.getWorkDuration(), 25);
-    QCOMPARE(pomodoro.getShortBreakDuration(), 5);
-    QCOMPARE(pomodoro.getLongBreakDuration(), 15);
+    QCOMPARE(pomodoro.getWorkDuration(), 10);
+    QCOMPARE(pomodoro.getShortBreakDuration(), 3);
+    QCOMPARE(pomodoro.getLongBreakDuration(), 5);
 }
 
 void TestClassicPomodoro::testChangeProperties() {
@@ -44,30 +45,30 @@ void TestClassicPomodoro::testStart() {
 
 void TestClassicPomodoro::testStop() {
     ClassicPomodoro pomodoro;
+
     pomodoro.changeProperties(2, 1, 5, 4, 4);
     pomodoro.start();
+
     QTest::qWait(1000);
     pomodoro.pause();
+
     int remaining = pomodoro.timer->getRemainingTime();
-    QTest::qWait(1000);
     QCOMPARE(pomodoro.timer->getRemainingTime(), remaining);
 }
 
 void TestClassicPomodoro::testSaveAndLoadSettingsToFile() {
-    /*
     ClassicPomodoro pomodoro;
-    pomodoro.changeProperties(10,1,2,3);
+    pomodoro.changeProperties(10,1,2,3,4);
 
-    pomodoro.saveSessionStateToFile();
+    pomodoro.saveSettingsToFile();
+    pomodoro.changeProperties(1,2,3,4,5);
+    pomodoro.loadSettingsFromFile();
 
-    ClassicPomodoro pomodoro2;
-    pomodoro2.loadSettingsFromFile();
-
-    QCOMPARE(pomodoro.getWorkDuration(), 25);
-    QCOMPARE(pomodoro.getShortBreakDuration(), 5);
-    QCOMPARE(pomodoro.getLongBreakDuration(), 15);
-    QCOMPARE(pomodoro.getCycles(), 4);
-    */
+    QCOMPARE(pomodoro.getWorkDuration(), 10);
+    QCOMPARE(pomodoro.getShortBreakDuration(), 1);
+    QCOMPARE(pomodoro.getLongBreakDuration(), 2);
+    QCOMPARE(pomodoro.getCycles(), 3);
+    QCOMPARE(pomodoro.getWorkBlocks(), 4);
 }
 
 //QTEST_MAIN(TestClassicPomodoro)

@@ -70,6 +70,7 @@ void ClassicPomodoro::nextPhase() {
             phaseLabel->setText("Current phase: Work");
         });
     }
+    saveSessionStateToFile();
 }
 int ClassicPomodoro::getWorkDuration() {
     return workDuration;
@@ -153,8 +154,35 @@ void ClassicPomodoro::saveSettingsToFile() {
     file.close();
 }
 
+void ClassicPomodoro::saveSessionStateToFile() {
+    QJsonObject state;
+    state["currentWorkBlock"] = currentWorkBlock;
+    state["currentCycle"] = currentCycle;
+    state["currentPhase"] = currentPhase;
 
+    QJsonDocument stateData(state);
+    QFile file("ClassicPomodoroSessionState.json");
+    if(!file.open(QIODevice::WriteOnly))
+        return;
 
+    file.write(stateData.toJson());
+    file.close();
+}
+void ClassicPomodoro::loadSessionStateFromFile() {
+    QFile file("ClassicPomodoroSessionState.json");
+    if(!file.open(QIODevice::ReadOnly))
+        return;
 
-void ClassicPomodoro::saveSessionStateToFile() {}
-void ClassicPomodoro::loadSessionStateFromFile() {}
+    QByteArray stateData = file.readAll();
+    file.close();
+
+    QJsonDocument StateFile(QJsonDocument::fromJson(stateData));
+    if(!StateFile.isObject())
+        return;
+
+    QJsonObject StateJson = StateFile.object();
+
+    currentWorkBlock = StateFile["currentWorkBlock"].toInt(0);
+    currentCycle = StateFile["currentCycle"].toInt(0);
+    currentPhase = StateFile["currentPhase"].toString("Work");
+}

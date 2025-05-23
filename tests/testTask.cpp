@@ -14,12 +14,11 @@ private slots:
 
 void TestTask::testEditStatus() {
     Task task("Test Task");
-    //task.editStatus();
+    task.setStatus(true);
     QVERIFY(task.getStatus() == true);
 
-   // task.editStatus();
-    //task.editStatus();
-    QVERIFY(task.getStatus() == true);
+    task.setStatus(!task.getStatus());
+    QVERIFY(task.getStatus() == false);
 }
 
 void TestTask::testEditName() {

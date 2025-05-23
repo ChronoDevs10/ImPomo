@@ -11,7 +11,8 @@
 #include "notifications.h"
 #include "statistics.h"
 
-class ExtendedPomodoro: public IPomodoroMode, public ITimerObserver  {
+class ExtendedPomodoro: public QObject, public IPomodoroMode, public ITimerObserver  {
+    Q_OBJECT
 private:
     int current;
 public:

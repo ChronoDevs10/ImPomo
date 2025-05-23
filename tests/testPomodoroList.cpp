@@ -7,15 +7,16 @@ class TestPomodoroList : public QObject {
 
 private slots:
     void testAddTask();
+    void testEditTaskDuration();
     void testRemoveTask();
     void testEditTaskName();
     void testEditTaskStatus();
-    void testEditTaskDuration();
     void testReorderTasks();
 };
 
 void TestPomodoroList::testAddTask() {
     PomodoroList list;
+    list.parent = nullptr;
     PomodoroTask task("Test Task", 25);
 
     list.addTask(&task);
@@ -24,6 +25,7 @@ void TestPomodoroList::testAddTask() {
 
 void TestPomodoroList::testEditTaskDuration() {
     PomodoroList list;
+    list.parent = nullptr;
     PomodoroTask task("Test Task", 25);
     list.addTask(&task);
 
@@ -33,6 +35,7 @@ void TestPomodoroList::testEditTaskDuration() {
 
 void TestPomodoroList::testRemoveTask() {
     PomodoroList list;
+    list.parent = nullptr;
     PomodoroTask task("Test Task", 25);
 
     list.addTask(&task);
@@ -42,6 +45,7 @@ void TestPomodoroList::testRemoveTask() {
 
 void TestPomodoroList::testEditTaskName() {
     PomodoroList list;
+    list.parent = nullptr;
     PomodoroTask task("Test Task", 25);
     list.addTask(&task);
 
@@ -51,15 +55,17 @@ void TestPomodoroList::testEditTaskName() {
 
 void TestPomodoroList::testEditTaskStatus() {
     PomodoroList list;
+    list.parent = nullptr;
     PomodoroTask task("Test Task", 25);
     list.addTask(&task);
 
-   // list.editTaskStatus(&task);
+    list.editTaskStatus(&task, !(task.getStatus()));
     QVERIFY(task.getStatus() == true);
 }
 
 void TestPomodoroList::testReorderTasks() {
     PomodoroList list;
+    list.parent = nullptr;
     PomodoroTask task1("Test Task1", 20);
     PomodoroTask task2("Test Task2", 10);
     PomodoroTask task3("Test Task3", 1);

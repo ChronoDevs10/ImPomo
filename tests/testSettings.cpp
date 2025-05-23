@@ -13,34 +13,34 @@ private slots:
 
 void TestAppSettings::testEnableDisableReminders() {
     AppSettings settings;
-    //settings.enableReminders();
+    settings.setSoundStatus(true);
     QVERIFY(settings.getSoundStatus());
 
-    //settings.disableReminders();
+    settings.setSoundStatus(false);
     QVERIFY(!settings.getSoundStatus());
 }
 
 void TestAppSettings::testSetTheme() {
     AppSettings settings;
     settings.setTheme("dark");
-    //QCOMPARE(settings.getTheme(), "dark");
+    QCOMPARE(settings.getTheme(), "dark");
 
     settings.setTheme("light");
-    //QCOMPARE(settings.getTheme(), "light");
+    QCOMPARE(settings.getTheme(), "light");
 }
 
 void TestAppSettings::testSaveAndLoadSettingsFromFile() {
     AppSettings settings;
-    //settings.enableReminders();
+    settings.setSoundStatus(true);
     settings.setTheme("dark");
-
     settings.saveSettingsToFile();
 
-    AppSettings settings2;
-    settings2.loadSettingsFromFile();
+    settings.setSoundStatus(false);
+    settings.setTheme("light");
 
-    QVERIFY(settings2.getSoundStatus());
-    //QCOMPARE(settings2.getTheme(), "dark");
+    settings.loadSettingsFromFile();
+    QVERIFY(settings.getSoundStatus());
+    QCOMPARE(settings.getTheme(), "dark");
 }
 
 //QTEST_MAIN(TestAppSettings)

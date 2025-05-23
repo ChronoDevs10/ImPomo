@@ -15,7 +15,7 @@ PomodoroList::PomodoroList() {
 
 void PomodoroList::addTask(Task* task) {
     PomodoroTask* pt = dynamic_cast<PomodoroTask*>(task);
-    if(tasks.size() == parent->tasksFinished) {
+    if(parent != nullptr && tasks.size() == parent->tasksFinished) {
         parent->timer->setTime(pt->getDuration());
         parent->setcurrent(parent->tasksFinished);
     }
@@ -29,12 +29,16 @@ void PomodoroList::addTask(Task* task) {
 void PomodoroList::removeTask(Task* task) {
     PomodoroTask* pt = dynamic_cast<PomodoroTask*>(task);
     tasks.removeOne(pt);
-    parent->updateCurrentTaskLabel();
+
+    if(parent != nullptr)
+        parent->updateCurrentTaskLabel();
     saveToDatabase();
 }
 void PomodoroList::editTaskName(Task* task, QString newName) {
     task->editName(newName);
-    parent->updateCurrentTaskLabel();
+    if(parent != nullptr)
+        parent->updateCurrentTaskLabel();
+
     saveToDatabase();
 }
 void PomodoroList::editTaskStatus(Task* task, bool status) {
@@ -61,7 +65,8 @@ void PomodoroList::editTaskDuration(Task* task, int newDuration) {
     PomodoroTask* pt = dynamic_cast<PomodoroTask*>(task);
 
     pt->editDuration(newDuration);
-    parent->updateCurrentTaskLabel();
+    if(parent != nullptr)
+        parent->updateCurrentTaskLabel();
     saveToDatabase();
 }
 
@@ -122,7 +127,7 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
         PomodoroTask* pt = dynamic_cast<PomodoroTask*>(task);
         int index = tasks.indexOf(pt);
 
-        if(index > parent->getcurrent())
+        if((index > parent->getcurrent()) || (parent->wasStarted == false && index == parent->getcurrent()))
             editTaskDuration(task, newDuration);
         else {
             durationBox->blockSignals(true);
@@ -133,20 +138,12 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
 
     QPushButton* deleteButton = new QPushButton("🗑");
     deleteButton->setFixedSize(50, 50);
-    deleteButton->setStyleSheet(
-        "QPushButton {"
-        "   background-color: #e57373;"
-        "   color: white;"
-        "   border-radius: 5px;"
-        "   font-size: 18px;"
-        "}"
-    );
 
     QObject::connect(deleteButton, &QPushButton::clicked, [this, task, fieldWidget]() {
         PomodoroTask* pt = dynamic_cast<PomodoroTask*>(task);
         int index = tasks.indexOf(pt);
 
-        if(index > parent->getcurrent()) {
+        if(index > parent->getcurrent() || (parent->wasStarted == false && index == parent->getcurrent())) {
             removeTask(task);
             fieldWidget->deleteLater();
         }
@@ -170,17 +167,33 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
 
     QObject::connect(upButton, &QPushButton::clicked, [this, task, fieldWidget]() {
         int index = tasks.indexOf(task);
-        if(index > 0 && index > parent->getcurrent() && (index - 1) > parent->getcurrent()) {
-            reorderTasks(index, index - 1);
-            refreshList(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
+
+        if(parent->wasStarted == true) {
+            if(((index > 0  && (index - 1) > parent->getcurrent()))) {
+                reorderTasks(index, index - 1);
+                refreshList(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
+            }
+        } else {
+            if(((index >= 0 && (index - 1) >= parent->getcurrent()))) {
+                reorderTasks(index, index - 1);
+                refreshList(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
+            }
         }
     });
 
     QObject::connect(downButton, &QPushButton::clicked, [this, task, fieldWidget]() {
         int index = tasks.indexOf(task);
-        if(index < tasks.size() - 1 && index > parent->getcurrent() && (index + 1) > parent->getcurrent()) {
-            reorderTasks(index, index + 1);
-            refreshList(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
+
+        if(parent->wasStarted == true) {
+            if(index < tasks.size() - 1 && index > parent->getcurrent()) {
+                reorderTasks(index, index + 1);
+                refreshList(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
+            }
+        } else {
+            if(index < tasks.size() - 1 && index >= parent->getcurrent()) {
+                reorderTasks(index, index + 1);
+                refreshList(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
+            }
         }
     });
 

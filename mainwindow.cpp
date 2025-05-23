@@ -19,10 +19,12 @@ MainWindow::MainWindow(QWidget *parent)
     extendedPomodoro->notifications = notifications;
     extendedPomodoro->list->loadFromDatabase();
     extendedPomodoro->stats = statistics;
+    extendedPomodoro->loadSessionStateFromFile();
 
     classicPomodoro->notifications = notifications;
-    classicPomodoro->loadSettingsFromFile();
     classicPomodoro->stats = statistics;
+    classicPomodoro->loadSettingsFromFile();
+    classicPomodoro->loadSessionStateFromFile();
 
     //-----------------------------------------------
     central = new QWidget(this);
