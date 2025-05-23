@@ -116,17 +116,17 @@ void ClassicPomodoro::update() {
 
 void ClassicPomodoro::loadSettingsFromFile() {
     QFile file("ClassicPomodoroSettings.json");
-    if (!file.open(QIODevice::ReadOnly))
+    if(!file.open(QIODevice::ReadOnly))
         return;
 
     QByteArray SettingsData = file.readAll();
     file.close();
 
-    QJsonDocument doc(QJsonDocument::fromJson(SettingsData));
-    if (!doc.isObject())
+    QJsonDocument SettingsFile(QJsonDocument::fromJson(SettingsData));
+    if(!SettingsFile.isObject())
         return;
 
-    QJsonObject SettingsJson = doc.object();
+    QJsonObject SettingsJson = SettingsFile.object();
 
     changeProperties(SettingsJson["workDuration"].toInt(25),
                     SettingsJson["shortBreakDuration"].toInt(5),
@@ -146,7 +146,7 @@ void ClassicPomodoro::saveSettingsToFile() {
     QJsonDocument SettingsFile(settings);
 
     QFile file("ClassicPomodoroSettings.json");
-    if (!file.open(QIODevice::WriteOnly))
+    if(!file.open(QIODevice::WriteOnly))
         return;
 
     file.write(SettingsFile.toJson());

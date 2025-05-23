@@ -93,6 +93,7 @@ private:
     void setupStatisticsTab();
     void setupSettingsTab();
     QPushButton* createMenuButton();
+
     void setStyle(int style);
     void setStyleHome(int style);
     void setStyleToDo(int style);

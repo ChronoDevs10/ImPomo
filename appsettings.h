@@ -2,6 +2,9 @@
 #define APPSETTINGS_H
 
 #include <QString>
+#include <QFile>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 class AppSettings {
 private:

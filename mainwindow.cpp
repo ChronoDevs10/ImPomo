@@ -5,6 +5,7 @@ MainWindow::MainWindow(QWidget *parent)
     classicPomodoro(new ClassicPomodoro()), extendedPomodoro(new ExtendedPomodoro(pomodoroList)),
     appSettings(new AppSettings()), statistics(new Statistics()), notifications(new Notifications())
 {
+    appSettings->loadSettingsFromFile();
     notifications->settings = appSettings;
 
     statistics->appSettings = appSettings;
@@ -48,6 +49,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     setWindowTitle("✨ImPomo✨");
     resize(600, 800);
+
+    if(appSettings->getTheme() == "Light") {
+        setStyle(0);
+    } else if(appSettings->getTheme()  == "Dark")
+        setStyle(1);
 
     taskIdx = 0;
 }
