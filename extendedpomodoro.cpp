@@ -68,10 +68,11 @@ void ExtendedPomodoro::nextPhase() {
     }
     else {
         wasStarted = false;
-        tasksFinished = list->taskCount();
+        timer->setTime(0);
         currTaskLabel->setText("All tasks finished");
         pause();
     }
+    tasksFinished++;
     saveSessionStateToFile();
 }
 int ExtendedPomodoro::getcurrent() {
@@ -79,11 +80,14 @@ int ExtendedPomodoro::getcurrent() {
 }
 void ExtendedPomodoro::setcurrent(int newCurr) {
     current = newCurr;
+    saveSessionStateToFile();
 }
 void ExtendedPomodoro::update() {
     stats->addImpomoData(list->getPTasks().at(current)->getDuration());
+
+    if(!list->getPTasks().at(current)->getStatus())
+        notifications->playSound();
     nextPhase();
-    notifications->playSound();
 }
 void ExtendedPomodoro::reorderTasks() {}
 void ExtendedPomodoro::updateCurrentTaskLabel() {
@@ -111,6 +115,7 @@ void ExtendedPomodoro::clearAllTasks() {
 void ExtendedPomodoro::saveSessionStateToFile() {
     QJsonObject state;
     state["current"] = current;
+    state["tasksFinished"] = tasksFinished;
 
     QJsonDocument stateData(state);
 
@@ -135,7 +140,21 @@ void ExtendedPomodoro::loadSessionStateFromFile() {
 
     QJsonObject StateJson = StateFile.object();
 
-    current = StateFile["current"].toInt(0);
-    updateCurrentTaskLabel();
+    current = StateJson["current"].toInt(0);
+    tasksFinished = StateJson["tasksFinished"].toInt(0);
 }
-
+void ExtendedPomodoro::loadFromDatabase() {
+    list->loadFromDatabase();
+    if(list->taskCount() == 0) {
+        clearAllTasks();
+    } else {
+        if(list->getPTasks().last()->getStatus()) {//same szare zadania
+            current = (list->taskCount() - 1);
+            timer->setTime(0);
+            currTaskLabel->setText("All tasks finished");
+        } else {
+            timer->setTime(list->getPTasks().at(current)->getDuration());
+            updateCurrentTaskLabel();
+        }
+    }
+}

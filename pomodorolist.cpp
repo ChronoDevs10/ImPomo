@@ -30,8 +30,6 @@ void PomodoroList::removeTask(Task* task) {
     PomodoroTask* pt = dynamic_cast<PomodoroTask*>(task);
     tasks.removeOne(pt);
 
-    if(parent != nullptr)
-        parent->updateCurrentTaskLabel();
     saveToDatabase();
 }
 void PomodoroList::editTaskName(Task* task, QString newName) {
@@ -66,7 +64,7 @@ void PomodoroList::editTaskDuration(Task* task, int newDuration) {
 
     pt->editDuration(newDuration);
     if(parent != nullptr)
-        parent->updateCurrentTaskLabel();
+        parent->timer->updateLabel();
     saveToDatabase();
 }
 
@@ -127,8 +125,11 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
         PomodoroTask* pt = dynamic_cast<PomodoroTask*>(task);
         int index = tasks.indexOf(pt);
 
-        if((index > parent->getcurrent()) || (parent->wasStarted == false && index == parent->getcurrent()))
+        if((index > parent->getcurrent()) || (parent->wasStarted == false && index == parent->getcurrent())) {
             editTaskDuration(task, newDuration);
+            if(index == parent->getcurrent())
+                parent->timer->setTime(task->getDuration());
+        }
         else {
             durationBox->blockSignals(true);
             durationBox->setValue(pt->getDuration());
@@ -142,10 +143,22 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
     QObject::connect(deleteButton, &QPushButton::clicked, [this, task, fieldWidget]() {
         PomodoroTask* pt = dynamic_cast<PomodoroTask*>(task);
         int index = tasks.indexOf(pt);
-
-        if(index > parent->getcurrent() || (parent->wasStarted == false && index == parent->getcurrent())) {
+        if(!task->getStatus() && (index > parent->getcurrent() || (parent->wasStarted == false && index == parent->getcurrent()))) {
             removeTask(task);
             fieldWidget->deleteLater();
+            if(taskCount() == 0) {
+                parent->clearAllTasks();
+            } else {
+                if(tasks.last()->getStatus()) {
+                    parent->setcurrent(taskCount() - 1);
+                    parent->timer->setTime(0);
+                    parent->currTaskLabel->setText("All tasks finished");
+                } else {
+                    if(!parent->wasStarted)
+                        parent->timer->setTime(getPTasks().at(parent->getcurrent())->getDuration());
+                    parent->updateCurrentTaskLabel();
+                }
+            }
         }
     });
 

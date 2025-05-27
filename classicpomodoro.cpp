@@ -1,9 +1,9 @@
 #include "classicpomodoro.h"
 
 ClassicPomodoro::ClassicPomodoro() {
-    workDuration = 10;
-    shortBreakDuration = 3;
-    longBreakDuration = 5;
+    workDuration = 25;
+    shortBreakDuration = 5;
+    longBreakDuration = 10;
     cycles = 4;
     workBlocksInCycle = 4;
 

@@ -35,6 +35,7 @@ public:
 
     void saveSessionStateToFile() override;
     void loadSessionStateFromFile() override;
+    void loadFromDatabase();
 
     int getcurrent();
     void setcurrent(int newCurr);

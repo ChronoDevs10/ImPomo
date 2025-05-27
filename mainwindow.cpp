@@ -5,11 +5,11 @@ MainWindow::MainWindow(QWidget *parent)
     classicPomodoro(new ClassicPomodoro()), extendedPomodoro(new ExtendedPomodoro(pomodoroList)),
     appSettings(new AppSettings()), statistics(new Statistics()), notifications(new Notifications())
 {
+
     appSettings->loadSettingsFromFile();
     notifications->settings = appSettings;
 
     statistics->appSettings = appSettings;
-
     toDoList->loadFromDatabase();
     toDoList->settings = appSettings;
 
@@ -17,14 +17,15 @@ MainWindow::MainWindow(QWidget *parent)
 
     extendedPomodoro->settings = appSettings;
     extendedPomodoro->notifications = notifications;
-    extendedPomodoro->list->loadFromDatabase();
-    extendedPomodoro->stats = statistics;
     extendedPomodoro->loadSessionStateFromFile();
+    extendedPomodoro->loadFromDatabase();
+    extendedPomodoro->stats = statistics;
 
     classicPomodoro->notifications = notifications;
     classicPomodoro->stats = statistics;
     classicPomodoro->loadSettingsFromFile();
     classicPomodoro->loadSessionStateFromFile();
+
 
     //-----------------------------------------------
     central = new QWidget(this);
@@ -56,8 +57,6 @@ MainWindow::MainWindow(QWidget *parent)
         setStyle(0);
     } else if(appSettings->getTheme()  == "Dark")
         setStyle(1);
-
-    taskIdx = 0;
 }
 
 MainWindow::~MainWindow() {
@@ -442,9 +441,7 @@ void MainWindow::addTaskField() {
         }
 
     } else if(stackedWidget->currentIndex() == 2) {
-        QString taskIdxStr = QString::number(taskIdx);
-        Task* baseTask = TaskFactory::createTask("Pomodoro", taskIdxStr, 5);
-        taskIdx++;
+        Task* baseTask = TaskFactory::createTask("Pomodoro", "", 25);
         PomodoroTask* task = dynamic_cast<PomodoroTask*>(baseTask);
         extendedPomodoro->list->addTask(task);
 
@@ -563,6 +560,11 @@ void MainWindow::setStyleClassPomo(int style) {
     classicPomodoro->timer->pauseButton->setStyleSheet(TimerButtonStyle);
     classicPomodoro->timer->resetButton->setStyleSheet(TimerButtonStyle);
     classicPomodoro->timer->timeLabel->setStyleSheet(TimerStyle);
+
+    tab->style()->unpolish(tab);
+    tab->style()->polish(tab);
+    tab->update();
+
 }
 void MainWindow::setStyleStats(int style) {
     QWidget* tab = stackedWidget->widget(4);

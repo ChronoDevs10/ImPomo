@@ -1,10 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "task.h"
-#include "todolist.h"
-#include "taskfactory.h"
-#include "timer.h"
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QStackedWidget>
@@ -20,7 +16,6 @@
 #include <QSpinBox>
 #include <QLineEdit>
 #include <QApplication>
-#include <QApplication>
 #include <QPushButton>
 #include <QScreen>
 #include <QCalendarWidget>
@@ -29,16 +24,8 @@
 #include <QRadioButton>
 #include <QGroupBox>
 #include <QDialogButtonBox>
-
 #include <QMainWindow>
-#include <QPushButton>
-#include <QVBoxLayout>
-#include <QScrollArea>
-#include <QStackedWidget>
 #include <QCheckBox>
-
-
-
 
 #include "todolist.h"
 #include "pomodorolist.h"
@@ -47,6 +34,9 @@
 #include "statistics.h"
 #include "appsettings.h"
 #include "notifications.h"
+#include "task.h"
+#include "taskfactory.h"
+#include "timer.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -83,8 +73,6 @@ private:
 
     QScrollArea* imPomodoroScrollArea;
     QVBoxLayout* imPomodoroScrollLayout;
-
-    int taskIdx;
 
     void setupHomeTab();
     void setupToDoListTab();
