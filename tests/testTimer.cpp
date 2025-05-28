@@ -9,6 +9,9 @@ public:
     void update() override {
         updated = true;
     }
+    void updateTime(int time) override{
+
+    }
 };
 
 class TimerTest : public QObject {

@@ -24,6 +24,7 @@ public:
     AppSettings* settings;
     Notifications* notifications;
     Statistics* stats;
+    int remainingTime;
 
     ExtendedPomodoro();
     ExtendedPomodoro(PomodoroList* List);
@@ -32,6 +33,7 @@ public:
     void reset() override;
     void nextPhase() override;
     void update() override;
+    void updateTime(int time) override;
 
     void saveSessionStateToFile() override;
     void loadSessionStateFromFile() override;
@@ -40,7 +42,6 @@ public:
     int getcurrent();
     void setcurrent(int newCurr);
     void updateCurrentTaskLabel();
-    void reorderTasks();
     void clearAllTasks();
     void changeStyle();
 };

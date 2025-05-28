@@ -89,7 +89,10 @@ void ExtendedPomodoro::update() {
         notifications->playSound();
     nextPhase();
 }
-void ExtendedPomodoro::reorderTasks() {}
+void ExtendedPomodoro::updateTime(int time){
+    remainingTime = time;
+    saveSessionStateToFile();
+}
 void ExtendedPomodoro::updateCurrentTaskLabel() {
     if(list->taskCount() > 0) {
         QString taskName = list->getPTasks().at(current)->getName();
@@ -116,6 +119,7 @@ void ExtendedPomodoro::saveSessionStateToFile() {
     QJsonObject state;
     state["current"] = current;
     state["tasksFinished"] = tasksFinished;
+    state["savedTime"] = remainingTime;
 
     QJsonDocument stateData(state);
 
@@ -128,8 +132,15 @@ void ExtendedPomodoro::saveSessionStateToFile() {
 }
 void ExtendedPomodoro::loadSessionStateFromFile() {
     QFile file("ExtendedPomodoroSessionState.json");
-    if(!file.open(QIODevice::ReadOnly))
+    if(!file.open(QIODevice::ReadOnly)) {
+        current = 0;
+        tasksFinished = 0;
+        if(list->taskCount() != 0)
+            remainingTime = list->getPTasks().at(0)->getDuration();
+        else
+            remainingTime = 0;
         return;
+    }
 
     QByteArray stateData = file.readAll();
     file.close();
@@ -142,6 +153,7 @@ void ExtendedPomodoro::loadSessionStateFromFile() {
 
     current = StateJson["current"].toInt(0);
     tasksFinished = StateJson["tasksFinished"].toInt(0);
+    remainingTime = StateJson["savedTime"].toInt(25);
 }
 void ExtendedPomodoro::loadFromDatabase() {
     list->loadFromDatabase();
@@ -154,6 +166,7 @@ void ExtendedPomodoro::loadFromDatabase() {
             currTaskLabel->setText("All tasks finished");
         } else {
             timer->setTime(list->getPTasks().at(current)->getDuration());
+            timer->setRemainingTime(remainingTime);
             updateCurrentTaskLabel();
         }
     }

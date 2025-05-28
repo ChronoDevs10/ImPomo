@@ -56,6 +56,10 @@ void Timer::reset() {
 int Timer::getRemainingTime() {
     return remainingTime;
 }
+void Timer::setRemainingTime(int newTime) {
+    remainingTime = newTime;
+    updateLabel();
+}
 int Timer::getStartTime(){
     return startTime;
 }
@@ -63,6 +67,7 @@ int Timer::getStartTime(){
 void Timer::updateTime() {
     if(remainingTime > 0) {
         --remainingTime;
+        subscriber->updateTime(remainingTime);
         updateLabel();
     } else {
         timer->stop();

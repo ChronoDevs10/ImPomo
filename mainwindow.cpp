@@ -26,7 +26,6 @@ MainWindow::MainWindow(QWidget *parent)
     classicPomodoro->loadSettingsFromFile();
     classicPomodoro->loadSessionStateFromFile();
 
-
     //-----------------------------------------------
     central = new QWidget(this);
     mainLayout = new QVBoxLayout(central);

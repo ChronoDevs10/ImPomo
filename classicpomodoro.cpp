@@ -115,10 +115,17 @@ void ClassicPomodoro::update() {
     notifications->playSound();
 }
 
+void ClassicPomodoro::updateTime(int time){
+    remainingTime = time;
+    saveSessionStateToFile();
+}
+
 void ClassicPomodoro::loadSettingsFromFile() {
     QFile file("ClassicPomodoroSettings.json");
-    if(!file.open(QIODevice::ReadOnly))
+    if(!file.open(QIODevice::ReadOnly)) {
+        changeProperties(25,5,15,4,4);
         return;
+    }
 
     QByteArray SettingsData = file.readAll();
     file.close();
@@ -156,9 +163,11 @@ void ClassicPomodoro::saveSettingsToFile() {
 
 void ClassicPomodoro::saveSessionStateToFile() {
     QJsonObject state;
+
     state["currentWorkBlock"] = currentWorkBlock;
     state["currentCycle"] = currentCycle;
     state["currentPhase"] = currentPhase;
+    state["savedTime"] = remainingTime;
 
     QJsonDocument stateData(state);
     QFile file("ClassicPomodoroSessionState.json");
@@ -170,8 +179,16 @@ void ClassicPomodoro::saveSessionStateToFile() {
 }
 void ClassicPomodoro::loadSessionStateFromFile() {
     QFile file("ClassicPomodoroSessionState.json");
-    if(!file.open(QIODevice::ReadOnly))
+    if(!file.open(QIODevice::ReadOnly)) {
+        currentWorkBlock = 0;
+        currentCycle = 0;
+        currentPhase = "Work";
+        remainingTime = workDuration;
+
+        timer->setTime(remainingTime);
+        phaseLabel->setText("Current phase: " + currentPhase);
         return;
+    }
 
     QByteArray stateData = file.readAll();
     file.close();
@@ -185,4 +202,8 @@ void ClassicPomodoro::loadSessionStateFromFile() {
     currentWorkBlock = StateFile["currentWorkBlock"].toInt(0);
     currentCycle = StateFile["currentCycle"].toInt(0);
     currentPhase = StateFile["currentPhase"].toString("Work");
+    remainingTime = StateJson["savedTime"].toInt(workDuration);
+
+    timer->setTime(remainingTime);
+    phaseLabel->setText("Current phase: " + currentPhase);
 }

@@ -27,6 +27,7 @@ public:
     void reset() override;
 
     int getRemainingTime();
+    void setRemainingTime(int newTime);
     int getStartTime();
 
     void updateTime();

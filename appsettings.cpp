@@ -42,8 +42,12 @@ void AppSettings::saveSettingsToFile() {
 }
 void AppSettings::loadSettingsFromFile() {
     QFile file("AppSettings.json");
-    if(!file.open(QIODevice::ReadOnly))
+    if(!file.open(QIODevice::ReadOnly)) {
+        soundStatus = true;
+        theme = "Dark";
+        sound = "Soft Alarm";
         return;
+    }
 
     QByteArray SettingsData = file.readAll();
     file.close();

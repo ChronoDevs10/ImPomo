@@ -23,15 +23,17 @@ private:
     int longBreakDuration;
     int cycles;
     int workBlocksInCycle;
-    int currentWorkBlock;
-    int currentCycle;
-    QString currentPhase;
+
 public:
     AppSettings* settings;
     Notifications* notifications;
     Statistics* stats;
     Timer* timer;
     QLabel* phaseLabel;
+    int remainingTime;
+    int currentWorkBlock;
+    int currentCycle;
+    QString currentPhase;
 
     ClassicPomodoro();
     void start() override;
@@ -41,6 +43,7 @@ public:
     void saveSessionStateToFile() override;
     void loadSessionStateFromFile() override;
     void update() override;
+    void updateTime(int time) override;
 
     void changeProperties(int newWork, int newShortBreak, int newLongBreak, int newCycles, int workBlocks);
     void setCurrentPhase(QString newPhase);
