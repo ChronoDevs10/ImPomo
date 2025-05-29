@@ -137,8 +137,8 @@ QWidget* ToDoList::createTaskWidget(Task* task) {
 
         deleteButton->setStyleSheet("QPushButton { background-color: #ffa726; color: black; border-radius: 5px; }");
 
-        upButton->setStyleSheet("QPushButton { background-color: #ffe0b2; color: black; border-radius: 5px; }");
-        downButton->setStyleSheet("QPushButton { background-color: #ffe0b2; color: black; border-radius: 5px; }");
+        upButton->setStyleSheet("QPushButton { background-color: #ffe0b2; color: black; border-radius: 5px; border: 1px solid #4c4c4c;}");
+        downButton->setStyleSheet("QPushButton { background-color: #ffe0b2; color: black; border-radius: 5px; border: 1px solid #4c4c4c;}");
     }
     else if(settings->getTheme() == "Dark") {
         checkBox->setStyleSheet(

@@ -46,13 +46,7 @@ void ClassicPomodoro::nextPhase() {
             currentCycle++;
             currentWorkBlock = 0;
         }
-        else if(currentPhase == "Short break") {
-            phaseLabel->setText("Current phase: Work");
-            currentPhase = "Work";
-            timer->setTime(workDuration);
-            timer->start();
-        }
-        else if(currentPhase == "Long break") {
+        else if(currentPhase == "Short break" || currentPhase == "Long break") {
             phaseLabel->setText("Current phase: Work");
             currentPhase = "Work";
             timer->setTime(workDuration);
@@ -118,6 +112,15 @@ void ClassicPomodoro::update() {
 void ClassicPomodoro::updateTime(int time){
     remainingTime = time;
     saveSessionStateToFile();
+}
+
+void ClassicPomodoro::resetPomodoro() {
+    pause();
+    currentCycle = 0;
+    currentWorkBlock = 0;
+    currentPhase = "Work";
+    phaseLabel->setText("Current phase: Work");
+    timer->setTime(workDuration);
 }
 
 void ClassicPomodoro::loadSettingsFromFile() {

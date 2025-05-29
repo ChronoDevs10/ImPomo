@@ -182,16 +182,17 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
         int index = tasks.indexOf(task);
 
         if(parent->wasStarted == true) {
-            if(((index > 0  && (index - 1) > parent->getcurrent()))) {
+            if(index > 0  && (index - 1) > parent->getcurrent()) {
                 reorderTasks(index, index - 1);
-                refreshList(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
+                parent->timer->setTime(getPTasks().at(parent->getcurrent())->getDuration());
             }
         } else {
-            if(((index >= 0 && (index - 1) >= parent->getcurrent()))) {
+            if(index >= 0 && (index - 1) >= parent->getcurrent()) {
                 reorderTasks(index, index - 1);
-                refreshList(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
+                parent->timer->setTime(getPTasks().at(parent->getcurrent())->getDuration());
             }
         }
+        refreshList(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
     });
 
     QObject::connect(downButton, &QPushButton::clicked, [this, task, fieldWidget]() {
@@ -200,14 +201,15 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
         if(parent->wasStarted == true) {
             if(index < tasks.size() - 1 && index > parent->getcurrent()) {
                 reorderTasks(index, index + 1);
-                refreshList(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
+                parent->timer->setTime(getPTasks().at(parent->getcurrent())->getDuration());
             }
         } else {
             if(index < tasks.size() - 1 && index >= parent->getcurrent()) {
                 reorderTasks(index, index + 1);
-                refreshList(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
+                parent->timer->setTime(getPTasks().at(parent->getcurrent())->getDuration());
             }
         }
+        refreshList(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
     });
 
     if(task->getStatus())
@@ -225,8 +227,8 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
     if(settings->getTheme() == "Light") {
         deleteButton->setStyleSheet("QPushButton { background-color: #ffa726; color: black; border-radius: 5px; }");
 
-        upButton->setStyleSheet("QPushButton { background-color: #ffe0b2; color: black; border-radius: 5px; }");
-        downButton->setStyleSheet("QPushButton { background-color: #ffe0b2; color: black; border-radius: 5px; }");
+        upButton->setStyleSheet("QPushButton { background-color: #ffe0b2; color: black; border-radius: 5px; border: 1px solid #4c4c4c;}");
+        downButton->setStyleSheet("QPushButton { background-color: #ffe0b2; color: black; border-radius: 5px; border: 1px solid #4c4c4c;}");
     }
     else if(settings->getTheme() == "Dark") {
         deleteButton->setStyleSheet("QPushButton { background-color: #dd2c00; color: white; border-radius: 5px; }");

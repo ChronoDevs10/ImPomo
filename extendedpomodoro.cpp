@@ -138,7 +138,7 @@ void ExtendedPomodoro::loadSessionStateFromFile() {
         if(list->taskCount() != 0)
             remainingTime = list->getPTasks().at(0)->getDuration();
         else
-            remainingTime = 0;
+            remainingTime = 25;
         return;
     }
 
@@ -166,7 +166,7 @@ void ExtendedPomodoro::loadFromDatabase() {
             currTaskLabel->setText("All tasks finished");
         } else {
             timer->setTime(list->getPTasks().at(current)->getDuration());
-            timer->setRemainingTime(remainingTime);
+            timer->setRemainingTime(remainingTime);//!!!!!!!!!!!!!
             updateCurrentTaskLabel();
         }
     }

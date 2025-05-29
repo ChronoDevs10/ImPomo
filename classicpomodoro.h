@@ -53,7 +53,7 @@ public:
     int getCycles();
     int getWorkBlocks();
     QString getcurrentPhase();
-    void changeStyle();
+    void resetPomodoro();
 
     void loadSettingsFromFile();
     void saveSettingsToFile();
