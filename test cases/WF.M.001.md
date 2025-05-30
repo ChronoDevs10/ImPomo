@@ -27,7 +27,7 @@ Timer aktywny, odlicza 20 minut. Zadanie widoczne na liście z przypisanym czase
 
 ---
 
-### **2. Próba zmiany czasu trwającego już zadania (scenariusz alternatywny)**
+### **2. Próba zmiany czasu trwającego zadania (scenariusz alternatywny)**
 
 **Stan początkowy aplikacji:**  
 Tryb ImPomo, jedno zadanie na liście, ustawione na 50 minut. Timer uruchomiony.
