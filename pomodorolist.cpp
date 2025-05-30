@@ -184,12 +184,14 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
         if(parent->wasStarted == true) {
             if(index > 0  && (index - 1) > parent->getcurrent()) {
                 reorderTasks(index, index - 1);
-                parent->timer->setTime(getPTasks().at(parent->getcurrent())->getDuration());
+                if(index == parent->getcurrent() || index - 1 == parent->getcurrent())
+                    parent->timer->setTime(getPTasks().at(parent->getcurrent())->getDuration());
             }
         } else {
             if(index >= 0 && (index - 1) >= parent->getcurrent()) {
                 reorderTasks(index, index - 1);
-                parent->timer->setTime(getPTasks().at(parent->getcurrent())->getDuration());
+                if(index == parent->getcurrent() || index - 1 == parent->getcurrent())
+                    parent->timer->setTime(getPTasks().at(parent->getcurrent())->getDuration());
             }
         }
         refreshList(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
@@ -201,12 +203,14 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
         if(parent->wasStarted == true) {
             if(index < tasks.size() - 1 && index > parent->getcurrent()) {
                 reorderTasks(index, index + 1);
-                parent->timer->setTime(getPTasks().at(parent->getcurrent())->getDuration());
+                if(index == parent->getcurrent() || index + 1 == parent->getcurrent())
+                    parent->timer->setTime(getPTasks().at(parent->getcurrent())->getDuration());
             }
         } else {
             if(index < tasks.size() - 1 && index >= parent->getcurrent()) {
                 reorderTasks(index, index + 1);
-                parent->timer->setTime(getPTasks().at(parent->getcurrent())->getDuration());
+                if(index == parent->getcurrent() || index + 1 == parent->getcurrent())
+                    parent->timer->setTime(getPTasks().at(parent->getcurrent())->getDuration());
             }
         }
         refreshList(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
