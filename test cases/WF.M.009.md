@@ -2,7 +2,7 @@
 
 ---
 
-### **1. Powiadomienia dźwiękowe włączone**
+### **1. Powiadomienia dźwiękowe włączone (happy path)**
 
 **Stan początkowy aplikacji:**  
 Powiadomienia dźwiękowe są włączone w ustawieniach, aplikacja jest w trybie Pomodoro ustawionym na 1 minutę czasu pracy i 1 minutę przerwy.
@@ -29,7 +29,7 @@ Timer działa dalej, powiadomienia dźwiękowe poprawnie odtwarzają się przy z
 
 ---
 
-### **2. Dźwięk wyłączony systemowo**
+### **2. Dźwięk wyłączony systemowo (scenariusz alternatywny)**
 
 **Stan początkowy aplikacji:**  
 Powiadomienia dźwiękowe są włączone w ustawieniach, aplikacja jest w trybie Pomodoro ustawionym na 1 minutę czasu pracy i 1 minutę przerwy.
