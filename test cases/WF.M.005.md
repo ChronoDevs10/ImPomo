@@ -28,28 +28,3 @@ Aplikacja domyślnie ustawia 25 minut pracy. Po zakończeniu bloku pracy automat
 
 **Stan końcowy aplikacji:**  
 Tryb: krótka przerwa, licznik ustawiony na 5:00 i aktywny.
-
----
-
-### **2. Zmiana czasu trwającego bloku w trakcie jego działania (scenariusz alternatywny)**
-
-**Stan początkowy aplikacji:**  
-Tryb klasyczny Pomodoro. Użytkownik rozpoczął blok pracy – licznik odlicza (np. 17:00 z 25:00).
-
-**Kroki testowe:**
-1. Przejście do ustawień trybu Pomodoro w trakcie trwania bloku pracy.
-2. Zmiana czasu pracy z 25 minut na 30 minut.
-3. Zatwierdzenie zmian.
-4. Obserwacja aktualizacji pozostałego czasu (powinien wynosić teraz 22:00 z 30:00).
-
-**Oczekiwany rezultat testu:**  
-Aplikacja umożliwia zmianę czasu trwającego bloku. Pozostały czas zostaje przeliczony zgodnie z nowym limitem (np. 17:00 z 25:00 → 22:00 z 30:00). Timer kontynuuje odliczanie płynnie z nowym ustawieniem.
-
-**Rzeczywisty rezultat testu:**  
-[do uzupełnienia]
-
-**Rezultat testu (zaliczony / niezaliczony):**  
-[do uzupełnienia]
-
-**Stan końcowy aplikacji:**  
-Timer działa poprawnie z nowym czasem trwania bloku.
