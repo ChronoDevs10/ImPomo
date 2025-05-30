@@ -23,6 +23,16 @@ In addition to the improved Pomodoro method, **ImPomo** also offers a classic Po
 
 - **Qt C++**: The application is built with Qt for the user interface and C++ for the core functionality, ensuring a responsive and efficient user experience.
 
+## 📥 Download & Run
+
+You can download the application from the official release page:
+
+👉 [**Download ImPomo v1.0**](https://github.com/ChronoDevs10/ImPomo/releases/tag/v1.0)
+
+1. Download the `**ImPomo.zip**` file.
+2. Extract the contents of the ZIP archive to any folder of your choice.
+3. Run the `**ImPomo.exe**` file to launch the application.
+
 ## 📝 License
 
 This project is licensed under the GNU General Public License (GPL) v3.0 - see the [LICENSE](LICENSE) file for details.
