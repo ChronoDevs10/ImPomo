@@ -29,9 +29,9 @@ You can download the application from the official release page:
 
 👉 [**Download ImPomo v1.0**](https://github.com/ChronoDevs10/ImPomo/releases/tag/v1.0)
 
-1. Download the `**ImPomo.zip**` file.
+1. Download the `ImPomo.zip` file.
 2. Extract the contents of the ZIP archive to any folder of your choice.
-3. Run the `**ImPomo.exe**` file to launch the application.
+3. Run the `ImPomo.exe` file to launch the application.
 
 ## 📝 License
 
