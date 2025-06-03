@@ -21,10 +21,10 @@ Tryb Pomodoro, ustawienia domyślne:
 Aplikacja domyślnie ustawia 25 minut pracy. Po zakończeniu bloku pracy automatycznie uruchamia 5-minutową przerwę bez konieczności ingerencji użytkownika.
 
 **Rzeczywisty rezultat testu:**  
-[...]
+*taki sam jak oczekiwany*
 
 **Rezultat testu (zaliczony / niezaliczony):**  
-[...]
+*zaliczony*
 
 **Stan końcowy aplikacji:**  
 Tryb: krótka przerwa, licznik ustawiony na 5:00 i aktywny.
