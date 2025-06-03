@@ -17,10 +17,10 @@ Tryb ImPomo uruchomiony, brak zadań na liście. Timer nie został jeszcze uruch
 Dodane zadanie adanie jest pierwszym na liście, a timer pokazuje **20:00** i zaczyna odliczać po uruchomieniu.
 
 **Rzeczywisty rezultat testu:**  
-[...]
+*dodane zadanie jest pierwsze na liscie, timer pokazuje 20min i zaczyna odliczac po uruchomieniu*
 
 **Rezultat testu (zaliczony / niezaliczony):**  
-[...]
+*zaliczony*
 
 **Stan końcowy aplikacji:**  
 Timer aktywny, odlicza 20 minut. Zadanie widoczne na liście z przypisanym czasem.
@@ -39,10 +39,10 @@ Tryb ImPomo, jedno zadanie na liście, ustawione na 50 minut. Timer uruchomiony.
 Aplikacja nie pozwala na zmianę czasu trwającego zadania.
 
 **Rzeczywisty rezultat testu:**  
-[do uzupełnienia]
+*aplikacja nie pozwala na zmianę czasu trwającego zadania*
 
 **Rezultat testu (zaliczony / niezaliczony):**  
-[do uzupełnienia]
+*zaliczony*
 
 **Stan końcowy aplikacji:**  
 Timer nadal odlicza 50 minut. Zadanie w toku.
@@ -63,10 +63,10 @@ Lista zadań w ImPomo jest pusta.
 Aplikacja odrzuca wartość ujemną.
 
 **Rzeczywisty rezultat testu:**  
-[do uzupełnienia]
+*aplikacja odrzuca wartosc ujemna*
 
 **Rezultat testu (zaliczony / niezaliczony):**  
-[do uzupełnienia]
+*zaliczony*
 
 **Stan końcowy aplikacji:**  
 Zadanie ma przypisany czas taki, jak przed próbą zmiany.
