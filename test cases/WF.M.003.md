@@ -18,10 +18,10 @@ Na liście znajduje się jedno zadanie z przypisanym czasem (np. 1 min).
 Po naciśnięciu pauzy timer zatrzymuje odliczanie, które po naciśnięciu start zostaje wznowione. Zadanie poprawnie odlicza się do końca.
 
 **Rzeczywisty rezultat testu:**  
-[...]
+*taki jak oczekiwany*
 
 **Rezultat testu (zaliczony / niezaliczony):**  
-[...]
+*zaliczony*
 
 **Stan końcowy aplikacji:**  
 Zadanie zostało zakończone i oznaczone na szaro. Etykieta wskazuje na zakończenie wszystkich zadań, timer jest wyzerowany.
@@ -40,10 +40,10 @@ Jedno zadanie na liście.
 Aplikacja ignoruje komendę pauzy.
 
 **Rzeczywisty rezultat testu:**  
-[...]
+*nic sie nie stalo*
 
 **Rezultat testu (zaliczony / niezaliczony):**  
-[...]
+*zaliczony*
 
 **Stan końcowy aplikacji:**  
 Timer nadal nieuruchomiony, brak zmian na liście.
