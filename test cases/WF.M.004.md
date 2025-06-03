@@ -19,10 +19,10 @@ Lista zadań To-do jest pusta.
 Lista zadań zawiera trzy zadania w kolejności: **2, 3, 1**.
 
 **Rzeczywisty rezultat testu:**  
-[...]
+*lista zadan z oczekiwanymi zadaniami w oczekiwanej kolejnosci*
 
 **Rezultat testu (zaliczony / niezaliczony):**  
-[...]
+*zaliczony*
 
 **Stan końcowy aplikacji:**  
 Lista zawiera odpowiednią liczbę zadań w poprawnej kolejności: **2, 3, 1**.
@@ -41,10 +41,10 @@ Lista zawiera jedno zadanie **"1"**.
 Aplikacja ignoruje operację.
 
 **Rzeczywisty rezultat testu:**  
-[...]
+*nic sie nie stalo*
 
 **Rezultat testu (zaliczony / niezaliczony):**  
-[...]
+*zaliczony*
 
 **Stan końcowy aplikacji:**  
 Lista z jednym zadaniem, bez zmian.
