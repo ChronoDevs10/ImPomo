@@ -16,10 +16,10 @@ Lista zadań w ImPomo jest pusta.
 Po zakończeniu odliczania aplikacja automatycznie zaczyna odliczanie czasu dla kolejnego zadania oraz aktualizuje etykietę **"Current task"**.
 
 **Rzeczywisty rezultat testu:**  
-[...]
+*aplikacja automatycznie przeszła do nastepnego zadania i zaktualizowala etykiete*
 
 **Rezultat testu (zaliczony / niezaliczony):**  
-[...]
+*zaliczony*
 
 **Stan końcowy aplikacji:**  
 Timer aktywny, trwa odliczanie dla drugiego zadania. Pierwsze zadanie jest zaznaczone na szaro.
@@ -40,10 +40,10 @@ Lista zadań w ImPomo jest pusta.
 Po zakończeniu zadania aplikacja nie odlicza czasu (brak kolejnego zadania), ale prawidłowo kończy sesję – etykieta nad zegarem powinna pokazywać komunikat **"All tasks finished"** (ewentualnie **"No tasks on the list"**).
 
 **Rzeczywisty rezultat testu:**  
-[...]
+*komunikat all tasks finished, timer sie zatrzymal*
 
 **Rezultat testu (zaliczony / niezaliczony):**  
-[...]
+*zaliczony*
 
 **Stan końcowy aplikacji:**  
 Wszystkie zadania na liście zaznaczone na szaro, odpowiednia etykieta widoczna, zegar wyzerowany.
