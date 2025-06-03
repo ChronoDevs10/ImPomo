@@ -19,7 +19,7 @@ Lista zadań To-do jest pusta.
 Lista zadań zawiera trzy zadania w kolejności: **2, 3, 1**.
 
 **Rzeczywisty rezultat testu:**  
-*lista zadan z oczekiwanymi zadaniami w oczekiwanej kolejnosci*
+*lista zadan z oczekiwanymi zadaniami w oczekiwanej kolejnosci(2,3,1)*
 
 **Rezultat testu (zaliczony / niezaliczony):**  
 *zaliczony*
