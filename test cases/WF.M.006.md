@@ -18,10 +18,10 @@ Aplikacja uruchomiona. Tryb klasycznego Pomodoro aktywny. Sesja jeszcze nie zost
 Timer uruchamia się z ustawionym czasem 1 min pracy i po jego zakończeniu automatycznie przechodzi do minutowej przerwy.
 
 **Rzeczywisty rezultat testu:**  
-[...]
+*taki jak oczekiwany*
 
 **Rezultat testu (zaliczony / niezaliczony):**  
-[...]
+*zaliczony*
 
 **Stan końcowy aplikacji:**  
 Aktywna sesja z czasem pracy 1 min i minutową przerwą.
@@ -42,10 +42,10 @@ Aktywna sesja klasycznego Pomodoro, timer odlicza czas.
 Timer resetuje się do nowo ustawionej wartości (15 minut). Odliczanie rozpoczyna się od nowa – licznik pokazuje pełne 15 minut.
 
 **Rzeczywisty rezultat testu:**  
-[...]
+*taki jak oczekiwany*
 
 **Rezultat testu (zaliczony / niezaliczony):**  
-[...]
+*zaliczony*
 
 **Stan końcowy aplikacji:**  
 Timer działa zgodnie z nowymi ustawieniami, sesja kontynuowana od początku nowego bloku pracy.
