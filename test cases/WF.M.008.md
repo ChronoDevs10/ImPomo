@@ -19,10 +19,10 @@ Wyświetlana tabela zawiera:
 - liczbę zakończonych zadań tego dnia
 
 **Rzeczywisty rezultat testu:**  
-[...]
+*wyswietlana tabela zawiera statystyki z danego dnia*
 
 **Rezultat testu (zaliczony / niezaliczony):**  
-[...]
+*zaliczony*
 
 **Stan końcowy aplikacji:**  
 Moduł Statystyki wyświetla poprawne dane dla wybranego dnia.
@@ -44,10 +44,10 @@ Wyświetlana tabela zawiera zerowe wartości:
 - liczba zakończonych zadań: 0.  
 
 **Rzeczywisty rezultat testu:**  
-[...]
+*wyswietlana tabela ma wsystkie wartosci ustawione na 0*
 
 **Rezultat testu (zaliczony / niezaliczony):**  
-[...]
+*zaliczony*
 
 **Stan końcowy aplikacji:**  
 Moduł Statystyki obsługuje poprawnie wybór przyszłej daty, prezentując "puste" dane.
