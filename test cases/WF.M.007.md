@@ -20,10 +20,10 @@ Po zakończeniu przerwy automatycznie rozpoczyna się kolejny blok pracy.
 Nie jest wymagana interwencja użytkownika.
 
 **Rzeczywisty rezultat testu:**  
-[...]
+*wszystko sie robi samo tak jak chcielismy*
 
 **Rezultat testu (zaliczony / niezaliczony):**  
-[...]
+*zaliczony*
 
 **Stan końcowy aplikacji:**  
 Timer jest aktywny, odlicza drugi blok pracy.
@@ -46,10 +46,10 @@ Po kliknięciu przycisku „Reset” timer natychmiast zatrzymuje się, przechod
 Po ponownym uruchomieniu timer działa normalnie i automatycznie przechodzi między blokami pracy i przerwy.
 
 **Rzeczywisty rezultat testu:**  
-[...]
+*taki jak oczekiwany*
 
 **Rezultat testu (zaliczony / niezaliczony):**  
-[...]
+*zaliczony*
 
 **Stan końcowy aplikacji:**  
 Timer poprawnie odmierza sesję od początku.
