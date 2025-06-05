@@ -22,6 +22,9 @@ Aplikacja domyślnie ustawia 25 minut pracy. Po zakończeniu bloku pracy automat
 
 **Rzeczywisty rezultat testu:**  
 *taki sam jak oczekiwany*
+<p align="center">
+  <img src="../testCasesResults/WFM005-1.png" width="50%" />
+</p>
 
 **Rezultat testu (zaliczony / niezaliczony):**  
 *zaliczony*
