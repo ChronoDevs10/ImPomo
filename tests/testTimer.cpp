@@ -32,8 +32,8 @@ void TimerTest::testInitialTime() {
 
 void TimerTest::testSetTime() {
     Timer timer;
-    timer.setTime(25 * 60);
-    QCOMPARE(timer.getRemainingTime(), 25 * 60);
+    timer.setTime(25*60);
+    QCOMPARE(timer.getRemainingTime(), 25*60);
 }
 
 void TimerTest::testStartTime() {
@@ -46,7 +46,7 @@ void TimerTest::testStartTime() {
 
 void TimerTest::testPauseTime() {
     Timer timer;
-    timer.setTime(60 * 5);
+    timer.setTime(60*5);
     timer.start();
     QTest::qWait(1000);
     timer.pause();

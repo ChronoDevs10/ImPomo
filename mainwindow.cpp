@@ -5,7 +5,6 @@ MainWindow::MainWindow(QWidget *parent)
     classicPomodoro(new ClassicPomodoro()), extendedPomodoro(new ExtendedPomodoro(pomodoroList)),
     appSettings(new AppSettings()), statistics(new Statistics()), notifications(new Notifications())
 {
-
     appSettings->loadSettingsFromFile();
     notifications->settings = appSettings;
 
@@ -24,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
     classicPomodoro->notifications = notifications;
     classicPomodoro->stats = statistics;
     classicPomodoro->loadSettingsFromFile();
+
     classicPomodoro->loadSessionStateFromFile();
 
     //-----------------------------------------------
@@ -303,59 +303,63 @@ void MainWindow::setupSettingsTab() {
 void MainWindow::PomodoroSettings() {
     QDialog dialog(this);
     dialog.setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-
     dialog.setWindowTitle("Pomodoro Settings");
     dialog.setFixedSize(400, 400);
 
     QString style;
 
-    if(appSettings->getTheme() == "Light")
-        style = "QDialog { background-color: #ffd59a; color: #000000; font-family: 'Segoe UI', sans-serif; font-size: 14px; border: 1px solid #4c4c4c; border-radius: 5px; padding: 5px; }\n" \
-            "QLabel { color: #000000; font-size: 16px; font-weight: bold; margin-top: 10px; }\n" \
-            "QLineEdit { background-color: #fff1db; color: #000000; border: 1px solid #4c4c4c; border-radius: 5px; padding: 4px; min-width: 120px; height: 40px; }\n" \
-            "QDialogButtonBox QPushButton { background-color: #ffb74d; color: #000000; padding: 8px 16px; border: 1px solid #e0912d; border-radius: 6px; font-weight: bold; min-width: 80px; }\n" \
-            "QDialogButtonBox QPushButton:hover { background-color: #ffa726; }\n" \
+    if (appSettings->getTheme() == "Light")
+        style =
+            "QDialog { background-color: #ffd59a; color: #000000; font-family: 'Segoe UI', sans-serif; font-size: 14px; border: 1px solid #4c4c4c; border-radius: 5px; padding: 5px; }\n"
+            "QLabel { color: #000000; font-size: 16px; font-weight: bold; margin-top: 10px; }\n"
+            "QSpinBox { background-color: #fff1db; color: #000000; border: 1px solid #4c4c4c; border-radius: 5px; padding: 4px; min-width: 120px; height: 40px; }\n"
+            "QSpinBox::up-button, QSpinBox::down-button { width: 0; height: 0; border: none; }\n"
+            "QDialogButtonBox QPushButton { background-color: #ffb74d; color: #000000; padding: 8px 16px; border: 1px solid #e0912d; border-radius: 6px; font-weight: bold; min-width: 80px; }\n"
+            "QDialogButtonBox QPushButton:hover { background-color: #ffa726; }\n"
             "QDialogButtonBox QPushButton:pressed { background-color: #fb8c00; }\n";
-    else if(appSettings->getTheme() == "Dark")
-        style = "QDialog { background-color: #000000; color: #ffffff; font-family: 'Segoe UI', sans-serif; font-size: 14px; border: 1px solid #5f5f5f; border-radius: 5px; padding: 5px; }\n" \
-            "QLabel { color: #d0d0d0; font-size: 16px; font-weight: bold; margin-top: 10px; }\n" \
-            "QLineEdit { background-color: #1a1a1a; color: #ffffff; border: 1px solid #7f7f7f; border-radius: 5px; padding: 4px; min-width: 120px; height: 40px; }\n" \
-            "QDialogButtonBox QPushButton { background-color: #5f5f5f; color: #ffffff; padding: 8px 16px; border: none; border-radius: 6px; font-weight: bold; min-width: 80px; }\n" \
-            "QDialogButtonBox QPushButton:hover { background-color: #7a7a7a; }\n" \
+    else if (appSettings->getTheme() == "Dark")
+        style =
+            "QDialog { background-color: #000000; color: #ffffff; font-family: 'Segoe UI', sans-serif; font-size: 14px; border: 1px solid #5f5f5f; border-radius: 5px; padding: 5px; }\n"
+            "QLabel { color: #d0d0d0; font-size: 16px; font-weight: bold; margin-top: 10px; }\n"
+            "QSpinBox { background-color: #1a1a1a; color: #ffffff; border: 1px solid #7f7f7f; border-radius: 5px; padding: 4px; min-width: 120px; height: 40px; }\n"
+            "QSpinBox::up-button, QSpinBox::down-button { width: 0; height: 0; border: none; }\n"
+            "QDialogButtonBox QPushButton { background-color: #5f5f5f; color: #ffffff; padding: 8px 16px; border: none; border-radius: 6px; font-weight: bold; min-width: 80px; }\n"
+            "QDialogButtonBox QPushButton:hover { background-color: #7a7a7a; }\n"
             "QDialogButtonBox QPushButton:pressed { background-color: #9a9a9a; }\n";
+
     dialog.setStyleSheet(style);
 
     QVBoxLayout* layout = new QVBoxLayout(&dialog);
 
-    QLineEdit* workLineEdit = new QLineEdit();
-    workLineEdit->setText(QString::number(classicPomodoro->getWorkDuration()));
-    workLineEdit->setValidator(new QIntValidator(1, 120));
+    QSpinBox* workSpinBox = new QSpinBox();
+    workSpinBox->setRange(1, 120);
+    workSpinBox->setValue(classicPomodoro->getWorkDuration());
     layout->addWidget(new QLabel("Work duration (min):"));
-    layout->addWidget(workLineEdit);
+    layout->addWidget(workSpinBox);
 
-    QLineEdit* shortBreakLineEdit = new QLineEdit();
-    shortBreakLineEdit->setText(QString::number(classicPomodoro->getShortBreakDuration()));
-    shortBreakLineEdit->setValidator(new QIntValidator(1, 60));
+    QSpinBox* shortBreakSpinBox = new QSpinBox();
+    shortBreakSpinBox->setRange(1, 60);
+    shortBreakSpinBox->setValue(classicPomodoro->getShortBreakDuration());
     layout->addWidget(new QLabel("Short break (min):"));
-    layout->addWidget(shortBreakLineEdit);
+    layout->addWidget(shortBreakSpinBox);
 
-    QLineEdit* longBreakLineEdit = new QLineEdit();
-    longBreakLineEdit->setText(QString::number(classicPomodoro->getLongBreakDuration()));
-    longBreakLineEdit->setValidator(new QIntValidator(1, 60));
+    QSpinBox* longBreakSpinBox = new QSpinBox();
+    longBreakSpinBox->setRange(1, 60);
+    longBreakSpinBox->setValue(classicPomodoro->getLongBreakDuration());
     layout->addWidget(new QLabel("Long break (min):"));
-    layout->addWidget(longBreakLineEdit);
+    layout->addWidget(longBreakSpinBox);
 
-    QLineEdit* cyclesLineEdit = new QLineEdit();
-    cyclesLineEdit->setText(QString::number(classicPomodoro->getCycles()));
-    cyclesLineEdit->setValidator(new QIntValidator(1, 15));
+    QSpinBox* cyclesSpinBox = new QSpinBox();
+    cyclesSpinBox->setRange(1, 15);
+    cyclesSpinBox->setValue(classicPomodoro->getCycles());
     layout->addWidget(new QLabel("Number of cycles:"));
-    layout->addWidget(cyclesLineEdit);
+    layout->addWidget(cyclesSpinBox);
 
-    QLineEdit* workBlocksLineEdit = new QLineEdit();
-    workBlocksLineEdit->setText(QString::number(classicPomodoro->getWorkBlocks()));
-    workBlocksLineEdit->setValidator(new QIntValidator(1, 15));
+    QSpinBox* workBlocksSpinBox = new QSpinBox();
+    workBlocksSpinBox->setRange(1, 15);
+    workBlocksSpinBox->setValue(classicPomodoro->getWorkBlocks());
     layout->addWidget(new QLabel("Number of work blocks per cycle:"));
-    layout->addWidget(workBlocksLineEdit);
+    layout->addWidget(workBlocksSpinBox);
 
     QDialogButtonBox* buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     layout->addWidget(buttonBox);
@@ -363,17 +367,19 @@ void MainWindow::PomodoroSettings() {
     connect(buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
 
-    if(dialog.exec() == QDialog::Accepted) {
+    if (dialog.exec() == QDialog::Accepted) {
         classicPomodoro->changeProperties(
-            workLineEdit->text().toInt(),
-            shortBreakLineEdit->text().toInt(),
-            longBreakLineEdit->text().toInt(),
-            cyclesLineEdit->text().toInt(),
-            workBlocksLineEdit->text().toInt()
+            workSpinBox->value(),
+            shortBreakSpinBox->value(),
+            longBreakSpinBox->value(),
+            cyclesSpinBox->value(),
+            workBlocksSpinBox->value()
             );
         classicPomodoro->saveSettingsToFile();
     }
 }
+
+
 
 QPushButton* MainWindow::createMenuButton() {
     QMenu *menu = new QMenu(this);

@@ -34,7 +34,7 @@ ExtendedPomodoro::ExtendedPomodoro(PomodoroList* List) {
     }
     else {
         current = 0;
-        timer->setTime(list->getPTasks().at(0)->getDuration());
+        timer->setTime(list->getPTasks().at(0)->getDuration()*60);
         currTaskLabel = new QLabel("Current task: " + list->getPTasks().at(0)->getName());
     }
 
@@ -62,7 +62,7 @@ void ExtendedPomodoro::nextPhase() {
 
     if(current < (list->taskCount() - 1)){
         current++;
-        timer->setTime(list->getPTasks().at(current)->getDuration());
+        timer->setTime(list->getPTasks().at(current)->getDuration()*60);
         currTaskLabel->setText("Current task: " + list->getPTasks().at(current)->getName());
         start();
     }
@@ -165,7 +165,7 @@ void ExtendedPomodoro::loadFromDatabase() {
             timer->setTime(0);
             currTaskLabel->setText("All tasks finished");
         } else {
-            timer->setTime(list->getPTasks().at(current)->getDuration());
+            timer->setTime(list->getPTasks().at(current)->getDuration()*60);
             timer->setRemainingTime(remainingTime);//!!!!!!!!!!!!!
             updateCurrentTaskLabel();
         }

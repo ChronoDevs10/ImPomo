@@ -16,7 +16,7 @@ PomodoroList::PomodoroList() {
 void PomodoroList::addTask(Task* task) {
     PomodoroTask* pt = dynamic_cast<PomodoroTask*>(task);
     if(parent != nullptr && tasks.size() == parent->tasksFinished) {
-        parent->timer->setTime(pt->getDuration());
+        parent->timer->setTime(pt->getDuration()*60);
         parent->setcurrent(parent->tasksFinished);
     }
     tasks.append(pt);
@@ -128,7 +128,7 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
         if((index > parent->getcurrent()) || (parent->wasStarted == false && index == parent->getcurrent())) {
             editTaskDuration(task, newDuration);
             if(index == parent->getcurrent())
-                parent->timer->setTime(task->getDuration());
+                parent->timer->setTime(task->getDuration()*60);
         }
         else {
             durationBox->blockSignals(true);
@@ -155,7 +155,7 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
                     parent->currTaskLabel->setText("All tasks finished");
                 } else {
                     if(!parent->wasStarted)
-                        parent->timer->setTime(getPTasks().at(parent->getcurrent())->getDuration());
+                        parent->timer->setTime(getPTasks().at(parent->getcurrent())->getDuration()*60);
                     parent->updateCurrentTaskLabel();
                 }
             }
@@ -185,13 +185,13 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
             if(index > 0  && (index - 1) > parent->getcurrent()) {
                 reorderTasks(index, index - 1);
                 if(index == parent->getcurrent() || index - 1 == parent->getcurrent())
-                    parent->timer->setTime(getPTasks().at(parent->getcurrent())->getDuration());
+                    parent->timer->setTime(getPTasks().at(parent->getcurrent())->getDuration()*60);
             }
         } else {
             if(index >= 0 && (index - 1) >= parent->getcurrent()) {
                 reorderTasks(index, index - 1);
                 if(index == parent->getcurrent() || index - 1 == parent->getcurrent())
-                    parent->timer->setTime(getPTasks().at(parent->getcurrent())->getDuration());
+                    parent->timer->setTime(getPTasks().at(parent->getcurrent())->getDuration()*60);
             }
         }
         refreshList(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));
@@ -204,13 +204,13 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
             if(index < tasks.size() - 1 && index > parent->getcurrent()) {
                 reorderTasks(index, index + 1);
                 if(index == parent->getcurrent() || index + 1 == parent->getcurrent())
-                    parent->timer->setTime(getPTasks().at(parent->getcurrent())->getDuration());
+                    parent->timer->setTime(getPTasks().at(parent->getcurrent())->getDuration()*60);
             }
         } else {
             if(index < tasks.size() - 1 && index >= parent->getcurrent()) {
                 reorderTasks(index, index + 1);
                 if(index == parent->getcurrent() || index + 1 == parent->getcurrent())
-                    parent->timer->setTime(getPTasks().at(parent->getcurrent())->getDuration());
+                    parent->timer->setTime(getPTasks().at(parent->getcurrent())->getDuration()*60);
             }
         }
         refreshList(qobject_cast<QVBoxLayout*>(fieldWidget->parentWidget()->layout()));

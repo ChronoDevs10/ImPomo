@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>Icon.ico</file>
+        <file>tada.wav</file>
+        <file>Alarm02.wav</file>
     </qresource>
 </RCC>

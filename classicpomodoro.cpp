@@ -13,7 +13,7 @@ ClassicPomodoro::ClassicPomodoro() {
 
     timer = new Timer();
     timer->setSubscriber(this);
-    timer->setTime(workDuration);
+    timer->setTime(workDuration*60);
 
     phaseLabel = new QLabel("Current phase: " + currentPhase);
 }
@@ -34,14 +34,14 @@ void ClassicPomodoro::nextPhase() {
             currentWorkBlock++;
             phaseLabel->setText("Current phase: Short break");
             currentPhase = "Short break";
-            timer->setTime(shortBreakDuration);
+            timer->setTime(shortBreakDuration*60);
             timer->start();
         }
         else if((currentPhase == "Work") && (currentWorkBlock == workBlocksInCycle - 1)) {
             stats->addClassicPomodoroData(workDuration);
             phaseLabel->setText("Current phase: Long break");
             currentPhase = "Long break";
-            timer->setTime(longBreakDuration);
+            timer->setTime(longBreakDuration*60);
             timer->start();
             currentCycle++;
             currentWorkBlock = 0;
@@ -49,13 +49,13 @@ void ClassicPomodoro::nextPhase() {
         else if(currentPhase == "Short break" || currentPhase == "Long break") {
             phaseLabel->setText("Current phase: Work");
             currentPhase = "Work";
-            timer->setTime(workDuration);
+            timer->setTime(workDuration*60);
             timer->start();
         }
     }
     else {
         phaseLabel->setText("Session finished");
-        timer->setTime(workDuration);
+        timer->setTime(workDuration*60);
         currentPhase = "Work";
         currentWorkBlock = 0;
         currentCycle = 0;
@@ -93,11 +93,11 @@ void ClassicPomodoro::changeProperties(int newWork, int newShortBreak, int newLo
     longBreakDuration = newLongBreak;
 
     if(currentPhase == "Work")
-        timer->setTime(newWork);
+        timer->setTime(newWork*60);
     else if(currentPhase == "Short break")
-        timer->setTime(newShortBreak);
+        timer->setTime(newShortBreak*60);
     else if(currentPhase == "Long break")
-        timer->setTime(newLongBreak);
+        timer->setTime(newLongBreak*60);
 
     if(newCycles >= currentCycle + 1)
         cycles = newCycles;
@@ -120,7 +120,7 @@ void ClassicPomodoro::resetPomodoro() {
     currentWorkBlock = 0;
     currentPhase = "Work";
     phaseLabel->setText("Current phase: Work");
-    timer->setTime(workDuration);
+    timer->setTime(workDuration*60);
 }
 
 void ClassicPomodoro::loadSettingsFromFile() {
@@ -143,7 +143,7 @@ void ClassicPomodoro::loadSettingsFromFile() {
                     SettingsJson["shortBreakDuration"].toInt(5),
                     SettingsJson["longBreakDuration"].toInt(15),
                     SettingsJson["cycles"].toInt(4),
-                    SettingsJson["workBlocksInCycle"].toInt(4) );
+                    SettingsJson["workBlocksInCycle"].toInt(4));
 }
 
 void ClassicPomodoro::saveSettingsToFile() {
@@ -188,7 +188,7 @@ void ClassicPomodoro::loadSessionStateFromFile() {
         currentPhase = "Work";
         remainingTime = workDuration;
 
-        timer->setTime(remainingTime);
+        timer->setTime(remainingTime*60);
         phaseLabel->setText("Current phase: " + currentPhase);
         return;
     }

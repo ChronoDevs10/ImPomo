@@ -4,7 +4,8 @@ QT += testlib charts
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
-CONFIG += console
+CONFIG -= console
+win32:CONFIG += windows
 RESOURCES += \
     resources.qrc
 
