@@ -16,7 +16,7 @@ Powiadomienia dźwiękowe są włączone, na liście w trybie ImPomo są dodane 
 Powiadomienia dźwiękowe są wyciszone, nie sygnalizują zakończenia zadania.  
 
 **Rzeczywisty rezultat testu:**  
-[...]
+*test nieprzeprowadzony ze wzgledu na niezaliczenie testu 9.1*
 
 **Rezultat testu (zaliczony / niezaliczony):**  
 [...]
