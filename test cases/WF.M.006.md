@@ -19,6 +19,9 @@ Timer uruchamia się z ustawionym czasem 1 min pracy i po jego zakończeniu auto
 
 **Rzeczywisty rezultat testu:**  
 *taki jak oczekiwany*
+<p align="center">
+  <img src="../testCasesResults/WFM006-1.png" width="50%" />
+</p>
 
 **Rezultat testu (zaliczony / niezaliczony):**  
 *zaliczony*
