@@ -18,10 +18,12 @@ Wyświetlana wartość jest zgodna z ustawionym czasem zadania.
 Timer poprawnie odlicza do zera.
 
 **Rzeczywisty rezultat testu:**  
-[...]
+<p align="center">
+  <img src="../testCasesResults/WFM010-1.png" width="50%" />
+</p>
 
 **Rezultat testu (zaliczony / niezaliczony):**  
-[...]
+*zaliczony*
 
 **Stan końcowy aplikacji:**  
 Timer odlicza czas zgodnie z aktualną sytuacją, wyświetlacz czasu pozostaje widoczny.
@@ -41,10 +43,15 @@ Oba tryby nieuruchomione, ImPomo zawiera kilka zadań do odliczenia.
 Aplikacja poprawnie pokazuje czas pozostały dla obu trybów, brak pomyłek w licznikach lub nadpisania widoku.
 
 **Rzeczywisty rezultat testu:**  
-[...]
+<p align="center">
+  <img src="../testCasesResults/WFM010-2b.png" width="50%" />
+</p>
+<p align="center">
+  <img src="../testCasesResults/WFM010-3b.png" width="50%" />
+</p>
 
 **Rezultat testu (zaliczony / niezaliczony):**  
-[...]
+*zaliczony*
 
 **Stan końcowy aplikacji:**  
 Aplikacja poprawnie pokazuje niezależne timery.
