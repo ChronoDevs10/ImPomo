@@ -17,6 +17,14 @@ Po zakończeniu odliczania aplikacja automatycznie zaczyna odliczanie czasu dla 
 
 **Rzeczywisty rezultat testu:**  
 *aplikacja automatycznie przeszła do nastepnego zadania i zaktualizowala etykiete*
+<p align="center">
+  <img src="../testCasesResults/WFM002-1.png" width="50%" />
+</p>
+<p align="center">
+  <img src="../testCasesResults/WFM002-2.png" width="50%" />
+</p>
+
+
 
 **Rezultat testu (zaliczony / niezaliczony):**  
 *zaliczony*
@@ -41,6 +49,10 @@ Po zakończeniu zadania aplikacja nie odlicza czasu (brak kolejnego zadania), al
 
 **Rzeczywisty rezultat testu:**  
 *komunikat all tasks finished, timer sie zatrzymal*
+<p align="center">
+  <img src="../testCasesResults/WFM002-3.png" width="50%" />
+</p>
+
 
 **Rezultat testu (zaliczony / niezaliczony):**  
 *zaliczony*
