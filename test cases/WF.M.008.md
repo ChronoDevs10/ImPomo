@@ -20,6 +20,9 @@ Wyświetlana tabela zawiera:
 
 **Rzeczywisty rezultat testu:**  
 *wyswietlana tabela zawiera statystyki z danego dnia*
+<p align="center">
+  <img src="../testCasesResults/WFM008-1.png" width="50%" />
+</p>
 
 **Rezultat testu (zaliczony / niezaliczony):**  
 *zaliczony*
@@ -45,6 +48,9 @@ Wyświetlana tabela zawiera zerowe wartości:
 
 **Rzeczywisty rezultat testu:**  
 *wyswietlana tabela ma wsystkie wartosci ustawione na 0*
+<p align="center">
+  <img src="../testCasesResults/WFM008-2.png" width="50%" />
+</p>
 
 **Rezultat testu (zaliczony / niezaliczony):**  
 *zaliczony*
