@@ -17,10 +17,10 @@ Lista zadań została zaktualizowana zgodnie z przesunięciami.
 Timer odlicza nadal zadanie A bez przerwania.
 
 **Rzeczywisty rezultat testu:**  
-[...]
+*taki jak oczekiwany*
 
 **Rezultat testu (zaliczony / niezaliczony):**  
-[...]
+*zaliczony*
 
 **Stan końcowy aplikacji:**  
 Timer odlicza zadanie A.  
@@ -45,10 +45,10 @@ Zmiana kolejności zadania aktualnie odliczanego i zakończonego jest zablokowan
 Timer odlicza dalej zadanie B bez zakłóceń.
 
 **Rzeczywisty rezultat testu:**  
-[...]
+*taki jak oczekiwany*
 
 **Rezultat testu (zaliczony / niezaliczony):**  
-[...]
+*zaliczony*
 
 **Stan końcowy aplikacji:**  
 Timer odlicza zadanie B.  
