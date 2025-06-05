@@ -19,7 +19,15 @@ Lista zadań To-do jest pusta.
 Lista zadań zawiera trzy zadania w kolejności: **2, 3, 1**.
 
 **Rzeczywisty rezultat testu:**  
-*lista zadan z oczekiwanymi zadaniami w oczekiwanej kolejnosci(2,3,1)*
+<p align="center">
+  <img src="../testCasesResults/WFM004-1.png" width="50%" />
+</p>
+<p align="center">
+  <img src="../testCasesResults/WFM004-2.png" width="50%" />
+</p>
+<p align="center">
+  <img src="../testCasesResults/WFM004-3.png" width="50%" />
+</p>
 
 **Rezultat testu (zaliczony / niezaliczony):**  
 *zaliczony*
@@ -42,6 +50,9 @@ Aplikacja ignoruje operację.
 
 **Rzeczywisty rezultat testu:**  
 *nic sie nie stalo*
+<p align="center">
+  <img src="../testCasesResults/WFM004-1B.png" width="50%" />
+</p>
 
 **Rezultat testu (zaliczony / niezaliczony):**  
 *zaliczony*
