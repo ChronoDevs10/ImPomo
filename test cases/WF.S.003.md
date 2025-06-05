@@ -17,10 +17,21 @@ Aplikacja przełącza się na tryb ciemny bez opóźnień oraz po ponownym uruch
 Wszystkie zakładki aplikacji poprawnie stosują nowy motyw.
 
 **Rzeczywisty rezultat testu:**  
-[...]
+<p align="center">
+  <img src="../testCasesResults/lightMode.png" width="50%" />
+</p>
+<p align="center">
+  <img src="../testCasesResults/changeMode.png" width="50%" />
+</p>
+<p align="center">
+  <img src="../testCasesResults/changeMode2.png" width="50%" />
+</p>
+<p align="center">
+  <img src="../testCasesResults/darkMode2.png" width="50%" />
+</p>
 
 **Rezultat testu (zaliczony / niezaliczony):**  
-[...]
+*zaliczony*
 
 **Stan końcowy aplikacji:**  
 Aplikacja działa w trybie ciemnym.
@@ -42,10 +53,22 @@ Aplikacja przełącza się na tryb jasny bez opóźnień oraz po ponownym urucho
 Wszystkie zakładki aplikacji poprawnie stosują nowy motyw.
 
 **Rzeczywisty rezultat testu:**  
-[...]
+<p align="center">
+  <img src="../testCasesResults/darkMode2.png" width="50%" />
+</p>
+<p align="center">
+  <img src="../testCasesResults/changeMode2.png" width="50%" />
+</p>
+<p align="center">
+  <img src="../testCasesResults/changeMode.png" width="50%" />
+</p>
+<p align="center">
+  <img src="../testCasesResults/lightMode.png" width="50%" />
+</p>
+
 
 **Rezultat testu (zaliczony / niezaliczony):**  
-[...]
+*zaliczony*
 
 **Stan końcowy aplikacji:**  
 Aplikacja działa w trybie jasnym.
