@@ -15,10 +15,15 @@ Zadania A i C zostają wizualnie oznaczone jako ukończone (przekreślone).
 Zadanie B pozostaje niezmienione.
 
 **Rzeczywisty rezultat testu:**  
-[...]
+<p align="center">
+  <img src="../testCasesResults/taskList.png" width="50%" />
+</p>
+<p align="center">
+  <img src="../testCasesResults/taskListWithSomeDone.png" width="50%" />
+</p>
 
 **Rezultat testu (zaliczony / niezaliczony):**  
-[...]
+*zaliczony*
 
 **Stan końcowy aplikacji:**  
 Lista zadań: A, B, C (A i C przekreślone)
@@ -38,10 +43,15 @@ Zadania A i C są przekreślone.
 Zadania A i C nie są już przekreślone.
 
 **Rzeczywisty rezultat testu:**  
-[...]
+<p align="center">
+  <img src="../testCasesResults/taskListWithSomeDone.png" width="50%" />
+</p>
+<p align="center">
+  <img src="../testCasesResults/taskList.png" width="50%" />
+</p>
 
 **Rezultat testu (zaliczony / niezaliczony):**  
-[...]
+*zaliczony*
 
 **Stan końcowy aplikacji:**  
 Lista zadań: A, B, C; żadne zadanie nie jest przekreślone.
