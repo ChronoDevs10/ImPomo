@@ -19,10 +19,10 @@ Powiadomienia dźwiękowe odtwarzają się w momentach przejścia między czasem
 Dopuszczalne lekkie opóźnienie przy pierwszym odtworzeniu dźwięku.
 
 **Rzeczywisty rezultat testu:**  
-[...]
+*Dźwięk nie odtworzył się*
 
 **Rezultat testu (zaliczony / niezaliczony):**  
-[...]
+*niezaliczony*
 
 **Stan końcowy aplikacji:**  
 Timer działa dalej, powiadomienia dźwiękowe poprawnie odtwarzają się przy zmianie trybu.
@@ -45,10 +45,10 @@ Powiadomienia dźwiękowe są włączone w ustawieniach, aplikacja jest w trybie
 Powiadomienia dźwiękowe nie odtwarzają się.
 
 **Rzeczywisty rezultat testu:**  
-[...]
+*Dźwięk nie odtworzył się*
 
 **Rezultat testu (zaliczony / niezaliczony):**  
-[...]
+*zaliczony*
 
 **Stan końcowy aplikacji:**  
 Sesja trwa dalej, ale bez dźwięku powiadomień.
