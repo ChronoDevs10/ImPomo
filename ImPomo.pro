@@ -1,5 +1,5 @@
 QT += core gui sql widgets multimedia
-QT += testlib charts
+QT += charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -25,18 +25,8 @@ SOURCES += \
     statistics.cpp \
     task.cpp \
     taskfactory.cpp \
-    tests/testClassicPomodoro.cpp \
-    tests/testExtendedPomodoro.cpp \
-    tests/testPomodoroList.cpp \
-    tests/testPomodoroTask.cpp \
-    tests/testSettings.cpp \
-    tests/testTask.cpp \
-    tests/testTaskFactory.cpp \
-    tests/testTimer.cpp \
-    tests/testToDoList.cpp \
     timer.cpp \
     todolist.cpp
-
 
 HEADERS += \
     appsettings.h \
@@ -59,7 +49,6 @@ HEADERS += \
 FORMS += \
     mainwindow.ui
 
-
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
@@ -67,4 +56,3 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     tst_task.qml
-

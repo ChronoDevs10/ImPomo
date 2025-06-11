@@ -26,7 +26,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     classicPomodoro->loadSessionStateFromFile();
 
-    //-----------------------------------------------
     central = new QWidget(this);
     mainLayout = new QVBoxLayout(central);
     setCentralWidget(central);
@@ -50,7 +49,8 @@ MainWindow::MainWindow(QWidget *parent)
     mainLayout->addWidget(addButton, 0, Qt::AlignHCenter);
 
     setWindowTitle("ImPomo");
-    showMaximized();
+    resize(800, 600);
+    show();
 
     if(appSettings->getTheme() == "Light") {
         setStyle(0);
