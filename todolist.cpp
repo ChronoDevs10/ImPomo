@@ -135,7 +135,7 @@ QWidget* ToDoList::createTaskWidget(Task* task) {
             "QCheckBox::indicator { width: 16px; height: 16px; border-radius: 4px; border: 1px solid gray; }"
             "QCheckBox::indicator:checked { background-color: #ff9800; }");
 
-        deleteButton->setStyleSheet("QPushButton { background-color: #ffa726; color: black; border-radius: 5px; }");
+        deleteButton->setStyleSheet("QPushButton { background-color: #ffa726; color: black; border-radius: 5px; } QPushButton:hover { background-color: #fb8c00; color: white; }");
 
         upButton->setStyleSheet("QPushButton { background-color: #ffe0b2; color: black; border-radius: 5px; border: 1px solid #4c4c4c;}");
         downButton->setStyleSheet("QPushButton { background-color: #ffe0b2; color: black; border-radius: 5px; border: 1px solid #4c4c4c;}");
@@ -145,8 +145,7 @@ QWidget* ToDoList::createTaskWidget(Task* task) {
             "QCheckBox::indicator { width: 16px; height: 16px; border-radius: 4px; background-color: #afafaf; }"
             "QCheckBox::indicator:checked { background-color: #4f4f4f; }");
 
-        deleteButton->setStyleSheet("QPushButton { background-color: #dd2c00; color: white; border-radius: 5px; }");
-
+        deleteButton->setStyleSheet("QPushButton { background-color: #dd2c00; color: white; border-radius: 5px; } QPushButton:hover { background-color: #8b0000; color: white; }");
         upButton->setStyleSheet("QPushButton { background-color: #7c7c7c; color: white; border-radius: 5px; }");
         downButton->setStyleSheet("QPushButton { background-color: #7c7c7c; color: white; border-radius: 5px; }");
     }

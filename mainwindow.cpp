@@ -344,7 +344,7 @@ void MainWindow::PomodoroSettings() {
     layout->addWidget(shortBreakSpinBox);
 
     QSpinBox* longBreakSpinBox = new QSpinBox();
-    longBreakSpinBox->setRange(1, 60);
+    longBreakSpinBox->setRange(1, 90);
     longBreakSpinBox->setValue(classicPomodoro->getLongBreakDuration());
     layout->addWidget(new QLabel("Long break (min):"));
     layout->addWidget(longBreakSpinBox);
@@ -367,7 +367,7 @@ void MainWindow::PomodoroSettings() {
     connect(buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
 
-    if (dialog.exec() == QDialog::Accepted) {
+    if(dialog.exec() == QDialog::Accepted) {
         classicPomodoro->changeProperties(
             workSpinBox->value(),
             shortBreakSpinBox->value(),
@@ -378,8 +378,6 @@ void MainWindow::PomodoroSettings() {
         classicPomodoro->saveSettingsToFile();
     }
 }
-
-
 
 QPushButton* MainWindow::createMenuButton() {
     QMenu *menu = new QMenu(this);
@@ -444,6 +442,9 @@ void MainWindow::showSettings() {
 
 void MainWindow::addTaskField() {
     if(stackedWidget->currentIndex() == 1) {
+        if(toDoList->taskCount() == 20)
+            return;
+
         Task* task = TaskFactory::createTask("Basic", "");
         toDoList->addTask(task);
 
@@ -455,6 +456,9 @@ void MainWindow::addTaskField() {
         }
 
     } else if(stackedWidget->currentIndex() == 2) {
+        if(pomodoroList->taskCount() == 20)
+            return;
+
         Task* baseTask = TaskFactory::createTask("Pomodoro", "", 25);
         PomodoroTask* task = dynamic_cast<PomodoroTask*>(baseTask);
         extendedPomodoro->list->addTask(task);
@@ -524,7 +528,7 @@ void MainWindow::setStyleImPomo(int style) {
             "   margin: 10px; "
             "   border: 1px solid #5f5f5f;"
             "}"
-            "QPushButton:hover { background-color: #cc3333; }"
+            "QPushButton:hover { background-color: #8b0000; }"
         );
     }
     extendedPomodoro->timer->startButton->setStyleSheet(TimerButtonStyle);
@@ -584,7 +588,7 @@ void MainWindow::setStyleClassPomo(int style) {
             "   margin: 10px; "
             "   border: 1px solid #5f5f5f;"
             "}"
-            "QPushButton:hover { background-color: #cc3333; }"
+            "QPushButton:hover { background-color: #8b0000; }"
             );
     }
     classicPomodoro->timer->startButton->setStyleSheet(TimerButtonStyle);

@@ -75,11 +75,12 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
     inputLayout->setSpacing(0);
 
     task->lineEdit = new QLineEdit(task->getName());
-    task->lineEdit->setFixedSize(300, 50);
+    task->lineEdit->setFixedSize(275, 50);
     task->lineEdit->setPlaceholderText("Enter task name");
 
     QSpinBox* durationBox = new QSpinBox();
     durationBox->setFixedHeight(50);
+    durationBox->setFixedWidth(80);
     durationBox->setMinimum(1);
     durationBox->setMaximum(180);
     durationBox->setValue(task->getDuration());
@@ -116,6 +117,7 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
 
     durationBox->setStyleSheet(durationStyle);
     task->lineEdit->setStyleSheet(lineEditStyle);
+    task->lineEdit->setMaxLength(25);
 
     QObject::connect(task->lineEdit, &QLineEdit::textChanged, [this, task](const QString& newName) {
         editTaskName(task, newName);
@@ -229,14 +231,12 @@ QWidget* PomodoroList::createTaskWidget(PomodoroTask* task) {
 
 
     if(settings->getTheme() == "Light") {
-        deleteButton->setStyleSheet("QPushButton { background-color: #ffa726; color: black; border-radius: 5px; }");
-
+        deleteButton->setStyleSheet("QPushButton { background-color: #ffa726; color: black; border-radius: 5px; } QPushButton:hover { background-color: #fb8c00; color: white; }");
         upButton->setStyleSheet("QPushButton { background-color: #ffe0b2; color: black; border-radius: 5px; border: 1px solid #4c4c4c;}");
         downButton->setStyleSheet("QPushButton { background-color: #ffe0b2; color: black; border-radius: 5px; border: 1px solid #4c4c4c;}");
     }
     else if(settings->getTheme() == "Dark") {
-        deleteButton->setStyleSheet("QPushButton { background-color: #dd2c00; color: white; border-radius: 5px; }");
-
+        deleteButton->setStyleSheet("QPushButton { background-color: #dd2c00; color: white; border-radius: 5px; } QPushButton:hover { background-color: #8b0000; color: white; }");
         upButton->setStyleSheet("QPushButton { background-color: #7c7c7c; color: white; border-radius: 5px; }");
         downButton->setStyleSheet("QPushButton { background-color: #7c7c7c; color: white; border-radius: 5px; }");
     }

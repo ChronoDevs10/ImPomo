@@ -70,6 +70,7 @@ void ExtendedPomodoro::nextPhase() {
         wasStarted = false;
         timer->setTime(0);
         currTaskLabel->setText("All tasks finished");
+
         pause();
     }
     tasksFinished++;
@@ -160,13 +161,13 @@ void ExtendedPomodoro::loadFromDatabase() {
     if(list->taskCount() == 0) {
         clearAllTasks();
     } else {
-        if(list->getPTasks().last()->getStatus()) {//same szare zadania
+        if(list->getPTasks().last()->getStatus()) {
             current = (list->taskCount() - 1);
             timer->setTime(0);
             currTaskLabel->setText("All tasks finished");
         } else {
             timer->setTime(list->getPTasks().at(current)->getDuration()*60);
-            timer->setRemainingTime(remainingTime);//!!!!!!!!!!!!!
+            timer->setRemainingTime(remainingTime);
             updateCurrentTaskLabel();
         }
     }
