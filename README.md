@@ -6,18 +6,18 @@ In addition to the improved Pomodoro method, **ImPomo** also offers a classic Po
 
 ## 🚀 Features
 
-- **Improved Pomodoro**: Plan your tasks in advance by assigning a time duration to each task. After completing one task, **ImPomo** automatically moves to the next task, eliminating the need for manual intervention.
+- **"ImPomo"**: Plan your tasks in advance by assigning a time duration to each task. After completing one task, **ImPomo** automatically moves to the next task, eliminating the need for manual intervention.
 - **Classic Pomodoro**: Follow the traditional Pomodoro method with 25 minutes of focused work followed by a 5-minute break. After four cycles, enjoy a longer break to recharge.
 - **To-Do List**: A straightforward task list that allows you to track your tasks without worrying about time management. Ideal for users who prefer a simple way to stay organized.
 
 ## 🛠️ How It Works
 
-1. **Create Your Task List**: Add tasks to the application and assign the time you want to focus on each task.
-2. **Choose Your Mode**: Select one of the following modes:
-   - **improved Pomodoro**: Automatically transition to the next task after completing the current one.
+ - **Create Your Task List**: Add tasks to the application and assign the time you want to focus on each task.
+ - **Choose Your Mode**: Select one of the following modes:
+   - **ImPomo**: Automatically transition to the next task after completing the current one.
    - **Classic Pomodoro**: Follow the 25-minute work period, 5-minute break structure, with a longer break after every four cycles.
    - **To-Do List**: A simple, flexible way to track your tasks without the time constraints.
-3. **Stay on Track**: Focus on your tasks while **ImPomo** manages the timing for you, helping you maintain a steady workflow.
+ - **Stay on Track**: Focus on your tasks while **ImPomo** manages the timing for you, helping you maintain a steady workflow.
 
 ## 🖥️ Technologies Used
 
@@ -27,7 +27,7 @@ In addition to the improved Pomodoro method, **ImPomo** also offers a classic Po
 
 You can download the application from the official release page:
 
-👉 [**Download ImPomo v1.0**](https://github.com/ChronoDevs10/ImPomo/releases/tag/v1.0)
+👉 [**Download ImPomo**](https://github.com/ChronoDevs10/ImPomo/releases/tag/v1.2)
 
 1. Download the `ImPomo.zip` file.
 2. Extract the contents of the ZIP archive to any folder of your choice.
@@ -42,5 +42,5 @@ This project is licensed under the GNU General Public License (GPL) v3.0 - see t
 We hope **ImPomo** helps you optimize your time management and boosts your productivity. Whether you prefer the improved Pomodoro technique or a simple to-do list, **ImPomo** has the flexibility to meet your needs.
 
 <p align="center">
-<img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExeHo1djJzeTI0cjRlcG9hdHl2bm8zOGNyaW80ZnE3enJ4bTMweG1qbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/SrWuKikT3frcM1u4Qg/giphy.gif" alt="Happy Penguin">
+<img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExeHo1djJzeTI0cjRlcG9hdHl2bm8zOGNyaW80ZnE3enJ4bTMweG1qbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/SrWuKikT3frcM1u4Qg/giphy.gif" alt="Happy Pingu">
 </p>
