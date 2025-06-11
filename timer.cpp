@@ -32,6 +32,9 @@ void Timer::setTime(int duration) {
 }
 
 void Timer::start() {
+    if(remainingTime <= 0)
+        return;
+
     emit started();
     if(!isRunning) {
         timer->start(1000);
@@ -67,12 +70,14 @@ int Timer::getStartTime(){
 void Timer::updateTime() {
     if(remainingTime > 0) {
         --remainingTime;
-        subscriber->updateTime(remainingTime);
+        if(subscriber)
+            subscriber->updateTime(remainingTime);
         updateLabel();
-    } else {
+    }else {
         timer->stop();
         isRunning = false;
-        subscriber->update();
+        if(subscriber)
+            subscriber->update();
     }
 }
 
