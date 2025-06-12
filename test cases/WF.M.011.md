@@ -16,10 +16,11 @@ Powiadomienia dźwiękowe są włączone, na liście w trybie ImPomo są dodane 
 Powiadomienia dźwiękowe są wyciszone, nie sygnalizują zakończenia zadania.  
 
 **Rzeczywisty rezultat testu:**  
-*test nieprzeprowadzony ze wzgledu na niezaliczenie testu 9.1*
+[05.06.2025] *test nieprzeprowadzony ze wzgledu na niezaliczenie testu 9.1*
+[12.06.2025] *zgodny z oczekiwaniami*
 
 **Rezultat testu (zaliczony / niezaliczony):**  
-[...]
+[12.06.2025] *zaliczony*
 
 **Stan końcowy aplikacji:**  
 Ustawienie wyciszenia powiadomień podczas pracy pozostaje aktywne do czasu ponownej jego zmiany.
