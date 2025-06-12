@@ -19,10 +19,12 @@ Powiadomienia dźwiękowe odtwarzają się w momentach przejścia między czasem
 Dopuszczalne lekkie opóźnienie przy pierwszym odtworzeniu dźwięku.
 
 **Rzeczywisty rezultat testu:**  
-*Dźwięk nie odtworzył się*
+[05.06.2025] *Dźwięk nie odtworzył się*
+[12.06.2025] *Dźwięk odtworzył się*
 
 **Rezultat testu (zaliczony / niezaliczony):**  
-*niezaliczony*
+[05.06.2025] *niezaliczony*
+[12.06.2025] *zaliczony*
 
 **Stan końcowy aplikacji:**  
 Timer działa dalej, powiadomienia dźwiękowe poprawnie odtwarzają się przy zmianie trybu.
